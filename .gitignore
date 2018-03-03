@@ -1,0 +1,31 @@
+# Ignore everything
+*
+
+# Don't ignore .gitignore
+!.gitignore
+
+# Don't ignore the LICENSE file
+!LICENSE
+
+# Don't ignore the README.md, CODE_OF_CONDUCT.md and CONTRIBUTING file
+!README.md
+!CODE_OF_CONDUCT.md  
+!CONTRIBUTING.md
+
+# Don't ignore pullapprove yaml file
+.pullapprove.yml
+
+# Don't ignore jenkins directory
+!jenkins/
+
+# Don't ignore xml files defining various configurations
+!jenkins/*.xml
+!jenkins/jobs/
+!jenkins/jobs/*/
+!jenkins/jobs/*/config.xml
+
+# Ignore CloudStatistics
+jenkins/org.jenkinsci.plugins.cloudstats.CloudStatistics.xml
+
+# Ignore Jenkins credentials
+jenkins/credentials.xml

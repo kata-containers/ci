@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<hudson.plugins.tfs.TeamPluginGlobalConfig plugin="tfs@5.126.0">
+  <collectionConfigurations/>
+  <configFolderPerNode>false</configFolderPerNode>
+  <enableTeamPushTriggerForAllJobs>false</enableTeamPushTriggerForAllJobs>
+  <enableTeamStatusForAllJobs>false</enableTeamStatusForAllJobs>
+  <userAccountMapper class="hudson.plugins.tfs.model.DomainUserAccountMapper"/>
+</hudson.plugins.tfs.TeamPluginGlobalConfig>
