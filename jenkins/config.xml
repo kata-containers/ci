@@ -1,9 +1,10 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version='1.1' encoding='UTF-8'?>
 <hudson>
   <disabledAdministrativeMonitors>
     <string>hudson.diagnosis.ReverseProxySetupMonitor</string>
+    <string>hudson.diagnosis.TooManyJobsButNoView</string>
   </disabledAdministrativeMonitors>
-  <version>2.89.4</version>
+  <version>2.107.1</version>
   <installState class="jenkins.install.InstallState$5">
     <isSetupComplete>true</isSetupComplete>
     <name>RESTART</name>
@@ -14,7 +15,7 @@
   <authorizationStrategy class="org.jenkinsci.plugins.GithubAuthorizationStrategy" plugin="github-oauth@0.29">
     <rootACL>
       <organizationNameList class="linked-list">
-        <string>kata-containers</string>
+        <string></string>
       </organizationNameList>
       <adminUserNameList class="linked-list">
         <string>sboeuf</string>
@@ -39,7 +40,7 @@
     <githubWebUri>https://github.com</githubWebUri>
     <githubApiUri>https://api.github.com</githubApiUri>
     <clientID>ce32399d14aa83aec212</clientID>
-    <clientSecret>{AQAAABAAAAAwsrdisckzs/dN9/EKf3B1xdQF7mI0xOvM9wC7CnwPgIFBzR5bwYKsqZ50GXbyi7bfdMxrIm+sBlko7L9b9QdndA==}</clientSecret>
+    <clientSecret>{AQAAABAAAAAwmxpmZ0sMtcIFrR3ZYHQedN6EmcPZqSIdCceQUuOdX2r6ctoY1kgv2IMe9G5eUwaA0WhqQVsBtHk8Zwu+sJ9z+A==}</clientSecret>
     <oauthScopes>read:org,user:email</oauthScopes>
   </securityRealm>
   <disableRememberMe>false</disableRememberMe>
@@ -134,35 +135,67 @@ sudo tar -C /usr/local -xzf go1.9.2.linux-amd64.tar.gz</initScript>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
         </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
         <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
-          <templateName>linux-agent</templateName>
-          <templateDesc></templateDesc>
-          <labels>linux</labels>
-          <location>Japan West</location>
-          <virtualMachineSize>Standard_D1_v2</virtualMachineSize>
+          <templateName>jenkins-azure-vm-ubuntu-17-10-template</templateName>
+          <templateDesc>Ubuntu 17.10 Template for Jenkins VM agents on Azure</templateDesc>
+          <labels>ubuntu_17_10_azure_cloud</labels>
+          <location>West US 2</location>
+          <virtualMachineSize>Standard_D4s_v3</virtualMachineSize>
           <storageAccountNameReferenceType>new</storageAccountNameReferenceType>
           <diskType>managed</diskType>
-          <newStorageAccountName>jngazzhf9fkatjaftagwowoa</newStorageAccountName>
+          <newStorageAccountName>katajenkins</newStorageAccountName>
           <existingStorageAccountName>katajenkins</existingStorageAccountName>
           <storageAccountType>Standard_LRS</storageAccountType>
           <noOfParallelJobs>1</noOfParallelJobs>
-          <usageMode>NORMAL</usageMode>
+          <usageMode>EXCLUSIVE</usageMode>
           <shutdownOnIdle>false</shutdownOnIdle>
-          <imageTopLevelType>basic</imageTopLevelType>
+          <imageTopLevelType>advanced</imageTopLevelType>
           <imageReferenceType>reference</imageReferenceType>
           <builtInImage>Ubuntu 16.04 LTS</builtInImage>
           <isInstallGit>false</isInstallGit>
           <isInstallMaven>false</isInstallMaven>
           <isInstallDocker>false</isInstallDocker>
           <osType>Linux</osType>
-          <imagePublisher></imagePublisher>
-          <imageOffer></imageOffer>
-          <imageSku></imageSku>
+          <imagePublisher>Canonical</imagePublisher>
+          <imageOffer>UbuntuServer</imageOffer>
+          <imageSku>17.10</imageSku>
           <imageVersion>latest</imageVersion>
           <agentLaunchMethod>SSH</agentLaunchMethod>
-          <preInstallSsh>false</preInstallSsh>
-          <initScript></initScript>
-          <credentialsId>agent_admin_account</credentialsId>
-          <agentWorkspace></agentWorkspace>
+          <preInstallSsh>true</preInstallSsh>
+          <initScript>set -x
+
+# Stop unattended-upgrades service
+sudo systemctl stop unattended-upgrades
+sudo systemctl disable unattended-upgrades
+sudo pkill -f dpkg
+sudo pkill -f apt-get
+sudo rm -f /var/lib/dpkg/lock
+sudo rm -f /var/lib/apt/lists/lock
+sudo rm -f /var/cache/apt/archives/lock
+
+# Install Java JRE and JDK for Jenkins agent
+sudo apt update -y
+sudo apt install -y openjdk-8-jre openjdk-8-jre-headless openjdk-8-jdk
+
+# Install git, make and gcc
+sudo apt install -y git make gcc
+
+# Install docker
+sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository &quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable&quot;
+sudo apt update -y
+sudo apt install -y docker-ce
+sudo gpasswd -a ${USER} docker
+sudo chmod g+rw /var/run/docker.sock
+
+# Install Go
+curl -O https://storage.googleapis.com/golang/go1.9.2.linux-amd64.tar.gz
+sudo tar -C /usr/local -xzf go1.9.2.linux-amd64.tar.gz
+
+echo &quot;Environment Variables&quot;
+env </initScript>
+          <credentialsId>de521202-ccf2-41c2-bc04-478bfa1675f6</credentialsId>
+          <agentWorkspace>/home/jenkins/jenkins_slave</agentWorkspace>
           <retentionTimeInMin>0</retentionTimeInMin>
           <virtualNetworkName></virtualNetworkName>
           <virtualNetworkResourceGroupName></virtualNetworkResourceGroupName>
@@ -174,15 +207,12 @@ sudo tar -C /usr/local -xzf go1.9.2.linux-amd64.tar.gz</initScript>
           <templateStatusDetails></templateStatusDetails>
           <templateVerified>false</templateVerified>
           <executeInitScriptAsRoot>false</executeInitScriptAsRoot>
-          <doNotUseMachineIfInitFails>false</doNotUseMachineIfInitFails>
-          <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudRetensionStrategy">
-            <idleTerminationMillis>3600000</idleTerminationMillis>
-            <idleTerminationMinutes>60</idleTerminationMinutes>
-          </retentionStrategy>
+          <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
+          <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
         </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
       </vmTemplates>
       <deploymentTimeout>1200</deploymentTimeout>
-      <approximateVirtualMachineCount>0</approximateVirtualMachineCount>
+      <approximateVirtualMachineCount>2</approximateVirtualMachineCount>
     </com.microsoft.azure.vmagent.AzureVMCloud>
   </clouds>
   <quietPeriod>5</quietPeriod>

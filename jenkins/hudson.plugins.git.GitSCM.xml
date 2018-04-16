@@ -1,6 +1,6 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<hudson.plugins.git.GitSCM_-DescriptorImpl plugin="git@3.7.0">
-  <generation>46</generation>
+<?xml version='1.1' encoding='UTF-8'?>
+<hudson.plugins.git.GitSCM_-DescriptorImpl plugin="git@3.8.0">
+  <generation>82</generation>
   <globalConfigName>Salvador Fuentes</globalConfigName>
   <globalConfigEmail>salvador.fuentes@intel.com</globalConfigEmail>
   <createAccountBasedOnEmail>false</createAccountBasedOnEmail>
