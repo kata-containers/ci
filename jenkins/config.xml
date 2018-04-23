@@ -4,7 +4,7 @@
     <string>hudson.diagnosis.ReverseProxySetupMonitor</string>
     <string>hudson.diagnosis.TooManyJobsButNoView</string>
   </disabledAdministrativeMonitors>
-  <version>2.107.1</version>
+  <version>2.107.2</version>
   <installState class="jenkins.install.InstallState$5">
     <isSetupComplete>true</isSetupComplete>
     <name>RESTART</name>
@@ -26,6 +26,8 @@
         <string>jcvenegas</string>
         <string>jodh-intel</string>
         <string>GabyCT</string>
+        <string>devimc</string>
+        <string>amshinde</string>
       </adminUserNameList>
       <authenticatedUserReadPermission>true</authenticatedUserReadPermission>
       <useRepositoryPermissions>true</useRepositoryPermissions>
@@ -40,7 +42,7 @@
     <githubWebUri>https://github.com</githubWebUri>
     <githubApiUri>https://api.github.com</githubApiUri>
     <clientID>ce32399d14aa83aec212</clientID>
-    <clientSecret>{AQAAABAAAAAwmxpmZ0sMtcIFrR3ZYHQedN6EmcPZqSIdCceQUuOdX2r6ctoY1kgv2IMe9G5eUwaA0WhqQVsBtHk8Zwu+sJ9z+A==}</clientSecret>
+    <clientSecret>{AQAAABAAAAAw1p/bX+X/l2jVMaxAcG7cwfS/oKxlOsqS1npLbTaHixxQgcYU7oLZru1yn7+gFEtsuIfuK+dWDBWUP2TfOqvErg==}</clientSecret>
     <oauthScopes>read:org,user:email</oauthScopes>
   </securityRealm>
   <disableRememberMe>false</disableRememberMe>
@@ -52,7 +54,7 @@
   <viewsTabBar class="hudson.views.DefaultViewsTabBar"/>
   <myViewsTabBar class="hudson.views.DefaultMyViewsTabBar"/>
   <clouds>
-    <com.microsoft.azure.vmagent.AzureVMCloud plugin="azure-vm-agents@0.6.2">
+    <com.microsoft.azure.vmagent.AzureVMCloud plugin="azure-vm-agents@0.7.0">
       <name>jenkins-azure-cloud</name>
       <cloudName>jenkins-azure-cloud</cloudName>
       <credentialsId>5561c860-9033-4fd0-9fc7-012d92d7af64</credentialsId>
@@ -210,9 +212,137 @@ env </initScript>
           <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
         </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
+        <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
+          <templateName>jenkins-azure-vm-centos-7-4-template</templateName>
+          <templateDesc>Centos 7.4 Template for Jenkins VM agents on Azure</templateDesc>
+          <labels>centos_7_4_azure_cloud</labels>
+          <location>West US 2</location>
+          <virtualMachineSize>Standard_D4s_v3</virtualMachineSize>
+          <storageAccountNameReferenceType>new</storageAccountNameReferenceType>
+          <diskType>managed</diskType>
+          <newStorageAccountName>katajenkins</newStorageAccountName>
+          <existingStorageAccountName>katajenkins</existingStorageAccountName>
+          <storageAccountType>Standard_LRS</storageAccountType>
+          <noOfParallelJobs>1</noOfParallelJobs>
+          <usageMode>EXCLUSIVE</usageMode>
+          <shutdownOnIdle>false</shutdownOnIdle>
+          <imageTopLevelType>advanced</imageTopLevelType>
+          <imageReferenceType>reference</imageReferenceType>
+          <builtInImage>Windows Server 2016</builtInImage>
+          <isInstallGit>false</isInstallGit>
+          <isInstallMaven>false</isInstallMaven>
+          <isInstallDocker>false</isInstallDocker>
+          <osType>Linux</osType>
+          <imagePublisher>OpenLogic</imagePublisher>
+          <imageOffer>CentOS</imageOffer>
+          <imageSku>7.4</imageSku>
+          <imageVersion>latest</imageVersion>
+          <agentLaunchMethod>SSH</agentLaunchMethod>
+          <preInstallSsh>true</preInstallSsh>
+          <initScript># Allow jenkins user to run sudo
+
+echo &apos;jenkins ALL=(ALL) NOPASSWD: ALL&apos;&gt;&gt; /etc/sudoers
+
+# Install Java JRE and JDK for Jenkins agent
+yum install -y java-1.8.0-openjdk java-1.8.0-openjdk-headless java-1.8.0-openjdk-devel
+
+# Install git, gcc and python
+yum install -y git gcc python
+
+# Install docker
+yum install -y yum-utils
+repo_url=&quot;https://download.docker.com/linux/centos/docker-ce.repo&quot;
+yum-config-manager --add-repo &quot;$repo_url&quot;
+yum -y install docker-ce
+yum -y update
+
+systemctl start docker
+gpasswd -a jenkins docker
+chmod g+rw /var/run/docker.sock
+
+# Install go
+curl -O https://storage.googleapis.com/golang/go1.9.2.linux-amd64.tar.gz
+tar -C /usr/local -xzf go1.9.2.linux-amd64.tar.gz 
+
+</initScript>
+          <credentialsId>de521202-ccf2-41c2-bc04-478bfa1675f6</credentialsId>
+          <agentWorkspace>/home/jenkins/jenkins_slave</agentWorkspace>
+          <retentionTimeInMin>0</retentionTimeInMin>
+          <virtualNetworkName></virtualNetworkName>
+          <virtualNetworkResourceGroupName></virtualNetworkResourceGroupName>
+          <subnetName></subnetName>
+          <usePrivateIP>false</usePrivateIP>
+          <nsgName></nsgName>
+          <jvmOptions></jvmOptions>
+          <templateDisabled>false</templateDisabled>
+          <templateStatusDetails></templateStatusDetails>
+          <templateVerified>false</templateVerified>
+          <executeInitScriptAsRoot>true</executeInitScriptAsRoot>
+          <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
+          <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
+        </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
+        <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
+          <templateName>jenkins-azure-vm-fedora-27-template</templateName>
+          <templateDesc>Fedora 27 Template for Jenkins VM agents on Azure</templateDesc>
+          <labels>fedora_27_azure_cloud</labels>
+          <location>West US 2</location>
+          <virtualMachineSize>Standard_D4s_v3</virtualMachineSize>
+          <storageAccountNameReferenceType>new</storageAccountNameReferenceType>
+          <diskType>managed</diskType>
+          <newStorageAccountName>katajenkins</newStorageAccountName>
+          <existingStorageAccountName>katajenkins</existingStorageAccountName>
+          <storageAccountType>Standard_LRS</storageAccountType>
+          <noOfParallelJobs>1</noOfParallelJobs>
+          <usageMode>EXCLUSIVE</usageMode>
+          <shutdownOnIdle>false</shutdownOnIdle>
+          <imageTopLevelType>advanced</imageTopLevelType>
+          <imageReferenceType>custom</imageReferenceType>
+          <builtInImage>Windows Server 2016</builtInImage>
+          <isInstallGit>false</isInstallGit>
+          <isInstallMaven>false</isInstallMaven>
+          <isInstallDocker>false</isInstallDocker>
+          <image>https://katajenkins.blob.core.windows.net/fedora/Fedora-Cloud-Base-27-1.6.x86_64.vhd</image>
+          <osType>Linux</osType>
+          <agentLaunchMethod>SSH</agentLaunchMethod>
+          <preInstallSsh>true</preInstallSsh>
+          <initScript># Install Java JRE and JDK for Jenkins agent
+sudo dnf install -y java-1.8.0-openjdk java-1.8.0-openjdk-headless java-1.8.0-openjdk-devel
+
+# Install git, gcc and python
+sudo dnf install -y git gcc python
+
+# Install docker
+sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+sudo dnf config-manager --set-enabled docker-ce-stable
+sudo dnf makecache
+sudo dnf install -y docker-ce
+
+sudo systemctl start docker
+sudo gpasswd -a ${USER} docker
+sudo chmod g+rw /var/run/docker.sock
+
+# Install go
+curl -O https://storage.googleapis.com/golang/go1.9.2.linux-amd64.tar.gz
+sudo tar -C /usr/local -xzf go1.9.2.linux-amd64.tar.gz</initScript>
+          <credentialsId>de521202-ccf2-41c2-bc04-478bfa1675f6</credentialsId>
+          <agentWorkspace>/home/jenkins/jenkins_slave</agentWorkspace>
+          <retentionTimeInMin>0</retentionTimeInMin>
+          <virtualNetworkName></virtualNetworkName>
+          <virtualNetworkResourceGroupName></virtualNetworkResourceGroupName>
+          <subnetName></subnetName>
+          <usePrivateIP>false</usePrivateIP>
+          <nsgName></nsgName>
+          <jvmOptions></jvmOptions>
+          <templateDisabled>false</templateDisabled>
+          <templateStatusDetails></templateStatusDetails>
+          <templateVerified>false</templateVerified>
+          <executeInitScriptAsRoot>false</executeInitScriptAsRoot>
+          <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
+          <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
+        </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
       </vmTemplates>
       <deploymentTimeout>1200</deploymentTimeout>
-      <approximateVirtualMachineCount>2</approximateVirtualMachineCount>
+      <approximateVirtualMachineCount>0</approximateVirtualMachineCount>
     </com.microsoft.azure.vmagent.AzureVMCloud>
   </clouds>
   <quietPeriod>5</quietPeriod>
@@ -225,6 +355,145 @@ env </initScript>
       <filterQueue>false</filterQueue>
       <properties class="hudson.model.View$PropertyList"/>
     </hudson.model.AllView>
+    <listView>
+      <owner class="hudson" reference="../../.."/>
+      <name>ubuntu_16.04</name>
+      <filterExecutors>false</filterExecutors>
+      <filterQueue>false</filterQueue>
+      <properties class="hudson.model.View$PropertyList"/>
+      <jobNames>
+        <comparator class="hudson.util.CaseInsensitiveComparator"/>
+        <string>kata-containers-agent-ubuntu-16-04-master</string>
+        <string>kata-containers-agent-ubuntu-16-04-PR</string>
+        <string>kata-containers-initrd-ubuntu-16-04-master</string>
+        <string>kata-containers-proxy-ubuntu-16-04-master</string>
+        <string>kata-containers-proxy-ubuntu-16-04-PR</string>
+        <string>kata-containers-runtime-ubuntu-16-04-master</string>
+        <string>kata-containers-runtime-ubuntu-16-04-PR</string>
+        <string>kata-containers-shim-ubuntu-16-04-master</string>
+        <string>kata-containers-shim-ubuntu-16-04-PR</string>
+        <string>kata-containers-tests-ubuntu-16-04-master</string>
+        <string>kata-containers-tests-ubuntu-16-04-PR</string>
+      </jobNames>
+      <jobFilters/>
+      <columns>
+        <hudson.views.StatusColumn/>
+        <hudson.views.WeatherColumn/>
+        <hudson.views.JobColumn/>
+        <hudson.views.LastSuccessColumn/>
+        <hudson.views.LastFailureColumn/>
+        <hudson.views.LastDurationColumn/>
+        <hudson.views.BuildButtonColumn/>
+      </columns>
+      <recurse>false</recurse>
+    </listView>
+    <listView>
+      <owner class="hudson" reference="../../.."/>
+      <name>ubuntu_17.10</name>
+      <filterExecutors>false</filterExecutors>
+      <filterQueue>false</filterQueue>
+      <properties class="hudson.model.View$PropertyList"/>
+      <jobNames>
+        <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../listView/jobNames/comparator"/>
+        <string>kata-containers-agent-ubuntu-17-10-master</string>
+        <string>kata-containers-agent-ubuntu-17-10-PR</string>
+        <string>kata-containers-proxy-ubuntu-17-10-master</string>
+        <string>kata-containers-proxy-ubuntu-17-10-PR</string>
+        <string>kata-containers-runtime-ubuntu-17-10-master</string>
+        <string>kata-containers-runtime-ubuntu-17-10-PR</string>
+        <string>kata-containers-shim-ubuntu-17-10-master</string>
+        <string>kata-containers-shim-ubuntu-17-10-PR</string>
+        <string>kata-containers-tests-ubuntu-17-10-master</string>
+        <string>kata-containers-tests-ubuntu-17-10-PR</string>
+      </jobNames>
+      <jobFilters/>
+      <columns>
+        <hudson.views.StatusColumn/>
+        <hudson.views.WeatherColumn/>
+        <hudson.views.JobColumn/>
+        <hudson.views.LastSuccessColumn/>
+        <hudson.views.LastFailureColumn/>
+        <hudson.views.LastDurationColumn/>
+        <hudson.views.BuildButtonColumn/>
+      </columns>
+      <recurse>false</recurse>
+    </listView>
+    <listView>
+      <owner class="hudson" reference="../../.."/>
+      <name>centos_7.4</name>
+      <filterExecutors>false</filterExecutors>
+      <filterQueue>false</filterQueue>
+      <properties class="hudson.model.View$PropertyList"/>
+      <jobNames>
+        <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../listView/jobNames/comparator"/>
+        <string>kata-containers-agent-centos-7-4-master</string>
+        <string>kata-containers-agent-centos-7-4-PR</string>
+        <string>kata-containers-proxy-centos-7-4-master</string>
+        <string>kata-containers-proxy-centos-7-4-PR</string>
+        <string>kata-containers-runtime-centos-7-4-master</string>
+        <string>kata-containers-runtime-centos-7-4-PR</string>
+        <string>kata-containers-shim-centos-7-4-master</string>
+        <string>kata-containers-shim-centos-7-4-PR</string>
+        <string>kata-containers-tests-centos-7-4-master</string>
+        <string>kata-containers-tests-centos-7-4-PR</string>
+      </jobNames>
+      <jobFilters/>
+      <columns>
+        <hudson.views.StatusColumn/>
+        <hudson.views.WeatherColumn/>
+        <hudson.views.JobColumn/>
+        <hudson.views.LastSuccessColumn/>
+        <hudson.views.LastFailureColumn/>
+        <hudson.views.LastDurationColumn/>
+        <hudson.views.BuildButtonColumn/>
+      </columns>
+      <recurse>false</recurse>
+    </listView>
+    <listView>
+      <owner class="hudson" reference="../../.."/>
+      <name>Pull_Requests</name>
+      <filterExecutors>false</filterExecutors>
+      <filterQueue>false</filterQueue>
+      <properties class="hudson.model.View$PropertyList"/>
+      <jobNames>
+        <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../listView/jobNames/comparator"/>
+      </jobNames>
+      <jobFilters/>
+      <columns>
+        <hudson.views.StatusColumn/>
+        <hudson.views.WeatherColumn/>
+        <hudson.views.JobColumn/>
+        <hudson.views.LastSuccessColumn/>
+        <hudson.views.LastFailureColumn/>
+        <hudson.views.LastDurationColumn/>
+        <hudson.views.BuildButtonColumn/>
+      </columns>
+      <includeRegex>.*-PR</includeRegex>
+      <recurse>false</recurse>
+    </listView>
+    <listView>
+      <owner class="hudson" reference="../../.."/>
+      <name>Merges_to_Master</name>
+      <filterExecutors>false</filterExecutors>
+      <filterQueue>false</filterQueue>
+      <properties class="hudson.model.View$PropertyList"/>
+      <jobNames>
+        <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../listView/jobNames/comparator"/>
+        <string>kata-containers-runtime-ubuntu-16-04-master</string>
+      </jobNames>
+      <jobFilters/>
+      <columns>
+        <hudson.views.StatusColumn/>
+        <hudson.views.WeatherColumn/>
+        <hudson.views.JobColumn/>
+        <hudson.views.LastSuccessColumn/>
+        <hudson.views.LastFailureColumn/>
+        <hudson.views.LastDurationColumn/>
+        <hudson.views.BuildButtonColumn/>
+      </columns>
+      <includeRegex>.*-master</includeRegex>
+      <recurse>false</recurse>
+    </listView>
   </views>
   <primaryView>all</primaryView>
   <slaveAgentPort>-1</slaveAgentPort>
