@@ -8,7 +8,7 @@
       <projectUrl>https://github.com/kata-containers/runtime/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
-    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.27">
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.28">
       <autoRebuild>false</autoRebuild>
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
@@ -126,14 +126,14 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
     <hudson.tasks.ArtifactArchiver>
-      <artifacts>kata-proxy_*,kata-runtime_*,kata-shim_*,crio_*,docker_*</artifacts>
+      <artifacts>kata-proxy_*,kata-runtime_*,kata-shim_*,crio_*,docker_*,kubelet_*,kata-collect-data_*</artifacts>
       <allowEmptyArchive>true</allowEmptyArchive>
       <onlyIfSuccessful>false</onlyIfSuccessful>
       <fingerprint>false</fingerprint>
       <defaultExcludes>true</defaultExcludes>
       <caseSensitive>true</caseSensitive>
     </hudson.tasks.ArtifactArchiver>
-    <com.microsoft.azure.vmagent.AzureVMAgentPostBuildAction plugin="azure-vm-agents@0.6.2">
+    <com.microsoft.azure.vmagent.AzureVMAgentPostBuildAction plugin="azure-vm-agents@0.7.0">
       <agentPostBuildAction>Delete agent after build execution (when idle).</agentPostBuildAction>
     </com.microsoft.azure.vmagent.AzureVMAgentPostBuildAction>
   </publishers>

@@ -126,7 +126,7 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
     <hudson.tasks.ArtifactArchiver>
-      <artifacts>kata-proxy_*,kata-runtime_*,kata-shim_*,crio_*,docker_*</artifacts>
+      <artifacts>kata-proxy_*,kata-runtime_*,kata-shim_*,crio_*,docker_*,kubelet_*,kata-collect-data_*</artifacts>
       <allowEmptyArchive>true</allowEmptyArchive>
       <onlyIfSuccessful>false</onlyIfSuccessful>
       <fingerprint>false</fingerprint>
