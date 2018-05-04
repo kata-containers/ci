@@ -12,37 +12,134 @@
   <numExecutors>2</numExecutors>
   <mode>NORMAL</mode>
   <useSecurity>true</useSecurity>
-  <authorizationStrategy class="org.jenkinsci.plugins.GithubAuthorizationStrategy" plugin="github-oauth@0.29">
-    <rootACL>
-      <organizationNameList class="linked-list">
-        <string></string>
-      </organizationNameList>
-      <adminUserNameList class="linked-list">
-        <string>sboeuf</string>
-        <string>katacontainersbot</string>
-        <string>sameo</string>
-        <string>grahamwhaley</string>
-        <string>chavafg</string>
-        <string>jcvenegas</string>
-        <string>jodh-intel</string>
-        <string>GabyCT</string>
-        <string>devimc</string>
-        <string>amshinde</string>
-      </adminUserNameList>
-      <authenticatedUserReadPermission>true</authenticatedUserReadPermission>
-      <useRepositoryPermissions>true</useRepositoryPermissions>
-      <authenticatedUserCreateJobPermission>false</authenticatedUserCreateJobPermission>
-      <allowGithubWebHookPermission>true</allowGithubWebHookPermission>
-      <allowCcTrayPermission>false</allowCcTrayPermission>
-      <allowAnonymousReadPermission>true</allowAnonymousReadPermission>
-      <allowAnonymousJobStatusPermission>false</allowAnonymousJobStatusPermission>
-    </rootACL>
+  <authorizationStrategy class="hudson.security.GlobalMatrixAuthorizationStrategy">
+    <permission>com.cloudbees.plugins.credentials.CredentialsProvider.Create:chavafg</permission>
+    <permission>com.cloudbees.plugins.credentials.CredentialsProvider.Create:kata-containers*jenkins-admin</permission>
+    <permission>com.cloudbees.plugins.credentials.CredentialsProvider.Create:katacontainersbot</permission>
+    <permission>com.cloudbees.plugins.credentials.CredentialsProvider.Delete:chavafg</permission>
+    <permission>com.cloudbees.plugins.credentials.CredentialsProvider.Delete:kata-containers*jenkins-admin</permission>
+    <permission>com.cloudbees.plugins.credentials.CredentialsProvider.Delete:katacontainersbot</permission>
+    <permission>com.cloudbees.plugins.credentials.CredentialsProvider.ManageDomains:chavafg</permission>
+    <permission>com.cloudbees.plugins.credentials.CredentialsProvider.ManageDomains:kata-containers*jenkins-admin</permission>
+    <permission>com.cloudbees.plugins.credentials.CredentialsProvider.ManageDomains:katacontainersbot</permission>
+    <permission>com.cloudbees.plugins.credentials.CredentialsProvider.Update:chavafg</permission>
+    <permission>com.cloudbees.plugins.credentials.CredentialsProvider.Update:kata-containers*jenkins-admin</permission>
+    <permission>com.cloudbees.plugins.credentials.CredentialsProvider.Update:katacontainersbot</permission>
+    <permission>com.cloudbees.plugins.credentials.CredentialsProvider.View:chavafg</permission>
+    <permission>com.cloudbees.plugins.credentials.CredentialsProvider.View:kata-containers*jenkins-admin</permission>
+    <permission>com.cloudbees.plugins.credentials.CredentialsProvider.View:katacontainersbot</permission>
+    <permission>hudson.model.Computer.Build:chavafg</permission>
+    <permission>hudson.model.Computer.Build:kata-containers*jenkins-admin</permission>
+    <permission>hudson.model.Computer.Build:katacontainersbot</permission>
+    <permission>hudson.model.Computer.Configure:chavafg</permission>
+    <permission>hudson.model.Computer.Configure:kata-containers*jenkins-admin</permission>
+    <permission>hudson.model.Computer.Configure:katacontainersbot</permission>
+    <permission>hudson.model.Computer.Connect:chavafg</permission>
+    <permission>hudson.model.Computer.Connect:kata-containers*jenkins-admin</permission>
+    <permission>hudson.model.Computer.Connect:katacontainersbot</permission>
+    <permission>hudson.model.Computer.Create:chavafg</permission>
+    <permission>hudson.model.Computer.Create:kata-containers*jenkins-admin</permission>
+    <permission>hudson.model.Computer.Create:katacontainersbot</permission>
+    <permission>hudson.model.Computer.Delete:chavafg</permission>
+    <permission>hudson.model.Computer.Delete:kata-containers*jenkins-admin</permission>
+    <permission>hudson.model.Computer.Delete:katacontainersbot</permission>
+    <permission>hudson.model.Computer.Disconnect:chavafg</permission>
+    <permission>hudson.model.Computer.Disconnect:kata-containers*jenkins-admin</permission>
+    <permission>hudson.model.Computer.Disconnect:katacontainersbot</permission>
+    <permission>hudson.model.Hudson.Administer:chavafg</permission>
+    <permission>hudson.model.Hudson.Administer:kata-containers*jenkins-admin</permission>
+    <permission>hudson.model.Hudson.Administer:katacontainersbot</permission>
+    <permission>hudson.model.Hudson.Read:anonymous</permission>
+    <permission>hudson.model.Hudson.Read:authenticated</permission>
+    <permission>hudson.model.Hudson.Read:chavafg</permission>
+    <permission>hudson.model.Hudson.Read:kata-containers*jenkins-admin</permission>
+    <permission>hudson.model.Hudson.Read:kata-containers*runtime</permission>
+    <permission>hudson.model.Hudson.Read:kata-containers*tests</permission>
+    <permission>hudson.model.Hudson.Read:katacontainersbot</permission>
+    <permission>hudson.model.Item.Build:chavafg</permission>
+    <permission>hudson.model.Item.Build:kata-containers*jenkins-admin</permission>
+    <permission>hudson.model.Item.Build:kata-containers*runtime</permission>
+    <permission>hudson.model.Item.Build:kata-containers*tests</permission>
+    <permission>hudson.model.Item.Build:katabuilder</permission>
+    <permission>hudson.model.Item.Build:katacontainersbot</permission>
+    <permission>hudson.model.Item.Cancel:chavafg</permission>
+    <permission>hudson.model.Item.Cancel:kata-containers*jenkins-admin</permission>
+    <permission>hudson.model.Item.Cancel:kata-containers*runtime</permission>
+    <permission>hudson.model.Item.Cancel:kata-containers*tests</permission>
+    <permission>hudson.model.Item.Cancel:katabuilder</permission>
+    <permission>hudson.model.Item.Cancel:katacontainersbot</permission>
+    <permission>hudson.model.Item.Configure:chavafg</permission>
+    <permission>hudson.model.Item.Configure:kata-containers*jenkins-admin</permission>
+    <permission>hudson.model.Item.Configure:katacontainersbot</permission>
+    <permission>hudson.model.Item.Create:chavafg</permission>
+    <permission>hudson.model.Item.Create:kata-containers*jenkins-admin</permission>
+    <permission>hudson.model.Item.Create:katacontainersbot</permission>
+    <permission>hudson.model.Item.Delete:chavafg</permission>
+    <permission>hudson.model.Item.Delete:kata-containers*jenkins-admin</permission>
+    <permission>hudson.model.Item.Delete:katacontainersbot</permission>
+    <permission>hudson.model.Item.Discover:anonymous</permission>
+    <permission>hudson.model.Item.Discover:authenticated</permission>
+    <permission>hudson.model.Item.Discover:chavafg</permission>
+    <permission>hudson.model.Item.Discover:kata-containers*jenkins-admin</permission>
+    <permission>hudson.model.Item.Discover:kata-containers*runtime</permission>
+    <permission>hudson.model.Item.Discover:kata-containers*tests</permission>
+    <permission>hudson.model.Item.Discover:katacontainersbot</permission>
+    <permission>hudson.model.Item.Move:chavafg</permission>
+    <permission>hudson.model.Item.Move:kata-containers*jenkins-admin</permission>
+    <permission>hudson.model.Item.Move:kata-containers*runtime</permission>
+    <permission>hudson.model.Item.Move:kata-containers*tests</permission>
+    <permission>hudson.model.Item.Move:katacontainersbot</permission>
+    <permission>hudson.model.Item.Read:anonymous</permission>
+    <permission>hudson.model.Item.Read:authenticated</permission>
+    <permission>hudson.model.Item.Read:chavafg</permission>
+    <permission>hudson.model.Item.Read:kata-containers*jenkins-admin</permission>
+    <permission>hudson.model.Item.Read:kata-containers*runtime</permission>
+    <permission>hudson.model.Item.Read:kata-containers*tests</permission>
+    <permission>hudson.model.Item.Read:katabuilder</permission>
+    <permission>hudson.model.Item.Read:katacontainersbot</permission>
+    <permission>hudson.model.Item.ViewStatus:anonymous</permission>
+    <permission>hudson.model.Item.ViewStatus:authenticated</permission>
+    <permission>hudson.model.Item.ViewStatus:chavafg</permission>
+    <permission>hudson.model.Item.ViewStatus:kata-containers*jenkins-admin</permission>
+    <permission>hudson.model.Item.ViewStatus:kata-containers*runtime</permission>
+    <permission>hudson.model.Item.ViewStatus:kata-containers*tests</permission>
+    <permission>hudson.model.Item.ViewStatus:katabuilder</permission>
+    <permission>hudson.model.Item.ViewStatus:katacontainersbot</permission>
+    <permission>hudson.model.Item.Workspace:chavafg</permission>
+    <permission>hudson.model.Item.Workspace:kata-containers*jenkins-admin</permission>
+    <permission>hudson.model.Item.Workspace:kata-containers*runtime</permission>
+    <permission>hudson.model.Item.Workspace:kata-containers*tests</permission>
+    <permission>hudson.model.Item.Workspace:katacontainersbot</permission>
+    <permission>hudson.model.Run.Delete:chavafg</permission>
+    <permission>hudson.model.Run.Delete:kata-containers*jenkins-admin</permission>
+    <permission>hudson.model.Run.Delete:katacontainersbot</permission>
+    <permission>hudson.model.Run.Replay:chavafg</permission>
+    <permission>hudson.model.Run.Replay:kata-containers*jenkins-admin</permission>
+    <permission>hudson.model.Run.Replay:katacontainersbot</permission>
+    <permission>hudson.model.Run.Update:chavafg</permission>
+    <permission>hudson.model.Run.Update:kata-containers*jenkins-admin</permission>
+    <permission>hudson.model.Run.Update:katacontainersbot</permission>
+    <permission>hudson.model.View.Configure:chavafg</permission>
+    <permission>hudson.model.View.Configure:kata-containers*jenkins-admin</permission>
+    <permission>hudson.model.View.Configure:katacontainersbot</permission>
+    <permission>hudson.model.View.Create:chavafg</permission>
+    <permission>hudson.model.View.Create:kata-containers*jenkins-admin</permission>
+    <permission>hudson.model.View.Create:katacontainersbot</permission>
+    <permission>hudson.model.View.Delete:chavafg</permission>
+    <permission>hudson.model.View.Delete:kata-containers*jenkins-admin</permission>
+    <permission>hudson.model.View.Delete:katacontainersbot</permission>
+    <permission>hudson.model.View.Read:chavafg</permission>
+    <permission>hudson.model.View.Read:kata-containers*jenkins-admin</permission>
+    <permission>hudson.model.View.Read:katacontainersbot</permission>
+    <permission>hudson.scm.SCM.Tag:chavafg</permission>
+    <permission>hudson.scm.SCM.Tag:kata-containers*jenkins-admin</permission>
+    <permission>hudson.scm.SCM.Tag:katacontainersbot</permission>
   </authorizationStrategy>
   <securityRealm class="org.jenkinsci.plugins.GithubSecurityRealm">
     <githubWebUri>https://github.com</githubWebUri>
     <githubApiUri>https://api.github.com</githubApiUri>
     <clientID>ce32399d14aa83aec212</clientID>
-    <clientSecret>{AQAAABAAAAAw1p/bX+X/l2jVMaxAcG7cwfS/oKxlOsqS1npLbTaHixxQgcYU7oLZru1yn7+gFEtsuIfuK+dWDBWUP2TfOqvErg==}</clientSecret>
+    <clientSecret>{AQAAABAAAAAw2S4LmuUxqwJ8C2Cr0/SLxLsyyfV/q8Dixsnh08MPrdeRjDi1ZB6NikOIXCz8J/PPpQ/Zjjr9yNe/jtQ4WTiKlg==}</clientSecret>
     <oauthScopes>read:org,user:email</oauthScopes>
   </securityRealm>
   <disableRememberMe>false</disableRememberMe>
@@ -262,7 +359,7 @@ chmod g+rw /var/run/docker.sock
 
 # Install go
 curl -O https://storage.googleapis.com/golang/go1.9.2.linux-amd64.tar.gz
-tar -C /usr/local -xzf go1.9.2.linux-amd64.tar.gz 
+tar -C /usr/local -xzf go1.9.2.linux-amd64.tar.gz
 
 </initScript>
           <credentialsId>de521202-ccf2-41c2-bc04-478bfa1675f6</credentialsId>
@@ -342,7 +439,7 @@ sudo tar -C /usr/local -xzf go1.9.2.linux-amd64.tar.gz</initScript>
         </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
       </vmTemplates>
       <deploymentTimeout>1200</deploymentTimeout>
-      <approximateVirtualMachineCount>0</approximateVirtualMachineCount>
+      <approximateVirtualMachineCount>7</approximateVirtualMachineCount>
     </com.microsoft.azure.vmagent.AzureVMCloud>
   </clouds>
   <quietPeriod>5</quietPeriod>
@@ -492,6 +589,28 @@ sudo tar -C /usr/local -xzf go1.9.2.linux-amd64.tar.gz</initScript>
         <hudson.views.BuildButtonColumn/>
       </columns>
       <includeRegex>.*-master</includeRegex>
+      <recurse>false</recurse>
+    </listView>
+    <listView>
+      <owner class="hudson" reference="../../.."/>
+      <name>Fedora_27</name>
+      <filterExecutors>false</filterExecutors>
+      <filterQueue>false</filterQueue>
+      <properties class="hudson.model.View$PropertyList"/>
+      <jobNames>
+        <comparator class="hudson.util.CaseInsensitiveComparator"/>
+      </jobNames>
+      <jobFilters/>
+      <columns>
+        <hudson.views.StatusColumn/>
+        <hudson.views.WeatherColumn/>
+        <hudson.views.JobColumn/>
+        <hudson.views.LastSuccessColumn/>
+        <hudson.views.LastFailureColumn/>
+        <hudson.views.LastDurationColumn/>
+        <hudson.views.BuildButtonColumn/>
+      </columns>
+      <includeRegex>.*-fedora-.*</includeRegex>
       <recurse>false</recurse>
     </listView>
   </views>
