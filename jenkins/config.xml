@@ -4,7 +4,7 @@
     <string>hudson.diagnosis.ReverseProxySetupMonitor</string>
     <string>hudson.diagnosis.TooManyJobsButNoView</string>
   </disabledAdministrativeMonitors>
-  <version>2.107.2</version>
+  <version>2.107.3</version>
   <installState class="jenkins.install.InstallState$5">
     <isSetupComplete>true</isSetupComplete>
     <name>RESTART</name>
@@ -158,18 +158,18 @@
       <maxVirtualMachinesLimit>20</maxVirtualMachinesLimit>
       <resourceGroupReferenceType>existing</resourceGroupReferenceType>
       <newResourceGroupName></newResourceGroupName>
-      <existingResourceGroupName>kata-containers-jenkins</existingResourceGroupName>
+      <existingResourceGroupName>jenkins-eastus</existingResourceGroupName>
       <vmTemplates>
         <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
           <templateName>jenkins-azure-vm-ubuntu-16-04-template</templateName>
           <templateDesc>Ubuntu 16.04 Template for Jenkins VM agents on Azure</templateDesc>
           <labels>ubuntu_16_04_azure_cloud</labels>
-          <location>West US 2</location>
+          <location>East US</location>
           <virtualMachineSize>Standard_D4s_v3</virtualMachineSize>
           <storageAccountNameReferenceType>new</storageAccountNameReferenceType>
           <diskType>managed</diskType>
-          <newStorageAccountName>katajenkins</newStorageAccountName>
-          <existingStorageAccountName>katajenkins</existingStorageAccountName>
+          <newStorageAccountName>kataeastus</newStorageAccountName>
+          <existingStorageAccountName>kataeastus</existingStorageAccountName>
           <storageAccountType>Standard_LRS</storageAccountType>
           <noOfParallelJobs>1</noOfParallelJobs>
           <usageMode>EXCLUSIVE</usageMode>
@@ -212,11 +212,7 @@ sudo add-apt-repository &quot;deb [arch=amd64] https://download.docker.com/linux
 sudo apt update -y
 sudo apt install -y docker-ce
 sudo gpasswd -a ${USER} docker
-sudo chmod g+rw /var/run/docker.sock
-
-# Install Go
-curl -O https://storage.googleapis.com/golang/go1.9.2.linux-amd64.tar.gz
-sudo tar -C /usr/local -xzf go1.9.2.linux-amd64.tar.gz</initScript>
+sudo chmod g+rw /var/run/docker.sock</initScript>
           <credentialsId>de521202-ccf2-41c2-bc04-478bfa1675f6</credentialsId>
           <agentWorkspace>/home/jenkins/jenkins_slave</agentWorkspace>
           <retentionTimeInMin>0</retentionTimeInMin>
@@ -237,12 +233,12 @@ sudo tar -C /usr/local -xzf go1.9.2.linux-amd64.tar.gz</initScript>
           <templateName>jenkins-azure-vm-ubuntu-17-10-template</templateName>
           <templateDesc>Ubuntu 17.10 Template for Jenkins VM agents on Azure</templateDesc>
           <labels>ubuntu_17_10_azure_cloud</labels>
-          <location>West US 2</location>
+          <location>East US</location>
           <virtualMachineSize>Standard_D4s_v3</virtualMachineSize>
           <storageAccountNameReferenceType>new</storageAccountNameReferenceType>
           <diskType>managed</diskType>
-          <newStorageAccountName>katajenkins</newStorageAccountName>
-          <existingStorageAccountName>katajenkins</existingStorageAccountName>
+          <newStorageAccountName>kataeastus</newStorageAccountName>
+          <existingStorageAccountName>kataeastus</existingStorageAccountName>
           <storageAccountType>Standard_LRS</storageAccountType>
           <noOfParallelJobs>1</noOfParallelJobs>
           <usageMode>EXCLUSIVE</usageMode>
@@ -285,14 +281,7 @@ sudo add-apt-repository &quot;deb [arch=amd64] https://download.docker.com/linux
 sudo apt update -y
 sudo apt install -y docker-ce
 sudo gpasswd -a ${USER} docker
-sudo chmod g+rw /var/run/docker.sock
-
-# Install Go
-curl -O https://storage.googleapis.com/golang/go1.9.2.linux-amd64.tar.gz
-sudo tar -C /usr/local -xzf go1.9.2.linux-amd64.tar.gz
-
-echo &quot;Environment Variables&quot;
-env </initScript>
+sudo chmod g+rw /var/run/docker.sock</initScript>
           <credentialsId>de521202-ccf2-41c2-bc04-478bfa1675f6</credentialsId>
           <agentWorkspace>/home/jenkins/jenkins_slave</agentWorkspace>
           <retentionTimeInMin>0</retentionTimeInMin>
@@ -313,12 +302,12 @@ env </initScript>
           <templateName>jenkins-azure-vm-centos-7-4-template</templateName>
           <templateDesc>Centos 7.4 Template for Jenkins VM agents on Azure</templateDesc>
           <labels>centos_7_4_azure_cloud</labels>
-          <location>West US 2</location>
+          <location>East US</location>
           <virtualMachineSize>Standard_D4s_v3</virtualMachineSize>
           <storageAccountNameReferenceType>new</storageAccountNameReferenceType>
           <diskType>managed</diskType>
-          <newStorageAccountName>katajenkins</newStorageAccountName>
-          <existingStorageAccountName>katajenkins</existingStorageAccountName>
+          <newStorageAccountName>kataeastus</newStorageAccountName>
+          <existingStorageAccountName>kataeastus</existingStorageAccountName>
           <storageAccountType>Standard_LRS</storageAccountType>
           <noOfParallelJobs>1</noOfParallelJobs>
           <usageMode>EXCLUSIVE</usageMode>
@@ -355,13 +344,7 @@ yum -y update
 
 systemctl start docker
 gpasswd -a jenkins docker
-chmod g+rw /var/run/docker.sock
-
-# Install go
-curl -O https://storage.googleapis.com/golang/go1.9.2.linux-amd64.tar.gz
-tar -C /usr/local -xzf go1.9.2.linux-amd64.tar.gz
-
-</initScript>
+chmod g+rw /var/run/docker.sock</initScript>
           <credentialsId>de521202-ccf2-41c2-bc04-478bfa1675f6</credentialsId>
           <agentWorkspace>/home/jenkins/jenkins_slave</agentWorkspace>
           <retentionTimeInMin>0</retentionTimeInMin>
@@ -382,12 +365,12 @@ tar -C /usr/local -xzf go1.9.2.linux-amd64.tar.gz
           <templateName>jenkins-azure-vm-fedora-27-template</templateName>
           <templateDesc>Fedora 27 Template for Jenkins VM agents on Azure</templateDesc>
           <labels>fedora_27_azure_cloud</labels>
-          <location>West US 2</location>
+          <location>East US</location>
           <virtualMachineSize>Standard_D4s_v3</virtualMachineSize>
           <storageAccountNameReferenceType>new</storageAccountNameReferenceType>
           <diskType>managed</diskType>
-          <newStorageAccountName>katajenkins</newStorageAccountName>
-          <existingStorageAccountName>katajenkins</existingStorageAccountName>
+          <newStorageAccountName>kataeastus</newStorageAccountName>
+          <existingStorageAccountName>kataeastus</existingStorageAccountName>
           <storageAccountType>Standard_LRS</storageAccountType>
           <noOfParallelJobs>1</noOfParallelJobs>
           <usageMode>EXCLUSIVE</usageMode>
@@ -398,7 +381,7 @@ tar -C /usr/local -xzf go1.9.2.linux-amd64.tar.gz
           <isInstallGit>false</isInstallGit>
           <isInstallMaven>false</isInstallMaven>
           <isInstallDocker>false</isInstallDocker>
-          <image>https://katajenkins.blob.core.windows.net/fedora/Fedora-Cloud-Base-27-1.6.x86_64.vhd</image>
+          <image>https://kataeastus.blob.core.windows.net/fedora/Fedora-Cloud-Base-27-1.6.x86_64.vhd</image>
           <osType>Linux</osType>
           <agentLaunchMethod>SSH</agentLaunchMethod>
           <preInstallSsh>true</preInstallSsh>
@@ -416,11 +399,7 @@ sudo dnf install -y docker-ce
 
 sudo systemctl start docker
 sudo gpasswd -a ${USER} docker
-sudo chmod g+rw /var/run/docker.sock
-
-# Install go
-curl -O https://storage.googleapis.com/golang/go1.9.2.linux-amd64.tar.gz
-sudo tar -C /usr/local -xzf go1.9.2.linux-amd64.tar.gz</initScript>
+sudo chmod g+rw /var/run/docker.sock</initScript>
           <credentialsId>de521202-ccf2-41c2-bc04-478bfa1675f6</credentialsId>
           <agentWorkspace>/home/jenkins/jenkins_slave</agentWorkspace>
           <retentionTimeInMin>0</retentionTimeInMin>
@@ -439,7 +418,7 @@ sudo tar -C /usr/local -xzf go1.9.2.linux-amd64.tar.gz</initScript>
         </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
       </vmTemplates>
       <deploymentTimeout>1200</deploymentTimeout>
-      <approximateVirtualMachineCount>7</approximateVirtualMachineCount>
+      <approximateVirtualMachineCount>0</approximateVirtualMachineCount>
     </com.microsoft.azure.vmagent.AzureVMCloud>
   </clouds>
   <quietPeriod>5</quietPeriod>

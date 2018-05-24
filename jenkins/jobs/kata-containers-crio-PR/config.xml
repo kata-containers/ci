@@ -4,6 +4,14 @@
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
+    <jenkins.model.BuildDiscarderProperty>
+      <strategy class="hudson.tasks.LogRotator">
+        <daysToKeep>30</daysToKeep>
+        <numToKeep>30</numToKeep>
+        <artifactDaysToKeep>30</artifactDaysToKeep>
+        <artifactNumToKeep>30</artifactNumToKeep>
+      </strategy>
+    </jenkins.model.BuildDiscarderProperty>
     <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.0">
       <projectUrl>https://github.com/kubernetes-incubator/cri-o/</projectUrl>
       <displayName></displayName>
@@ -110,6 +118,7 @@
 
 set -e
 
+# Export all environment variables needed.
 export PULL_NUMBER
 export PULL_BASE_REF
 export REPO_NAME
@@ -119,29 +128,32 @@ pr_number=&quot;${PULL_NUMBER}&quot;
 pr_branch=&quot;PR_${pr_number}&quot;
 
 export ghprbGhRepository=&quot;${REPO_OWNER}/${REPO_NAME}&quot;
-
-echo &quot;Env Variables:&quot; 
-env
-
-echo &quot;This Job will test CRI-O changes using Kata Containers runtime.&quot;
-echo &quot;Testing PR number ${pr_number}.&quot;
+export GOROOT=&quot;/usr/local/go&quot;
+export PATH=${GOPATH}/bin:/usr/local/go/bin:/usr/sbin:/sbin:${PATH}
 
 # Put our go area into the Jenkins job WORKSPACE tree
 export GOPATH=${WORKSPACE}/go
 mkdir -p &quot;${GOPATH}&quot;
-
-# Export all environment variables needed.
-export GOROOT=&quot;/usr/local/go&quot;
-export PATH=${GOPATH}/bin:/usr/local/go/bin:/usr/sbin:/sbin:${PATH}
 
 # CRI-O repository
 crio_repo=&quot;github.com/kubernetes-incubator/cri-o&quot;
 # Kata Containers Tests repository
 tests_repo=&quot;github.com/kata-containers/tests&quot;
 
-# Clone repositories
+echo &quot;This Job will test CRI-O changes using Kata Containers runtime.&quot;
+echo &quot;Testing PR number ${pr_number}.&quot;
+
+tests_repo_dir=&quot;${GOPATH}/src/${tests_repo}&quot;
+
+# Clone the tests repository
+mkdir -p $(dirname &quot;${tests_repo_dir}&quot;)
+[ -d &quot;${tests_repo_dir}&quot; ] || git clone &quot;https://${tests_repo}.git&quot; &quot;${tests_repo_dir}&quot;
+
+# Install Go
+${GOPATH}/src/${tests_repo}/.ci/install_go.sh -p
+
+# Clone CRI-O repository
 go get -d &quot;$crio_repo&quot; || true
-go get -d &quot;$tests_repo&quot; || true
 
 # Checkout to the PR commit and rebase with master
 cd &quot;${GOPATH}/src/${crio_repo}&quot;
