@@ -29,3 +29,7 @@ jenkins/org.jenkinsci.plugins.cloudstats.CloudStatistics.xml
 
 # Ignore Jenkins credentials
 jenkins/credentials.xml
+
+# Add everything under the VMs setup script path
+!VMs
+!VMs/**
