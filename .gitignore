@@ -11,6 +11,7 @@
 !README.md
 !CODE_OF_CONDUCT.md  
 !CONTRIBUTING.md
+!Jenkins_setup.md
 
 # Don't ignore pullapprove yaml file
 .pullapprove.yml
@@ -33,3 +34,7 @@ jenkins/credentials.xml
 # Add everything under the VMs setup script path
 !VMs
 !VMs/**
+
+# Include the pictures
+!pictures
+!pictures/**
