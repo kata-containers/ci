@@ -1,0 +1,58 @@
+#cloud-config
+# Copyright (c) 2018 Intel Corporation
+# 
+# SPDX-License-Identifier: Apache-2.0
+
+users:
+  - name: USERNAME
+    gecos: Jenkins User
+    lock-passwd: false
+    shell: /bin/bash
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    ssh-authorized-keys:
+      - PUBLICKEYCONTENTS
+
+packages:
+ - bc
+ - build-essential
+ - curl
+ - default-jre
+ - gawk
+ - gcc
+ - git
+ - jq
+ - make
+
+runcmd:
+# Install Go - we use it to bootstrap the metrics environment from the Jenkins scripts.
+# The sourceing of environment is a workaround to get any proxy settings we need
+ - 'bash -c "set -a; source /etc/environment; set +a; curl -L https://dl.google.com/go/go1.10.2.linux-ARCH.tar.gz -o /tmp/go1.10.2.linux-ARCH.tar.gz"'
+ - tar -C /usr/local -xzf /tmp/go1.10.2.linux-ARCH.tar.gz
+ - rm /tmp/go1.10.2.linux-ARCH.tar.gz
+
+# Install docker
+# The sourceing of environment is a workaround to get any proxy settings we need
+ - 'bash -c "set -a; source /etc/environment; set +a; curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -"'
+ - sudo add-apt-repository "deb [arch=ARCH] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
+ - apt-get update
+ - apt-get install -y docker-ce
+ - gpasswd -a USERNAME docker
+
+# Cleanup
+ - apt-get auto-remove -y
+
+write_files:
+# We need to set up the users git identity, otherwise git complains and
+# errors out on some merge/forward operations for PR builds.
+    path: /home/USERNAME/bin/gitproxy
+    permissions: '0744'
+-   content: |
+        [user]
+            name = USERNAME User
+# Safe using a fake email here - we never post to it or expose it outside
+# of the VM.
+            email = USERNAME@HOSTNAME
+
+# We leave the VM running, for the user to detach and then run the
+# host side completion script, which will then shut the VM down when
+# finally configured
