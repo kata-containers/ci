@@ -84,8 +84,8 @@ write_files:
 -   content: |
         [user]
             name = USERNAME User
-# Safe using a fake email here - we never post to it or expose it outside
-# of the VM.
+            # Safe using a fake email here - we never post to it or expose it outside
+            # of the VM.
             email = USERNAME@HOSTNAME
         [core]
             gitproxy = /home/USERNAME/bin/gitproxy
