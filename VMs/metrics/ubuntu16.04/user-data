@@ -44,14 +44,14 @@ runcmd:
 write_files:
 # We need to set up the users git identity, otherwise git complains and
 # errors out on some merge/forward operations for PR builds.
-    path: /home/USERNAME/bin/gitproxy
-    permissions: '0744'
 -   content: |
         [user]
             name = USERNAME User
 # Safe using a fake email here - we never post to it or expose it outside
 # of the VM.
             email = USERNAME@HOSTNAME
+    path: /home/USERNAME/.gitconfig
+    permissions: '0644'
 
 # We leave the VM running, for the user to detach and then run the
 # host side completion script, which will then shut the VM down when
