@@ -24,6 +24,12 @@ packages:
  - make
 
 runcmd:
+# Looks like the write_file to the USERNAME user homedir, even though the file
+# is owned by USERNAME (or not, as we could not make that work...), makes all
+# the dirs owned by root - so, let's put them back
+ - chown -R USERNAME /home/USERNAME
+ - chgrp -R USERNAME /home/USERNAME
+
 # Install Go - we use it to bootstrap the metrics environment from the Jenkins scripts.
 # The sourceing of environment is a workaround to get any proxy settings we need
  - 'bash -c "set -a; source /etc/environment; set +a; curl -L https://dl.google.com/go/go1.10.2.linux-ARCH.tar.gz -o /tmp/go1.10.2.linux-ARCH.tar.gz"'
