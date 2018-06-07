@@ -67,6 +67,19 @@ create_initfiles() {
 	sed -i "s/USERNAME/${VM_USERNAME}/g" ./${USER_DATA_NAME}
 	MYARCH=$(go env GOARCH)
 	sed -i "s/ARCH/${MYARCH}/g" ./${USER_DATA_NAME}
+
+	message "Checking new configs"
+	for c in ./"${META_DATA_NAME}" ./"${USER_DATA_NAME}"; do
+		# We use yaml query to check we have a valid set of yaml files
+		# as if you do not (which is pretty easy to do), then cloud-init
+		# is not always verbose with an error, and it can be hard to figure
+		# out why your created VM is not working as expected.
+		# Tested with the yq from https://github.com/mikefarah/yq
+		yq r "${c}" .
+		if [ $? -ne 0 ]; then
+			die "YAML file [${c}] failed yq syntax check"
+		fi
+	done
 }
 
 create_iso() {
