@@ -94,12 +94,12 @@ run_cloud_init() {
 
 	# first, clean up any pre-existing domain
 	message "Destroying any existing VM/image"
-	virsh stop ${VM_NAME}
+	virsh shutdown ${VM_NAME}
 	virsh destroy ${VM_NAME}
 	virsh undefine ${VM_NAME}
 
 	message "Destroying any existing VM/image clones"
-	virsh stop ${VM_CLONE_NAME}
+	virsh shutdown ${VM_CLONE_NAME}
 	virsh destroy ${VM_CLONE_NAME}
 	virsh undefine ${VM_CLONE_NAME}
 
