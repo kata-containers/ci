@@ -6,7 +6,6 @@
 users:
   - name: USERNAME
     gecos: Jenkins User
-    primary_group: USERNAME
     lock-passwd: false
     shell: /bin/bash
     sudo: ALL=(ALL) NOPASSWD:ALL
