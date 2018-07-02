@@ -1,0 +1,96 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<org.jenkinsci.plugins.configfiles.GlobalConfigFiles plugin="config-file-provider@2.18">
+  <configs class="sorted-set">
+    <comparator class="org.jenkinsci.plugins.configfiles.GlobalConfigFiles$1"/>
+    <jenkins.plugins.openstack.compute.UserDataConfig plugin="openstack-cloud@2.34">
+      <id>5af56ce8-e87c-4710-aae8-c2ec453b42ee</id>
+      <name>centos-init</name>
+      <comment></comment>
+      <content>#!/bin/bash
+
+# Install git, gcc and python
+yum install -y git gcc python
+
+# Install docker
+yum install -y yum-utils
+yum-config-manager --add-repo &quot;https://download.docker.com/linux/centos/docker-ce.repo&quot;
+yum -y install docker-ce
+yum -y update
+
+systemctl start docker
+gpasswd -a centos docker
+chmod g+rw /var/run/docker.sock
+
+# Install Java JRE and JDK for Jenkins agent
+yum install -y java-1.8.0-openjdk</content>
+      <providerId>jenkins.plugins.openstack.compute.UserDataConfig</providerId>
+    </jenkins.plugins.openstack.compute.UserDataConfig>
+    <jenkins.plugins.openstack.compute.UserDataConfig plugin="openstack-cloud@2.34">
+      <id>97d148e6-829b-4011-b5c6-39a0e959da56</id>
+      <name>fedora-init</name>
+      <comment></comment>
+      <content>#!/bin/bash
+
+# Install git, gcc and python
+sudo dnf install -y git gcc python
+
+# Install docker
+sudo dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+sudo dnf config-manager --set-enabled docker-ce-stable
+sudo dnf makecache
+sudo dnf install -y docker-ce
+
+sudo systemctl start docker
+sudo gpasswd -a fedora docker
+sudo chmod g+rw /var/run/docker.sock
+
+# Install Java JRE and JDK for Jenkins agent
+sudo dnf install -y java-1.8.0-openjdk </content>
+      <providerId>jenkins.plugins.openstack.compute.UserDataConfig</providerId>
+    </jenkins.plugins.openstack.compute.UserDataConfig>
+    <jenkins.plugins.openstack.compute.UserDataConfig plugin="openstack-cloud@2.34">
+      <id>bd93267e-7277-44bc-b8e0-6ed5fbdd805a</id>
+      <name>ubuntu-init</name>
+      <comment></comment>
+      <content>#!/bin/bash
+
+set -x
+
+# Stop unattended-upgrades service
+sudo systemctl stop unattended-upgrades
+sudo systemctl disable unattended-upgrades
+sudo pkill -f dpkg
+sudo pkill -f apt-get
+sudo rm -f /var/lib/dpkg/lock
+sudo rm -f /var/lib/apt/lists/lock
+sudo rm -f /var/cache/apt/archives/lock
+
+# Install git, make and gcc
+sudo apt install -y git make gcc
+
+# Install docker
+sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository &quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable&quot;
+sudo apt update -y
+sudo apt install -y docker-ce
+sudo gpasswd -a ubuntu docker
+sudo chmod g+rw /var/run/docker.sock
+
+# Install Java JRE and JDK for Jenkins agent
+sudo apt update -y
+sudo apt install -y openjdk-8-jre
+
+git config --global user.email &quot;katacontainersbot@gmail.com&quot;
+git config --global user.name &quot;Kata Containers Bot&quot;
+
+echo $(hostname -I | cut -d\  -f1) $(hostname) | sudo tee -a /etc/hosts
+
+# wipe any partition on vdb
+device=/dev/vdb
+mount | grep -q $device &amp;&amp; sudo umount $(mount | grep $device | cut -d&apos; &apos; -f1)
+sudo dd if=/dev/zero of=$device bs=128M count=1</content>
+      <providerId>jenkins.plugins.openstack.compute.UserDataConfig</providerId>
+    </jenkins.plugins.openstack.compute.UserDataConfig>
+  </configs>
+</org.jenkinsci.plugins.configfiles.GlobalConfigFiles>

@@ -1,7 +1,7 @@
 <?xml version='1.1' encoding='UTF-8'?>
-<hudson.plugins.git.GitSCM_-DescriptorImpl plugin="git@3.8.0">
-  <generation>145</generation>
-  <globalConfigName>Salvador Fuentes</globalConfigName>
-  <globalConfigEmail>salvador.fuentes@intel.com</globalConfigEmail>
+<hudson.plugins.git.GitSCM_-DescriptorImpl plugin="git@3.9.1">
+  <generation>106</generation>
+  <globalConfigName>katacontainersbot</globalConfigName>
+  <globalConfigEmail>katacontainersbot@gmail.com</globalConfigEmail>
   <createAccountBasedOnEmail>false</createAccountBasedOnEmail>
 </hudson.plugins.git.GitSCM_-DescriptorImpl>

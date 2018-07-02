@@ -1,0 +1,6 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<hudson.plugins.groovy.Groovy_-DescriptorImpl plugin="groovy@2.0">
+  <allowMacro>false</allowMacro>
+  <installations/>
+  <installations2/>
+</hudson.plugins.groovy.Groovy_-DescriptorImpl>

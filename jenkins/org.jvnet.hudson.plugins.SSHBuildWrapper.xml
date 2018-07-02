@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
-<org.jvnet.hudson.plugins.SSHBuildWrapper_-DescriptorImpl plugin="ssh@2.5">
+<?xml version='1.1' encoding='UTF-8'?>
+<org.jvnet.hudson.plugins.SSHBuildWrapper_-DescriptorImpl plugin="ssh@2.6.1">
   <sites/>
 </org.jvnet.hudson.plugins.SSHBuildWrapper_-DescriptorImpl>
