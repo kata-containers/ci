@@ -6,7 +6,6 @@
 users:
   - name: USERNAME
     gecos: Jenkins User
-    primary_group: USERNAME
     lock-passwd: false
     shell: /bin/bash
     sudo: ALL=(ALL) NOPASSWD:ALL
@@ -49,6 +48,13 @@ runcmd:
  - apt-get install -y docker-ce
  - gpasswd -a USERNAME docker
 
+# Remove the unattended upgrade feature, for two reasons:
+# - It takes the apt-lock, and can thus make our CI script apt usage fail (and thus
+#   fail the whole run.
+# - It may run in the background and purturb any metrics measurements we are trying to
+#   take - that is, it injects noise into our test system.
+ - apt remove -y unattended-upgrades
+
 # Cleanup
  - apt-get auto-remove -y
 
@@ -84,8 +90,8 @@ write_files:
 -   content: |
         [user]
             name = USERNAME User
-# Safe using a fake email here - we never post to it or expose it outside
-# of the VM.
+            # Safe using a fake email here - we never post to it or expose it outside
+            # of the VM.
             email = USERNAME@HOSTNAME
         [core]
             gitproxy = /home/USERNAME/bin/gitproxy
