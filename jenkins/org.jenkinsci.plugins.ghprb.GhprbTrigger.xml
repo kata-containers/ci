@@ -1,5 +1,5 @@
 <?xml version='1.1' encoding='UTF-8'?>
-<org.jenkinsci.plugins.ghprb.GhprbTrigger_-DescriptorImpl plugin="ghprb@1.40.0">
+<org.jenkinsci.plugins.ghprb.GhprbTrigger_-DescriptorImpl plugin="ghprb@1.42.0">
   <configVersion>1</configVersion>
   <whitelistPhrase>.*add\W+to\W+whitelist.*</whitelistPhrase>
   <okToTestPhrase>.*ok\W+to\W+test.*</okToTestPhrase>
@@ -18,13 +18,13 @@
   <githubAuth>
     <org.jenkinsci.plugins.ghprb.GhprbGitHubAuth>
       <serverAPIUrl>https://api.github.com</serverAPIUrl>
-      <credentialsId>87b353d2-ac1c-40b6-9b67-6c2d354f7210</credentialsId>
-      <id>48aa67dd-9319-432c-b6b9-84951c54b4ca</id>
-      <description>jenkins_auth</description>
-      <secret>{AQAAABAAAAAQoXNqet4wii3zwLBcStLGOGdoHJnXtbeZC3Qjg1Coes8=}</secret>
+      <credentialsId>7515f144-2a26-4537-9685-c110b0a41e80</credentialsId>
+      <id>c217b635-ee39-4531-a4ed-db4048679d71</id>
+      <description>Anonymous connection</description>
+      <secret>{AQAAABAAAAAQGW1kYsNU9yihjhBjcg3MMx5oggRbtZKAdJWo47AwSrk=}</secret>
     </org.jenkinsci.plugins.ghprb.GhprbGitHubAuth>
   </githubAuth>
-  <adminlist>katacontainers chavafg sboeuf</adminlist>
+  <adminlist>katacontainersbot</adminlist>
   <requestForTestingPhrase>Can one of the admins verify this patch?</requestForTestingPhrase>
   <extensions>
     <org.jenkinsci.plugins.ghprb.extensions.status.GhprbSimpleStatus>

@@ -12,7 +12,7 @@
         <artifactNumToKeep>30</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
-    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.0">
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.1">
       <projectUrl>https://github.com/kubernetes-incubator/cri-o/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
@@ -104,7 +104,7 @@
     </hudson.model.ParametersDefinitionProperty>
   </properties>
   <scm class="hudson.scm.NullSCM"/>
-  <assignedNode>ubuntu_16_04_azure_cloud</assignedNode>
+  <assignedNode>ubuntu-1604</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
@@ -119,10 +119,27 @@
 set -e
 
 # Export all environment variables needed.
+export CI=true
 export PULL_NUMBER
 export PULL_BASE_REF
 export REPO_NAME
 export REPO_OWNER
+
+
+# DEBUG - deleteme
+echo &quot;===============================&quot;
+set -x
+ls /dev
+sudo fdisk -l 
+
+
+sudo pvcreate /dev/vdb 
+
+sudo pvremove /dev/vdb
+set +x
+echo &quot;===============================&quot;
+
+
 
 pr_number=&quot;${PULL_NUMBER}&quot;
 pr_branch=&quot;PR_${pr_number}&quot;
@@ -134,6 +151,9 @@ export PATH=${GOPATH}/bin:/usr/local/go/bin:/usr/sbin:/sbin:${PATH}
 # Put our go area into the Jenkins job WORKSPACE tree
 export GOPATH=${WORKSPACE}/go
 mkdir -p &quot;${GOPATH}&quot;
+
+git config --global user.email &quot;katacontainersbot@gmail.com&quot;
+git config --global user.name &quot;Kata Containers Bot&quot;
 
 # CRI-O repository
 crio_repo=&quot;github.com/kubernetes-incubator/cri-o&quot;
@@ -206,9 +226,6 @@ sudo .ci/teardown.sh &quot;$WORKSPACE&quot;</script>
       <defaultExcludes>true</defaultExcludes>
       <caseSensitive>true</caseSensitive>
     </hudson.tasks.ArtifactArchiver>
-    <com.microsoft.azure.vmagent.AzureVMAgentPostBuildAction plugin="azure-vm-agents@0.7.0">
-      <agentPostBuildAction>Delete agent after build execution (when idle).</agentPostBuildAction>
-    </com.microsoft.azure.vmagent.AzureVMAgentPostBuildAction>
   </publishers>
   <buildWrappers>
     <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.19">
@@ -220,5 +237,6 @@ sudo .ci/teardown.sh &quot;$WORKSPACE&quot;</script>
     <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.2">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
+    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.34"/>
   </buildWrappers>
 </project>

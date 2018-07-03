@@ -1,6 +1,6 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <org.codefirst.SimpleThemeDecorator plugin="simple-theme-plugin@0.4">
-  <cssUrl>https://cdn.rawgit.com/afonsof/jenkins-material-theme/gh-pages/dist/material-indigo.css</cssUrl>
+  <cssUrl></cssUrl>
   <cssRules></cssRules>
   <jsUrl></jsUrl>
   <faviconUrl></faviconUrl>

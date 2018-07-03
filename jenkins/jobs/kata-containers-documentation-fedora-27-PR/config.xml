@@ -5,7 +5,7 @@
   <keepDependencies>false</keepDependencies>
   <properties>
     <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.1">
-      <projectUrl>https://github.com/kata-containers/osbuilder/</projectUrl>
+      <projectUrl>https://github.com/kata-containers/documentation/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
     <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.28">
@@ -19,7 +19,7 @@
       <hudson.plugins.git.UserRemoteConfig>
         <name>origin</name>
         <refspec>+refs/pull/${ghprbPullId}/*:refs/remotes/origin/pr/${ghprbPullId}/*</refspec>
-        <url>https://github.com/kata-containers/osbuilder.git</url>
+        <url>https://github.com/kata-containers/documentation.git</url>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
@@ -31,7 +31,7 @@
     <submoduleCfg class="list"/>
     <extensions/>
   </scm>
-  <assignedNode>centos-7</assignedNode>
+  <assignedNode>fedora-27</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
@@ -74,7 +74,7 @@
           <overrideGlobal>false</overrideGlobal>
         </org.jenkinsci.plugins.ghprb.extensions.build.GhprbCancelBuildsOnUpdate>
         <org.jenkinsci.plugins.ghprb.extensions.status.GhprbSimpleStatus>
-          <commitStatusContext>jenkins-ci-centos-7</commitStatusContext>
+          <commitStatusContext>jenkins-ci-fedora-27</commitStatusContext>
           <triggeredStatus>Build triggered</triggeredStatus>
           <startedStatus>Build running</startedStatus>
           <statusUrl></statusUrl>
@@ -102,9 +102,9 @@ cd tests
 export GOPATH=${WORKSPACE}/go
 export GOROOT=&quot;/usr/local/go&quot;
 export PATH=${GOPATH}/bin:/usr/local/go/bin:/usr/sbin:/sbin:${PATH}
-go get -d github.com/kata-containers/osbuilder || true
+go get -d github.com/kata-containers/documentation || true
 
-cd &quot;${GOPATH}/src/github.com/kata-containers/osbuilder&quot;
+cd &quot;${GOPATH}/src/github.com/kata-containers/documentation&quot;
 
 [ &quot;${ghprbPullId}&quot; ] &amp;&amp; [ &quot;${ghprbTargetBranch}&quot; ] &amp;&amp; pr_number=&quot;${ghprbPullId}&quot;
 pr_branch=&quot;PR_${pr_number}&quot;
