@@ -136,8 +136,7 @@
   <viewsTabBar class="hudson.views.DefaultViewsTabBar"/>
   <myViewsTabBar class="hudson.views.DefaultMyViewsTabBar"/>
   <clouds>
-    <jenkins.plugins.openstack.compute.JCloudsCloud plugin="openstack-cloud@2.36">
-      <actions/>
+    <jenkins.plugins.openstack.compute.JCloudsCloud plugin="openstack-cloud@2.37">
       <name>vexxhost</name>
       <credentialId>kata-openstack-credentials</credentialId>
       <endPointUrl>https://auth.vexxhost.net/v3</endPointUrl>
