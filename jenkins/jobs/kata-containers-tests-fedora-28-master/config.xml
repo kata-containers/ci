@@ -13,7 +13,7 @@
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
     <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.2">
-      <projectUrl>https://github.com/kata-containers/agent/</projectUrl>
+      <projectUrl>https://github.com/kata-containers/tests/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
     <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.28">
@@ -25,7 +25,7 @@
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
-        <url>https://github.com/kata-containers/agent.git</url>
+        <url>https://github.com/kata-containers/tests.git</url>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
@@ -37,9 +37,9 @@
     <submoduleCfg class="list"/>
     <extensions/>
   </scm>
-  <assignedNode>ubuntu-1604</assignedNode>
+  <assignedNode>fedora-27</assignedNode>
   <canRoam>false</canRoam>
-  <disabled>false</disabled>
+  <disabled>true</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
@@ -54,6 +54,12 @@
 
 set -e
 
+env
+
+export PATH=/usr/local/bin:${PATH}
+
+env 
+
 export ghprbPullId
 export ghprbTargetBranch
 
@@ -61,7 +67,7 @@ cd $HOME
 git clone https://github.com/kata-containers/tests.git
 cd tests
 
-.ci/jenkins_job_build.sh &quot;github.com/kata-containers/agent&quot;</command>
+.ci/jenkins_job_build.sh &quot;github.com/kata-containers/tests&quot;</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
@@ -97,14 +103,6 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
     </hudson.tasks.ArtifactArchiver>
   </publishers>
   <buildWrappers>
-    <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.16">
-      <bindings>
-        <org.jenkinsci.plugins.credentialsbinding.impl.StringBinding>
-          <credentialsId>e4bdbb8b-5524-4799-98b2-eda8fa69cec0</credentialsId>
-          <variable>CODECOV_TOKEN</variable>
-        </org.jenkinsci.plugins.credentialsbinding.impl.StringBinding>
-      </bindings>
-    </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
     <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.19">
       <strategy class="hudson.plugins.build_timeout.impl.NoActivityTimeOutStrategy">
         <timeoutSecondsString>300</timeoutSecondsString>

@@ -2,7 +2,7 @@
 <org.jenkinsci.plugins.configfiles.GlobalConfigFiles plugin="config-file-provider@2.18">
   <configs class="sorted-set">
     <comparator class="org.jenkinsci.plugins.configfiles.GlobalConfigFiles$1"/>
-    <jenkins.plugins.openstack.compute.UserDataConfig plugin="openstack-cloud@2.34">
+    <jenkins.plugins.openstack.compute.UserDataConfig plugin="openstack-cloud@2.36">
       <id>5af56ce8-e87c-4710-aae8-c2ec453b42ee</id>
       <name>centos-init</name>
       <comment></comment>
@@ -25,7 +25,7 @@ chmod g+rw /var/run/docker.sock
 yum install -y java-1.8.0-openjdk</content>
       <providerId>jenkins.plugins.openstack.compute.UserDataConfig</providerId>
     </jenkins.plugins.openstack.compute.UserDataConfig>
-    <jenkins.plugins.openstack.compute.UserDataConfig plugin="openstack-cloud@2.34">
+    <jenkins.plugins.openstack.compute.UserDataConfig plugin="openstack-cloud@2.36">
       <id>97d148e6-829b-4011-b5c6-39a0e959da56</id>
       <name>fedora-init</name>
       <comment></comment>
@@ -48,7 +48,7 @@ sudo chmod g+rw /var/run/docker.sock
 sudo dnf install -y java-1.8.0-openjdk </content>
       <providerId>jenkins.plugins.openstack.compute.UserDataConfig</providerId>
     </jenkins.plugins.openstack.compute.UserDataConfig>
-    <jenkins.plugins.openstack.compute.UserDataConfig plugin="openstack-cloud@2.34">
+    <jenkins.plugins.openstack.compute.UserDataConfig plugin="openstack-cloud@2.36">
       <id>bd93267e-7277-44bc-b8e0-6ed5fbdd805a</id>
       <name>ubuntu-init</name>
       <comment></comment>
@@ -66,6 +66,7 @@ sudo rm -f /var/lib/apt/lists/lock
 sudo rm -f /var/cache/apt/archives/lock
 
 # Install git, make and gcc
+sudo apt update -y
 sudo apt install -y git make gcc
 
 # Install docker
