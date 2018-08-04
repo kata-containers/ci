@@ -75,7 +75,8 @@
       <blackListCommitAuthor></blackListCommitAuthor>
       <blackListLabels></blackListLabels>
       <whiteListLabels></whiteListLabels>
-      <includedRegions>install/centos-installation-guide.md</includedRegions>
+      <includedRegions>install/centos-installation-guide.md
+install/docker/centos-docker-install.md</includedRegions>
       <excludedRegions></excludedRegions>
       <extensions>
         <org.jenkinsci.plugins.ghprb.extensions.build.GhprbCancelBuildsOnUpdate>
