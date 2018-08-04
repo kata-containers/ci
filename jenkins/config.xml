@@ -3,7 +3,7 @@
   <disabledAdministrativeMonitors>
     <string>hudson.diagnosis.TooManyJobsButNoView</string>
   </disabledAdministrativeMonitors>
-  <version>2.121.1</version>
+  <version>2.121.2</version>
   <installStateName>RUNNING</installStateName>
   <numExecutors>0</numExecutors>
   <mode>NORMAL</mode>
