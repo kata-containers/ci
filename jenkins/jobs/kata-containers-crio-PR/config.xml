@@ -169,6 +169,17 @@ git rebase &quot;origin/${PULL_BASE_REF}&quot;
 cd &quot;${GOPATH}/src/${tests_repo}&quot;
 .ci/setup.sh
 
+
+echo &quot;Ensure crio service is stopped before running the tests&quot;
+if systemctl is-active --quiet crio; then
+	sudo systemctl stop crio
+fi
+
+echo &quot;Ensure docker service is stopped before running the tests&quot;
+if systemctl is-active --quiet docker; then
+	sudo systemctl stop docker
+fi
+
 # Execute CRI-O tests using kata-containers runtime
 echo &quot;CRI-O Version to test:&quot;
 sudo crio --version
