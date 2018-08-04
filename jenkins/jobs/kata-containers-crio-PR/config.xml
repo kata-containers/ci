@@ -125,22 +125,6 @@ export PULL_BASE_REF
 export REPO_NAME
 export REPO_OWNER
 
-
-# DEBUG - deleteme
-echo &quot;===============================&quot;
-set -x
-ls /dev
-sudo fdisk -l 
-
-
-sudo pvcreate /dev/vdb 
-
-sudo pvremove /dev/vdb
-set +x
-echo &quot;===============================&quot;
-
-
-
 pr_number=&quot;${PULL_NUMBER}&quot;
 pr_branch=&quot;PR_${pr_number}&quot;
 
