@@ -1,7 +1,7 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description></description>
+  <description>Proxy PR build on ARM servers.</description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <jenkins.model.BuildDiscarderProperty>
@@ -13,7 +13,7 @@
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
     <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.2">
-      <projectUrl>https://github.com/kata-containers/agent/</projectUrl>
+      <projectUrl>https://github.com/kata-containers/proxy/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
     <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.28">
@@ -27,7 +27,7 @@
       <hudson.plugins.git.UserRemoteConfig>
         <name>origin</name>
         <refspec>+refs/pull/${ghprbPullId}/*:refs/remotes/origin/pr/${ghprbPullId}/*</refspec>
-        <url>https://github.com/kata-containers/agent.git</url>
+        <url>https://github.com/kata-containers/proxy.git</url>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
@@ -39,9 +39,9 @@
     <submoduleCfg class="list"/>
     <extensions/>
   </scm>
-  <assignedNode>ubuntu-1710</assignedNode>
+  <assignedNode>arm_node &amp;&amp; arm-ubuntu-1804</assignedNode>
   <canRoam>false</canRoam>
-  <disabled>true</disabled>
+  <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
@@ -82,7 +82,7 @@
           <overrideGlobal>false</overrideGlobal>
         </org.jenkinsci.plugins.ghprb.extensions.build.GhprbCancelBuildsOnUpdate>
         <org.jenkinsci.plugins.ghprb.extensions.status.GhprbSimpleStatus>
-          <commitStatusContext>jenkins-ci-ubuntu-17-10</commitStatusContext>
+          <commitStatusContext>jenkins-ci-ARM-ubuntu-18-04</commitStatusContext>
           <triggeredStatus>Build triggered</triggeredStatus>
           <startedStatus>Build running</startedStatus>
           <statusUrl></statusUrl>
@@ -96,16 +96,28 @@
     <hudson.tasks.Shell>
       <command>#!/bin/bash
 
-set -e
+# As we have set the shell to /bin/bash, we need to reset -e (and let&apos;s set -x as well eh)
+set -ex
 
+# These vars are required by the .ci scripts in the repos
 export ghprbPullId
 export ghprbTargetBranch
 
-cd $HOME
-git clone https://github.com/kata-containers/tests.git
-cd tests
+export REPO_NAME=&quot;github.com/kata-containers/proxy&quot;
+export TESTS_REPO_NAME=&quot;github.com/kata-containers/tests&quot;
+export TESTS_GIT_NAME=&quot;https://github.com/kata-containers/tests.git&quot;
+export GOPATH=&quot;${WORKSPACE}/go&quot;
 
-.ci/jenkins_job_build.sh &quot;github.com/kata-containers/agent&quot;</command>
+#go get -d -u ${TESTS_REPO_NAME}
+git clone ${TESTS_GIT_NAME} ${GOPATH}/src/${TESTS_REPO_NAME}
+cd ${GOPATH}/src/${TESTS_REPO_NAME}
+
+.ci/jenkins_job_build.sh &quot;${REPO_NAME}&quot;
+
+# And ensure the workspace tree is all owned by us before we quit, otherwise the later
+# `delete workspace before run` may fail on file perms (as some tests leave things owned by root).
+sudo chown -R ${USER} ${WORKSPACE}
+sudo chgrp -R $(id -ng) ${WORKSPACE}</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
@@ -141,6 +153,19 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
     </hudson.tasks.ArtifactArchiver>
   </publishers>
   <buildWrappers>
+    <hudson.plugins.ws__cleanup.PreBuildCleanup plugin="ws-cleanup@0.34">
+      <deleteDirs>false</deleteDirs>
+      <cleanupParameter></cleanupParameter>
+      <externalDelete></externalDelete>
+    </hudson.plugins.ws__cleanup.PreBuildCleanup>
+    <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.16">
+      <bindings>
+        <org.jenkinsci.plugins.credentialsbinding.impl.StringBinding>
+          <credentialsId>62ba7b0f-6f74-4674-8c0f-31b928acbebc</credentialsId>
+          <variable>CODECOV_TOKEN</variable>
+        </org.jenkinsci.plugins.credentialsbinding.impl.StringBinding>
+      </bindings>
+    </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
     <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.19">
       <strategy class="hudson.plugins.build_timeout.impl.NoActivityTimeOutStrategy">
         <timeoutSecondsString>300</timeoutSecondsString>
@@ -150,6 +175,5 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
     <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.2">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
-    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.37"/>
   </buildWrappers>
 </project>

@@ -125,22 +125,6 @@ export PULL_BASE_REF
 export REPO_NAME
 export REPO_OWNER
 
-
-# DEBUG - deleteme
-echo &quot;===============================&quot;
-set -x
-ls /dev
-sudo fdisk -l 
-
-
-sudo pvcreate /dev/vdb 
-
-sudo pvremove /dev/vdb
-set +x
-echo &quot;===============================&quot;
-
-
-
 pr_number=&quot;${PULL_NUMBER}&quot;
 pr_branch=&quot;PR_${pr_number}&quot;
 
@@ -185,6 +169,17 @@ git rebase &quot;origin/${PULL_BASE_REF}&quot;
 cd &quot;${GOPATH}/src/${tests_repo}&quot;
 .ci/setup.sh
 
+
+echo &quot;Ensure crio service is stopped before running the tests&quot;
+if systemctl is-active --quiet crio; then
+	sudo systemctl stop crio
+fi
+
+echo &quot;Ensure docker service is stopped before running the tests&quot;
+if systemctl is-active --quiet docker; then
+	sudo systemctl stop docker
+fi
+
 # Execute CRI-O tests using kata-containers runtime
 echo &quot;CRI-O Version to test:&quot;
 sudo crio --version
@@ -217,7 +212,7 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
     <hudson.tasks.ArtifactArchiver>
-      <artifacts>kata-proxy_*,kata-runtime_*,kata-shim_*,crio_*,docker_*,kubelet_*,kata-collect-data_*</artifacts>
+      <artifacts>kata-proxy_*,kata-runtime_*,kata-shim_*,crio_*,docker_*,kubelet_*,kata-collect-data_*, procenv-*</artifacts>
       <allowEmptyArchive>true</allowEmptyArchive>
       <onlyIfSuccessful>false</onlyIfSuccessful>
       <fingerprint>false</fingerprint>
@@ -235,6 +230,6 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
     <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.2">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
-    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.36"/>
+    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.37"/>
   </buildWrappers>
 </project>

@@ -75,7 +75,8 @@
       <blackListCommitAuthor></blackListCommitAuthor>
       <blackListLabels></blackListLabels>
       <whiteListLabels></whiteListLabels>
-      <includedRegions>install/fedora-installation-guide.md</includedRegions>
+      <includedRegions>install/fedora-installation-guide.md
+install/docker/fedora-docker-install.md</includedRegions>
       <excludedRegions></excludedRegions>
       <extensions>
         <org.jenkinsci.plugins.ghprb.extensions.build.GhprbCancelBuildsOnUpdate>
