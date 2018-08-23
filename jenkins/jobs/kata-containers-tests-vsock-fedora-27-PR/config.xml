@@ -82,7 +82,7 @@
           <overrideGlobal>false</overrideGlobal>
         </org.jenkinsci.plugins.ghprb.extensions.build.GhprbCancelBuildsOnUpdate>
         <org.jenkinsci.plugins.ghprb.extensions.status.GhprbSimpleStatus>
-          <commitStatusContext>jenkins-ci-fedora-27</commitStatusContext>
+          <commitStatusContext>jenkins-ci-fedora-27-vsocks</commitStatusContext>
           <triggeredStatus>Build triggered</triggeredStatus>
           <startedStatus>Build running</startedStatus>
           <statusUrl></statusUrl>
@@ -98,6 +98,7 @@
 
 set -e
 
+export USE_VSOCK=&quot;yes&quot;
 export ghprbPullId
 export ghprbTargetBranch
 
