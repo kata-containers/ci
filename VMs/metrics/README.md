@@ -33,6 +33,22 @@ Briefly, the scripts do the following:
 - Provide scripts for use from Jenkins to launch a cloned VM with a Jenkins agent and to
 delete a cloned VM.
 
+## Pre-requisites
+
+The scripts in this directory rely upon certain tools being available on the host
+system. The following lists those tools, and the Ubuntu packages or alternative
+installation methods that can be used to install them. Package names may be
+different for other distributions.
+
+| Dependency | Ubuntu package or method |
+| ----------- | ------------------------ |
+| go | Install latest from [golang.org](golang.org) |
+| jre | package default-jre |
+| libvirt | package libvirt-bin |
+| qemu-kvm | package qemu-kvm |
+| virtinst | package virtinst |
+| yq | Install latest with `go get` from [mikefarah/yq](github.com/mikefarah/yq)|
+
 ## The scripts
 
 The scripts are numbered roughly in the order you might expect to run them.
@@ -136,6 +152,62 @@ $ ./7_delete_clone.sh ubuntu16.04
 
 # Otherwise, now you have a master VM set up you are ready to configure Jenkins.
 ```
+
+## Configuring the user on the host
+
+A user needs to be chosen on the host system that will execute the VMs. That user
+requires some configuration.  The following steps document choosing and configuring
+a user called `jenkins` to execute the VMs on the host system.
+
+### Add golang `bin` directories to path
+
+Add the GOLANG binary directories to the `$PATH` variable by adding the following
+to `.profile`.
+
+```bash
+# set PATH so it includes golang
+if [ -d "/usr/local/go/bin" ] ; then
+	PATH="/usr/local/go/bin:$PATH"
+fi
+
+export GOPATH=${HOME}/go
+
+# set PATH so it includes local go bin
+if [ -d "${GOPATH}/bin" ] ; then
+	PATH="${GOPATH}/bin:$PATH"
+fi
+```
+
+### Add user to VM groups
+
+To launch VMs via `virsh`, add the user to the required groups:
+
+```bash
+$ adduser jenkins libvirt
+$ adduser jenkins libvirt-qemu
+```
+
+### Installing the `agent.jar`
+
+The scripts require the Jenkins `agent.jar` file to be located in the `${HOME}/bin`
+directory of the user. This file can be obtained from your Jenkins master:
+
+```bash
+$ mkdir -p ${HOME}/bin
+$ cd ${HOME}/bin
+$ curl -LO http://jenkins.katacontainers.io/jnlpJars/agent.jar
+```
+
+> **Note:** This agent file may change when you update your Jenkins master. This is rare,
+> but if slave problems are encountered after a Jenkins master update, consider refreshing
+> the `agent.jar` on your slave machine.
+
+### Setup Jenkins SSH keypair login
+
+For Jenkins to be able to launch the slave VM/agents over SSH, it will need some form
+of SSH authentication method to be configured. Consult the
+[Jenkins SSH slave plugin documentation](https://github.com/jenkinsci/ssh-slaves-plugin/blob/master/doc/CONFIGURE.md)
+for guidance on setting up authentication. Details on precise slave setup are below.
 
 ## Configuring Jenkins
 
@@ -241,3 +313,21 @@ to set up the proxies for a number of programs, including, `apt`, `git`, and `do
 make this process simpler, an example [`user-data.proxy`](ubuntu16.04/user-data.proxy) file
 is included in the `ubuntu16.04` subdirectory.
 
+### Tuning `checkmetrics.toml`
+
+The default `checkmetrics.toml` file provided in each distro subdirectory with the VM
+scripts will probably not match the results produced on your particular system. You will
+need to tune the `checkmetrics.toml` file by doing a few test runs and determining the
+values you require.
+
+1. Get Your Jenkins master/slave connection up and running and build jobs.
+2. Perform a few runs (>= 3). Expect them to fail the `checkmetrics` check.
+3. Analyse the logs or the JSON files from those logs to determine the values
+your system produces.
+4. Edit the `checkmetrics.toml` file in the distro subdir on the agent machine.
+5. Disable the slave in your Jenkins Master, and wait for all builds to finish.
+One trick is to change any relevant slave label from say `metrics` to `metricsX` to
+stop new jobs being scheduled on that slave.
+6. Re-run scripts `2` and `3` to rebuild the master VM image.
+7. Re-enable the slave.
+8. Iterate from step (2) until you are satisfied with the results.

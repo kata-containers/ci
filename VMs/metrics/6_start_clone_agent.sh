@@ -7,7 +7,7 @@ JARSRC="${HOME}/bin/agent.jar"
 JARDEST_DIR="/var/lib/jenkins"
 JARDEST="${JARDEST_DIR}/agent.jar"
 
-LOGFILE=/dev/null
+LOGFILE="${LOGFILE:-/dev/null}"
 
 source global_env.sh
 source lib.sh
