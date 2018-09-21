@@ -46,7 +46,7 @@ check_keys() {
 
 	PUBLICKEYCONTENTS=$(cat ${PUBKEYNAME})
 	# Escape any special regex chars in the key for later use with sed
-        ESCAPEDPUBLICKEYCONTENTS=$(echo "${PUBLICKEYCONTENTS}" | sed -e 's/\([[\/.*]\|\]\)/\\&/g')
+	ESCAPEDPUBLICKEYCONTENTS=$(echo "${PUBLICKEYCONTENTS}" | sed -e 's/\([[\/.*]\|\]\)/\\&/g')
 }
 
 create_initfiles() {
@@ -118,19 +118,19 @@ run_cloud_init() {
 	# add the existing simple qcow2 image file to virsh
 	message "Creating VM master image"
 	virt-install \
- 	-n ${VM_NAME} \
- 	--description "simple test" \
- 	--os-type=${VM_TYPE} \
- 	--os-variant=${VM_VARIANT} \
- 	--cpu=host-passthrough \
- 	--ram=${VM_RAM_SIZE} \
- 	--vcpus=${VM_VCPUS} \
- 	--disk path=${IMG_NAME},bus=virtio,size=${VM_IMAGE_SIZE} \
- 	--disk path=${ISOFILENAME},device=cdrom \
- 	--graphics none \
- 	--console pty,target_type=serial \
- 	--import \
- 	--boot useserial=on
+	-n ${VM_NAME} \
+	--description "simple test" \
+	--os-type=${VM_TYPE} \
+	--os-variant=${VM_VARIANT} \
+	--cpu=host-passthrough \
+	--ram=${VM_RAM_SIZE} \
+	--vcpus=${VM_VCPUS} \
+	--disk path=${IMG_NAME},bus=virtio,size=${VM_IMAGE_SIZE} \
+	--disk path=${ISOFILENAME},device=cdrom \
+	--graphics none \
+	--console pty,target_type=serial \
+	--import \
+	--boot useserial=on
 }
 
 main() {
