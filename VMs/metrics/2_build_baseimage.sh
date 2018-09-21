@@ -122,7 +122,7 @@ run_cloud_init() {
  	--description "simple test" \
  	--os-type=${VM_TYPE} \
  	--os-variant=${VM_VARIANT} \
- 	--cpu=host \
+ 	--cpu=host-passthrough \
  	--ram=${VM_RAM_SIZE} \
  	--vcpus=${VM_VCPUS} \
  	--disk path=${IMG_NAME},bus=virtio,size=${VM_IMAGE_SIZE} \
