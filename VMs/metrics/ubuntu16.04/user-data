@@ -21,6 +21,7 @@ packages:
  - gcc
  - git
  - jq
+ - linux-tools-common
  - make
 
 runcmd:
@@ -42,6 +43,7 @@ runcmd:
  - sudo add-apt-repository "deb [arch=ARCH] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
  - apt-get update
  - apt-get install -y docker-ce
+ - apt-get install -y linux-tools-`uname -r`
  - gpasswd -a USERNAME docker
 
 # Remove the unattended upgrade feature, for two reasons:
