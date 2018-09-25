@@ -101,6 +101,7 @@ set -e
 
 export ghprbPullId
 export ghprbTargetBranch
+export CI=true
 
 cd $HOME
 git clone https://github.com/kata-containers/tests.git

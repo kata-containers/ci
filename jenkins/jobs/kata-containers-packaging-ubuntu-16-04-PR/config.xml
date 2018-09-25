@@ -108,6 +108,7 @@ user = ${OBS_USER}
 pass = ${OBS_PASS}
 EOT
 
+export CI=true
 export ghprbPullId
 export ghprbTargetBranch
 export OBS_USER
