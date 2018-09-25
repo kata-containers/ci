@@ -25,7 +25,7 @@
     </org.jenkinsci.plugins.ghprb.GhprbGitHubAuth>
   </githubAuth>
   <adminlist>katacontainersbot</adminlist>
-  <requestForTestingPhrase>Can one of the admins verify this patch?</requestForTestingPhrase>
+  <requestForTestingPhrase></requestForTestingPhrase>
   <extensions>
     <org.jenkinsci.plugins.ghprb.extensions.status.GhprbSimpleStatus>
       <commitStatusContext>jenkins-ci</commitStatusContext>
