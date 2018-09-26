@@ -48,14 +48,14 @@
     <org.jenkinsci.plugins.ghprb.GhprbTrigger plugin="ghprb@1.42.0">
       <spec>H/5 * * * *</spec>
       <configVersion>3</configVersion>
-      <adminlist>katacontainers chavafg sboeuf</adminlist>
-      <allowMembersOfWhitelistedOrgsAsAdmin>false</allowMembersOfWhitelistedOrgsAsAdmin>
-      <orgslist></orgslist>
+      <adminlist></adminlist>
+      <allowMembersOfWhitelistedOrgsAsAdmin>true</allowMembersOfWhitelistedOrgsAsAdmin>
+      <orgslist>kata-containers</orgslist>
       <cron>H/5 * * * *</cron>
       <buildDescTemplate></buildDescTemplate>
-      <onlyTriggerPhrase>false</onlyTriggerPhrase>
+      <onlyTriggerPhrase>true</onlyTriggerPhrase>
       <useGitHubHooks>true</useGitHubHooks>
-      <permitAll>true</permitAll>
+      <permitAll>false</permitAll>
       <whitelist></whitelist>
       <autoCloseFailedPullRequests>false</autoCloseFailedPullRequests>
       <displayBuildErrorsOnDownstreamBuilds>false</displayBuildErrorsOnDownstreamBuilds>
@@ -70,7 +70,7 @@
         </org.jenkinsci.plugins.ghprb.GhprbBranch>
       </blackListTargetBranches>
       <gitHubAuthId>c217b635-ee39-4531-a4ed-db4048679d71</gitHubAuthId>
-      <triggerPhrase></triggerPhrase>
+      <triggerPhrase>.*/(re)?test.*</triggerPhrase>
       <skipBuildPhrase>.*\[skip\W+ci\].*</skipBuildPhrase>
       <blackListCommitAuthor></blackListCommitAuthor>
       <blackListLabels></blackListLabels>
@@ -158,6 +158,6 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
     <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.2">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
-    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.37"/>
+    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.40"/>
   </buildWrappers>
 </project>

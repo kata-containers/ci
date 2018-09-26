@@ -1,7 +1,4 @@
 <?xml version='1.1' encoding='UTF-8'?>
-<org.codefirst.SimpleThemeDecorator plugin="simple-theme-plugin@0.4">
-  <cssUrl></cssUrl>
-  <cssRules></cssRules>
-  <jsUrl></jsUrl>
-  <faviconUrl></faviconUrl>
+<org.codefirst.SimpleThemeDecorator plugin="simple-theme-plugin@0.5.1">
+  <elements/>
 </org.codefirst.SimpleThemeDecorator>
