@@ -134,12 +134,12 @@ export GOROOT=&quot;/usr/local/go&quot;&#xd;
 export PATH=${GOPATH}/bin:/usr/local/go/bin:/usr/sbin:/usr/local/bin:${PATH}&#xd;
 &#xd;
 cd $GOPATH/src/github.com/kata-containers/tests&#xd;
-.ci/teardown.sh &quot;$WORKSPACE&quot;</script>
+.ci/teardown.sh &quot;$WORKSPACE/artifacts&quot;</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
     <hudson.tasks.ArtifactArchiver>
-      <artifacts>kata-proxy_*,kata-runtime_*,kata-shim_*,crio_*,docker_*,kubelet_*,kata-collect-data_*, procenv-*</artifacts>
+      <artifacts>artifacts/*</artifacts>
       <allowEmptyArchive>true</allowEmptyArchive>
       <onlyIfSuccessful>false</onlyIfSuccessful>
       <fingerprint>false</fingerprint>
