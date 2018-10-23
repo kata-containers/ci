@@ -101,13 +101,17 @@ set -e
 export USE_VSOCK=&quot;yes&quot;
 export ghprbPullId
 export ghprbTargetBranch
+export GOPATH=&quot;${WORKSPACE}/go&quot;
 
 pr_number=&quot;${ghprbPullId}&quot;
 pr_branch=&quot;PR_${pr_number}&quot;
 
-cd $HOME
-git clone https://github.com/kata-containers/tests.git
-cd tests
+tests_repo_dir=&quot;${GOPATH}/src/github.com/kata-containers/tests&quot;
+mkdir -p &quot;${tests_repo_dir}&quot;
+
+git clone https://github.com/kata-containers/tests.git &quot;${tests_repo_dir}&quot;
+cd &quot;${tests_repo_dir}&quot;
+
 git fetch origin &quot;pull/${pr_number}/head:${pr_branch}&quot;
 git checkout &quot;${pr_branch}&quot;
 git rebase &quot;origin/${ghprbTargetBranch}&quot;
