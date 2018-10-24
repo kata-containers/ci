@@ -104,8 +104,8 @@ cat &lt;&lt; EOT &gt; ${OSCRC}
 [general]
 apiurl = ${OBS_API}
 [${OBS_API}]
-user = ${OBS_USER}
-pass = ${OBS_PASS}
+user = user
+pass = pass
 EOT
 
 export CI=true
@@ -136,13 +136,7 @@ echo &quot;===================FINISH=================================&quot;
   <publishers/>
   <buildWrappers>
     <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.16">
-      <bindings>
-        <org.jenkinsci.plugins.credentialsbinding.impl.UsernamePasswordMultiBinding>
-          <credentialsId>kata-openstack-credentials</credentialsId>
-          <usernameVariable>OBS_USER</usernameVariable>
-          <passwordVariable>OBS_PASS</passwordVariable>
-        </org.jenkinsci.plugins.credentialsbinding.impl.UsernamePasswordMultiBinding>
-      </bindings>
+      <bindings class="empty-list"/>
     </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
     <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.19">
       <strategy class="hudson.plugins.build_timeout.impl.NoActivityTimeOutStrategy">

@@ -1,0 +1,12 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<org.jenkinsci.plugins.ParameterizedRemoteTrigger.RemoteBuildConfiguration_-DescriptorImpl plugin="Parameterized-Remote-Trigger@3.0.6">
+  <remoteSites>
+    <org.jenkinsci.plugins.ParameterizedRemoteTrigger.RemoteJenkinsServer>
+      <displayName></displayName>
+      <hasBuildTokenRootSupport>false</hasBuildTokenRootSupport>
+      <auth2 class="org.jenkinsci.plugins.ParameterizedRemoteTrigger.auth2.NoneAuth"/>
+      <address></address>
+      <useProxy>false</useProxy>
+    </org.jenkinsci.plugins.ParameterizedRemoteTrigger.RemoteJenkinsServer>
+  </remoteSites>
+</org.jenkinsci.plugins.ParameterizedRemoteTrigger.RemoteBuildConfiguration_-DescriptorImpl>
