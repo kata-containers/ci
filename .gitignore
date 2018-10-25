@@ -38,3 +38,7 @@ jenkins/credentials.xml
 # Include the pictures
 !pictures
 !pictures/**
+
+# Include the deployment files
+!deployment
+!deployment/**
