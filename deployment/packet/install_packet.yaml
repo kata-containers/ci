@@ -1,0 +1,118 @@
+---
+# Copyright (c) 2018 Intel Corporation
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+# Install an instance with enough elements to allow both CI operation
+# modes of:
+# - Jenkins to run a kata CI on the bare metal
+# - A Kata metrics CI VM to be installed/configured for isolation of the
+#   metrics runs
+#
+
+- name: Install base elements for Kata Metrics VMs
+  hosts: AAA.BBB.CCC.DDD
+  gather_facts: False
+  vars_files:
+    - env.yaml
+
+  tasks:
+    - name: Check for Jenkins SSH keyfile
+      stat:
+        path: "{{ ourenv.jenkins_sshkeypath }}"
+      register: ssh_key_stat
+      delegate_to: localhost
+
+    - name: Abort if no SSH keyfile
+      fail:
+        msg: "SSH keyfile not found in path {{ ourenv.jenkins_sshkeypath }} - aborting"
+      when: ssh_key_stat.stat.exists == false
+
+    - name: Update the apt cache
+      apt:
+        update_cache: yes
+
+    - name: Install libvirt
+      package:
+        name: libvirt-bin
+        state: present
+
+    - name: Install qemu-kvm
+      package:
+        name: qemu-kvm
+        state: present
+
+    - name: Install virtinst
+      package:
+        name: virtinst
+        state: present
+
+    - name: Install genisoimage
+      package:
+        name: genisoimage
+        state: present
+
+    - name: Install default JRE
+      package:
+        name: default-jre
+        state: present
+
+    - name: Install git
+      package:
+        name: git
+        state: present
+
+    - name: Install snapd
+      package:
+        name: snapd
+        state: present
+
+    - name: Install yq
+      command: "snap install yq"
+
+    - name: Create golang dest dir
+      file:
+        path: /usr/local/go
+        state: directory
+
+    - name: Install golang
+      unarchive:
+        src: go1.10.2.linux-amd64.tar.gz
+        dest: /usr/local
+
+    - name: Set golang in PATH
+      copy:
+        dest: /etc/profile.d/custom-path.sh
+        content: 'PATH=/usr/local/go/bin:$PATH'
+
+    - name: Create the wheel group
+      group:
+        name: wheel
+        state: present
+
+    - name: Allow 'wheel' group to have passwordless sudo
+      lineinfile:
+        dest: /etc/sudoers
+        state: present
+        regexp: '^%wheel'
+        line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+        validate: visudo -cf %s
+
+    # We create the docker group now so we can add the Jenkins user to it,
+    # even though we won't have docker installed until later
+    - name: Create the docker group
+      group:
+        name: docker
+        state: present
+
+    - name: Create Jenkins user
+      user:
+        name: jenkins
+        groups: kvm,libvirtd,wheel,docker
+        append: true
+
+    - name: Setup Jenkins user SSH key
+      authorized_key:
+        user: jenkins
+        state: present
+        key: "{{ lookup('file', ourenv.jenkins_sshkeypath) }}"

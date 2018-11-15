@@ -1,0 +1,23 @@
+---
+# Copyright (c) 2018 Intel Corporation
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+- name: create t1.small device and wait up to 10 minutes for active state
+  hosts: localhost
+  tasks:
+  - packet_device:
+      project_id: e8e311a5-0dbb-4342-bafd-840ff074003e
+      hostnames: t1small-test
+      operating_system: ubuntu_16_04
+      plan: t1.small.x86
+      facility: sjc1
+      state: active
+      wait_timeout: 600
+    register: newhost
+
+  - name: Print details
+    debug:
+      msg: "Machine details are: {{ newhost }}"
+
