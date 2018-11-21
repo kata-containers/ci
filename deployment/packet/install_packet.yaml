@@ -62,6 +62,20 @@
         name: git
         state: present
 
+    - name: Install linux-tools-common
+      package:
+        name: linux-tools-common
+        state: present
+
+    - name: Get Kernel version
+      shell: uname -r
+      register: kernel_version
+
+    - name: Install linux-tools-common specific kernel
+      package:
+        name: linux-tools-{{ kernel_version.stdout }}
+        state: present
+
     - name: Install snapd
       package:
         name: snapd
@@ -79,6 +93,11 @@
       unarchive:
         src: go1.10.2.linux-amd64.tar.gz
         dest: /usr/local
+
+    - name: Remove the unattended upgrade features
+      apt:
+        name: unattended-upgrades
+        state: absent
 
     - name: Set golang in PATH
       copy:
