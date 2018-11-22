@@ -1,0 +1,36 @@
+---
+# Copyright (c) 2018 Intel Corporation
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+# Install the /etc/checkmetrics/checkmetrics-json-<uname>.toml file into
+# the instance.
+#
+
+- name: Install checkmetrics toml file for Kata Metrics
+  hosts: AAA.BBB.CCC.DDD
+  vars_files:
+    - env.yaml
+
+  tasks:
+    - name: Check for local checkmetrics file
+      stat:
+        path: "./checkmetrics-json-{{ ansible_hostname }}.toml"
+      register: toml_stat
+      delegate_to: localhost
+
+    - name: Abort if no checkmetrics keyfile
+      fail:
+        msg: "checkmetrics toml file not found in path ./checkmetrics-json-{{ ansible_hostname }}.toml - aborting"
+      when: toml_stat.stat.exists == false
+
+    - name: Create checkmetrics dest dir
+      file:
+        path: /etc/checkmetrics
+        state: directory
+
+    - name: Copy over checkmetrics file
+      copy:
+        dest: /etc/checkmetrics/
+        src: "./checkmetrics-json-{{ ansible_hostname }}.toml"
+
