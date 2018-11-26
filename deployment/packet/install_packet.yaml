@@ -62,6 +62,11 @@
         name: git
         state: present
 
+    - name: Install psmisc
+      package:
+        name: psmisc
+        state: present
+
     - name: Install linux-tools-common
       package:
         name: linux-tools-common
