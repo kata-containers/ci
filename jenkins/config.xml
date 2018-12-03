@@ -3,7 +3,7 @@
   <disabledAdministrativeMonitors>
     <string>hudson.diagnosis.TooManyJobsButNoView</string>
   </disabledAdministrativeMonitors>
-  <version>2.138.2</version>
+  <version>2.138.3</version>
   <installStateName>RUNNING</installStateName>
   <numExecutors>0</numExecutors>
   <mode>NORMAL</mode>
@@ -188,6 +188,32 @@
             <slaveOptions>
               <bootSource class="jenkins.plugins.openstack.compute.slaveopts.BootSource$Image">
                 <name>kata-fedora-27-x86_64</name>
+              </bootSource>
+              <userDataId>97d148e6-829b-4011-b5c6-39a0e959da56</userDataId>
+              <launcherFactory class="jenkins.plugins.openstack.compute.slaveopts.LauncherFactory$SSH">
+                <credentialsId>3bc0e03e-da0d-4310-a1c8-f97379e42bb9</credentialsId>
+              </launcherFactory>
+            </slaveOptions>
+          </jenkins.plugins.openstack.compute.JCloudsSlaveTemplate>
+          <jenkins.plugins.openstack.compute.JCloudsSlaveTemplate>
+            <name>fedora-28</name>
+            <labelString>fedora-28</labelString>
+            <slaveOptions>
+              <bootSource class="jenkins.plugins.openstack.compute.slaveopts.BootSource$Image">
+                <name>Fedora Cloud 28 (x86_64) [2018-04-25]</name>
+              </bootSource>
+              <userDataId>97d148e6-829b-4011-b5c6-39a0e959da56</userDataId>
+              <launcherFactory class="jenkins.plugins.openstack.compute.slaveopts.LauncherFactory$SSH">
+                <credentialsId>3bc0e03e-da0d-4310-a1c8-f97379e42bb9</credentialsId>
+              </launcherFactory>
+            </slaveOptions>
+          </jenkins.plugins.openstack.compute.JCloudsSlaveTemplate>
+          <jenkins.plugins.openstack.compute.JCloudsSlaveTemplate>
+            <name>fedora-29</name>
+            <labelString>fedora-29</labelString>
+            <slaveOptions>
+              <bootSource class="jenkins.plugins.openstack.compute.slaveopts.BootSource$Image">
+                <name>Fedora Cloud 29 (x86_64) [2018-10-24]</name>
               </bootSource>
               <userDataId>97d148e6-829b-4011-b5c6-39a0e959da56</userDataId>
               <launcherFactory class="jenkins.plugins.openstack.compute.slaveopts.LauncherFactory$SSH">
