@@ -20,7 +20,7 @@
       <serverAPIUrl>https://api.github.com</serverAPIUrl>
       <credentialsId>7515f144-2a26-4537-9685-c110b0a41e80</credentialsId>
       <id>c217b635-ee39-4531-a4ed-db4048679d71</id>
-      <description>Anonymous connection</description>
+      <description>katacontainers bot connection</description>
       <secret>{AQAAABAAAAAQGW1kYsNU9yihjhBjcg3MMx5oggRbtZKAdJWo47AwSrk=}</secret>
     </org.jenkinsci.plugins.ghprb.GhprbGitHubAuth>
   </githubAuth>
