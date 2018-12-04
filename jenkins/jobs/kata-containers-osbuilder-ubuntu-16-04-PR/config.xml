@@ -12,7 +12,7 @@
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
-    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.2">
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.3">
       <projectUrl>https://github.com/kata-containers/osbuilder/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
@@ -102,17 +102,22 @@ export ghprbPullId
 export ghprbTargetBranch
 export CI=true
 
-cd $HOME
 sudo apt-get update
 sudo apt-get install git make
-git clone https://github.com/kata-containers/tests.git
-cd tests
-
-.ci/install_go.sh -p
 
 export GOPATH=${WORKSPACE}/go
 export GOROOT=&quot;/usr/local/go&quot;
 export PATH=${GOPATH}/bin:/usr/local/go/bin:/usr/sbin:/sbin:${PATH}
+
+
+tests_repo_dir=&quot;${GOPATH}/src/github.com/kata-containers/tests&quot;
+mkdir -p &quot;${tests_repo_dir}&quot;
+
+git clone https://github.com/kata-containers/tests.git &quot;${tests_repo_dir}&quot;
+cd &quot;${tests_repo_dir}&quot;
+
+.ci/install_go.sh -p
+
 go get -d github.com/kata-containers/osbuilder || true
 
 cd &quot;${GOPATH}/src/github.com/kata-containers/osbuilder&quot;
