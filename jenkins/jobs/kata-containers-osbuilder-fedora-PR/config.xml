@@ -39,7 +39,7 @@
     <submoduleCfg class="list"/>
     <extensions/>
   </scm>
-  <assignedNode>ubuntu-1604</assignedNode>
+  <assignedNode>fedora-28</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
@@ -82,7 +82,7 @@
           <overrideGlobal>false</overrideGlobal>
         </org.jenkinsci.plugins.ghprb.extensions.build.GhprbCancelBuildsOnUpdate>
         <org.jenkinsci.plugins.ghprb.extensions.status.GhprbSimpleStatus>
-          <commitStatusContext>jenkins-ci-ubuntu-16-04</commitStatusContext>
+          <commitStatusContext>jenkins-ci-fedora</commitStatusContext>
           <triggeredStatus>Build triggered</triggeredStatus>
           <startedStatus>Build running</startedStatus>
           <statusUrl></statusUrl>
@@ -102,13 +102,9 @@ export ghprbPullId
 export ghprbTargetBranch
 export CI=true
 
-sudo apt-get update
-sudo apt-get install git make
-
 export GOPATH=${WORKSPACE}/go
 export GOROOT=&quot;/usr/local/go&quot;
 export PATH=${GOPATH}/bin:/usr/local/go/bin:/usr/sbin:/sbin:${PATH}
-
 
 tests_repo_dir=&quot;${GOPATH}/src/github.com/kata-containers/tests&quot;
 mkdir -p &quot;${tests_repo_dir}&quot;
@@ -131,7 +127,7 @@ pr_branch=&quot;PR_${pr_number}&quot;
 git fetch origin &quot;pull/${pr_number}/head:${pr_branch}&quot;
 git checkout &quot;${pr_branch}&quot;
 git rebase &quot;origin/${ghprbTargetBranch}&quot;
-    
+
 .ci/setup.sh
 .ci/run.sh</command>
     </hudson.tasks.Shell>
@@ -175,7 +171,7 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
       </strategy>
       <operationList/>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
-    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.2">
+    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.3">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
     <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.40"/>

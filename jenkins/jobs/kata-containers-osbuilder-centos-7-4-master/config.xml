@@ -12,11 +12,11 @@
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
-    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.2">
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.3">
       <projectUrl>https://github.com/kata-containers/osbuilder/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
-    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.28">
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.29">
       <autoRebuild>false</autoRebuild>
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
@@ -43,7 +43,7 @@
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
-    <com.cloudbees.jenkins.GitHubPushTrigger plugin="github@1.29.2">
+    <com.cloudbees.jenkins.GitHubPushTrigger plugin="github@1.29.3">
       <spec></spec>
     </com.cloudbees.jenkins.GitHubPushTrigger>
   </triggers>
@@ -54,15 +54,24 @@
 
 set -e
 
-cd $HOME
-git clone https://github.com/kata-containers/tests.git
-cd tests
-
-.ci/install_go.sh -p
+export CI=true
 
 export GOPATH=${WORKSPACE}/go
 export GOROOT=&quot;/usr/local/go&quot;
 export PATH=${GOPATH}/bin:/usr/local/go/bin:/usr/sbin:/sbin:${PATH}
+
+cd $HOME
+git clone https://github.com/kata-containers/tests.git
+cd tests
+
+tests_repo_dir=&quot;${GOPATH}/src/github.com/kata-containers/tests&quot;
+mkdir -p &quot;${tests_repo_dir}&quot;
+
+git clone https://github.com/kata-containers/tests.git &quot;${tests_repo_dir}&quot;
+cd &quot;${tests_repo_dir}&quot;
+
+.ci/install_go.sh -p
+
 go get -d github.com/kata-containers/osbuilder || true
 
 cd &quot;${GOPATH}/src/github.com/kata-containers/osbuilder&quot;
@@ -110,9 +119,9 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
       <operationList/>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
     <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.8.10"/>
-    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.2">
+    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.3">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
-    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.37"/>
+    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.40"/>
   </buildWrappers>
 </project>

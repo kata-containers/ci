@@ -13,7 +13,7 @@
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
     <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.3">
-      <projectUrl>https://github.com/kata-containers/osbuilder/</projectUrl>
+      <projectUrl>https://github.com/kata-containers/tests/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
     <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.29">
@@ -27,7 +27,7 @@
       <hudson.plugins.git.UserRemoteConfig>
         <name>origin</name>
         <refspec>+refs/pull/${ghprbPullId}/*:refs/remotes/origin/pr/${ghprbPullId}/*</refspec>
-        <url>https://github.com/kata-containers/osbuilder.git</url>
+        <url>https://github.com/kata-containers/tests.git</url>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
@@ -39,7 +39,7 @@
     <submoduleCfg class="list"/>
     <extensions/>
   </scm>
-  <assignedNode>ubuntu-1604</assignedNode>
+  <assignedNode>fedora-28</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
@@ -82,7 +82,7 @@
           <overrideGlobal>false</overrideGlobal>
         </org.jenkinsci.plugins.ghprb.extensions.build.GhprbCancelBuildsOnUpdate>
         <org.jenkinsci.plugins.ghprb.extensions.status.GhprbSimpleStatus>
-          <commitStatusContext>jenkins-ci-ubuntu-16-04</commitStatusContext>
+          <commitStatusContext>jenkins-ci-fedora-vsocks</commitStatusContext>
           <triggeredStatus>Build triggered</triggeredStatus>
           <startedStatus>Build running</startedStatus>
           <statusUrl></statusUrl>
@@ -98,17 +98,13 @@
 
 set -e
 
+export USE_VSOCK=&quot;yes&quot;
 export ghprbPullId
 export ghprbTargetBranch
-export CI=true
+export GOPATH=&quot;${WORKSPACE}/go&quot;
 
-sudo apt-get update
-sudo apt-get install git make
-
-export GOPATH=${WORKSPACE}/go
-export GOROOT=&quot;/usr/local/go&quot;
-export PATH=${GOPATH}/bin:/usr/local/go/bin:/usr/sbin:/sbin:${PATH}
-
+pr_number=&quot;${ghprbPullId}&quot;
+pr_branch=&quot;PR_${pr_number}&quot;
 
 tests_repo_dir=&quot;${GOPATH}/src/github.com/kata-containers/tests&quot;
 mkdir -p &quot;${tests_repo_dir}&quot;
@@ -116,24 +112,11 @@ mkdir -p &quot;${tests_repo_dir}&quot;
 git clone https://github.com/kata-containers/tests.git &quot;${tests_repo_dir}&quot;
 cd &quot;${tests_repo_dir}&quot;
 
-.ci/install_go.sh -p
-
-go get -d github.com/kata-containers/osbuilder || true
-
-cd &quot;${GOPATH}/src/github.com/kata-containers/osbuilder&quot;
-
-[ &quot;${ghprbPullId}&quot; ] &amp;&amp; [ &quot;${ghprbTargetBranch}&quot; ] &amp;&amp; pr_number=&quot;${ghprbPullId}&quot;
-pr_branch=&quot;PR_${pr_number}&quot;
-
-# Create a separate branch for the PR. This is required to allow
-# checkcommits to be able to determine how the PR differs from
-# &quot;master&quot;.
 git fetch origin &quot;pull/${pr_number}/head:${pr_branch}&quot;
 git checkout &quot;${pr_branch}&quot;
 git rebase &quot;origin/${ghprbTargetBranch}&quot;
-    
-.ci/setup.sh
-.ci/run.sh</command>
+
+.ci/jenkins_job_build.sh &quot;github.com/kata-containers/tests&quot;</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
@@ -171,11 +154,11 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
   <buildWrappers>
     <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.19">
       <strategy class="hudson.plugins.build_timeout.impl.NoActivityTimeOutStrategy">
-        <timeoutSecondsString>3000</timeoutSecondsString>
+        <timeoutSecondsString>300</timeoutSecondsString>
       </strategy>
       <operationList/>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
-    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.2">
+    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.3">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
     <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.40"/>

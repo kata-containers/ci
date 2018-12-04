@@ -1,7 +1,7 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Runs the popular docker images script</description>
+  <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <jenkins.model.BuildDiscarderProperty>
@@ -32,23 +32,17 @@
       <hudson.plugins.git.BranchSpec>
         <name>refs/heads/master</name>
       </hudson.plugins.git.BranchSpec>
-      <hudson.plugins.git.BranchSpec>
-        <name>*/master</name>
-      </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
     <submoduleCfg class="list"/>
     <extensions/>
   </scm>
-  <assignedNode>ubuntu-1604</assignedNode>
+  <assignedNode>fedora-28</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
-    <hudson.triggers.TimerTrigger>
-      <spec>0 0 * * 0</spec>
-    </hudson.triggers.TimerTrigger>
     <com.cloudbees.jenkins.GitHubPushTrigger plugin="github@1.29.3">
       <spec></spec>
     </com.cloudbees.jenkins.GitHubPushTrigger>
@@ -60,36 +54,13 @@
 
 set -e
 
-export ghprbPullId
-export ghprbTargetBranch
-export CI=true
+export USE_VSOCK=&quot;yes&quot;
 
-export GOPATH=${WORKSPACE}/go
-mkdir -p &quot;${GOPATH}&quot;
+cd $HOME
+git clone https://github.com/kata-containers/tests.git
+cd tests
 
-export GOROOT=&quot;/usr/local/go&quot;
-export PATH=${GOPATH}/bin:/usr/local/go/bin:/usr/sbin:/sbin:${PATH}
-
-tests_repo=&quot;${tests_repo:-github.com/kata-containers/tests}&quot;
-# Name of the repo that we are going to test
-export kata_repo=&quot;$1&quot;
-
-kata_repo_dir=&quot;${GOPATH}/src/${kata_repo}&quot;
-tests_repo_dir=&quot;${GOPATH}/src/${tests_repo}&quot;
-
-# Get the tests repository
-mkdir -p $(dirname &quot;${tests_repo_dir}&quot;)
-[ -d &quot;${tests_repo_dir}&quot; ] || git clone &quot;https://${tests_repo}.git&quot; &quot;${tests_repo_dir}&quot;
-
-${GOPATH}/src/${tests_repo}/.ci/install_go.sh -p -f
-&quot;${GOPATH}/src/${tests_repo}/cmd/container-manager/manage_ctr_mgr.sh&quot; docker configure -r runc -f
-
-cd ${GOPATH}/src/${tests_repo}
-.ci/setup.sh
-.ci/install_bats.sh
-
-cd ${GOPATH}/src/${tests_repo}/integration/popular_docker_hub_images/
-bats popular_docker_images.bats</command>
+.ci/jenkins_job_build.sh &quot;github.com/kata-containers/tests&quot;</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
@@ -127,12 +98,12 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
   <buildWrappers>
     <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.19">
       <strategy class="hudson.plugins.build_timeout.impl.NoActivityTimeOutStrategy">
-        <timeoutSecondsString>1200</timeoutSecondsString>
+        <timeoutSecondsString>300</timeoutSecondsString>
       </strategy>
       <operationList/>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
     <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.8.10"/>
-    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.2">
+    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.3">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
     <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.40"/>

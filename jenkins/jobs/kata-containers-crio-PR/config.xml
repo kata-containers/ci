@@ -6,17 +6,17 @@
   <properties>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
-        <daysToKeep>30</daysToKeep>
-        <numToKeep>30</numToKeep>
+        <daysToKeep>50</daysToKeep>
+        <numToKeep>50</numToKeep>
         <artifactDaysToKeep>30</artifactDaysToKeep>
         <artifactNumToKeep>30</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
-    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.2">
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.3">
       <projectUrl>https://github.com/kubernetes-incubator/cri-o/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
-    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.28">
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.29">
       <autoRebuild>false</autoRebuild>
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
@@ -130,17 +130,18 @@ pr_branch=&quot;PR_${pr_number}&quot;
 
 export ghprbGhRepository=&quot;${REPO_OWNER}/${REPO_NAME}&quot;
 export GOROOT=&quot;/usr/local/go&quot;
-export PATH=${GOPATH}/bin:/usr/local/go/bin:/usr/sbin:/sbin:${PATH}
+
 
 # Put our go area into the Jenkins job WORKSPACE tree
 export GOPATH=${WORKSPACE}/go
+export PATH=${GOPATH}/bin:/usr/local/go/bin:/usr/sbin:/sbin:${PATH}
 mkdir -p &quot;${GOPATH}&quot;
 
 git config --global user.email &quot;katacontainersbot@gmail.com&quot;
 git config --global user.name &quot;Kata Containers Bot&quot;
 
 # CRI-O repository
-crio_repo=&quot;github.com/kubernetes-incubator/cri-o&quot;
+crio_repo=&quot;github.com/kubernetes-sigs/cri-o&quot;
 # Kata Containers Tests repository
 tests_repo=&quot;github.com/kata-containers/tests&quot;
 
@@ -230,6 +231,6 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
     <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.2">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
-    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.37"/>
+    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.40"/>
   </buildWrappers>
 </project>
