@@ -155,6 +155,23 @@ $ export PATH=/usr/local/go/bin:$PATH
 and follow the instructions on the [metrics VMs](https://github.com/kata-containers/ci/tree/master/VMs/metrics#example)
 page to complete the installation ready to deploy the instance into the CI Jenkins master.
 
+## Configuring checkmetrics
+
+A metrics machine must have a valid `checkmetrics` configuration file in `/etc/checkmetrics`
+in order to verify the metrics CI results.
+
+To aid setup of this file on the bare metal metrics slaves, the `add_checkmetrics.yaml`
+ansible script can be used. A local checkmetrics toml file must be present in the same
+directory where you execute the script, with the name form `checkmetrics-json-<uname>.toml`,
+where `<uname>` is the name of the remote slave, as set in `create_packet.yaml`, and returned
+by `uname -n` on that slave.
+
+To copy the toml file to the slave, edit the `add_checkmetrics.yaml` file, replacing
+`AAA.BBB.CCC.DDD` with the IP address of the instance. Then execute the following:
+
+```bash
+$ ansible-playbook add_checkmetrics.yaml
+```
 
 ## Integration into the Jenkins master
 
