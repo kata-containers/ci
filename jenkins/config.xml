@@ -714,14 +714,48 @@ sudo dd if=/dev/zero of=$device bs=128M count=1</initScript>
       <filterQueue>false</filterQueue>
       <properties class="hudson.model.View$PropertyList"/>
     </hudson.model.AllView>
+    <hudson.plugins.sectioned__view.SectionedView plugin="sectioned-view@1.25">
+      <owner class="hudson" reference="../../.."/>
+      <name>CI Status</name>
+      <description>This View shows the status of the CI jobs and tests.</description>
+      <filterExecutors>false</filterExecutors>
+      <filterQueue>false</filterQueue>
+      <properties class="hudson.model.View$PropertyList"/>
+      <sections>
+        <hudson.plugins.sectioned__view.TextSection>
+          <jobNames>
+            <comparator class="hudson.util.CaseInsensitiveComparator"/>
+          </jobNames>
+          <jobFilters/>
+          <name>Known flaky tests</name>
+          <width>HALF</width>
+          <alignment>LEFT</alignment>
+          <text>- package manager update test check apt-get update
+   issue: https://github.com/kata-containers/tests/issues/1002
+</text>
+          <style>NOTE</style>
+        </hudson.plugins.sectioned__view.TextSection>
+        <hudson.plugins.sectioned__view.TextSection>
+          <jobNames>
+            <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../hudson.plugins.sectioned__view.TextSection/jobNames/comparator"/>
+          </jobNames>
+          <jobFilters/>
+          <name>Unstable Jobs</name>
+          <width>HALF</width>
+          <alignment>RIGHT</alignment>
+          <text>- Debian Jobs.
+- Power 8 Job on proxy repo.
+- ARM CI failing (only on runtime repository checks)
+  - https://github.com/kata-containers/runtime/pull/1186#issuecomment-458902179
+  - https://github.com/kata-containers/ci/issues/30#issuecomment-460768777</text>
+          <style>NOTE</style>
+        </hudson.plugins.sectioned__view.TextSection>
+      </sections>
+    </hudson.plugins.sectioned__view.SectionedView>
   </views>
   <primaryView>all</primaryView>
   <slaveAgentPort>-1</slaveAgentPort>
-  <disabledAgentProtocols>
-    <string>JNLP-connect</string>
-    <string>JNLP2-connect</string>
-  </disabledAgentProtocols>
-  <label></label>
+  <label>master</label>
   <crumbIssuer class="hudson.security.csrf.DefaultCrumbIssuer">
     <excludeClientIPFromCrumb>true</excludeClientIPFromCrumb>
   </crumbIssuer>
