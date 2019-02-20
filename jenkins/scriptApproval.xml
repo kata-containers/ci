@@ -1,5 +1,5 @@
 <?xml version='1.1' encoding='UTF-8'?>
-<scriptApproval plugin="script-security@1.46">
+<scriptApproval plugin="script-security@1.48">
   <approvedScriptHashes>
     <string>017d0db438428731cd600b6ebda805065433520f</string>
   </approvedScriptHashes>
