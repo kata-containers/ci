@@ -1,7 +1,7 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description></description>
+  <description>runtime master builds for metrics tracking (via ELK injection)</description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <jenkins.model.BuildDiscarderProperty>
@@ -13,7 +13,7 @@
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
     <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.3">
-      <projectUrl>https://github.com/kata-containers/agent/</projectUrl>
+      <projectUrl>https://github.com/kata-containers/runtime/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
     <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.29">
@@ -25,7 +25,7 @@
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
-        <url>https://github.com/kata-containers/agent.git</url>
+        <url>https://github.com/kata-containers/runtime.git</url>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
@@ -37,7 +37,7 @@
     <submoduleCfg class="list"/>
     <extensions/>
   </scm>
-  <assignedNode>centos-7 || centos7_azure</assignedNode>
+  <assignedNode>x86-ubuntu-1604 &amp;&amp; x86_metrics_master_slave</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
@@ -56,12 +56,17 @@ set -e
 
 export ghprbPullId
 export ghprbTargetBranch
+export METRICS_CI=1
 
 cd $HOME
 git clone https://github.com/kata-containers/tests.git
 cd tests
 
-.ci/jenkins_job_build.sh &quot;github.com/kata-containers/agent&quot;</command>
+.ci/jenkins_job_build.sh &quot;github.com/kata-containers/runtime&quot;
+
+echo &quot;Run the metrics tests&quot;
+.ci/run_metrics_PR_ci.sh
+</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
@@ -83,12 +88,17 @@ export GOROOT=&quot;/usr/local/go&quot;&#xd;
 export PATH=${GOPATH}/bin:/usr/local/go/bin:/usr/sbin:/usr/local/bin:${PATH}&#xd;
 &#xd;
 cd $GOPATH/src/github.com/kata-containers/tests&#xd;
-.ci/teardown.sh &quot;$WORKSPACE/artifacts&quot;</script>
+.ci/teardown.sh &quot;$WORKSPACE/artifacts&quot;&#xd;
+&#xd;
+# And ensure the workspace tree is all owned by us before we quit, otherwise the later&#xd;
+# `delete workspace before run` may fail on file perms (as some tests leave things owned by root).&#xd;
+sudo chown -R ${USER} ${WORKSPACE}&#xd;
+sudo chgrp -R $(id -ng) ${WORKSPACE}</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
     <hudson.tasks.ArtifactArchiver>
-      <artifacts>artifacts/*</artifacts>
+      <artifacts>go/src/github.com/kata-containers/tests/metrics/results/*.json</artifacts>
       <allowEmptyArchive>true</allowEmptyArchive>
       <onlyIfSuccessful>false</onlyIfSuccessful>
       <fingerprint>false</fingerprint>
@@ -97,6 +107,20 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
     </hudson.tasks.ArtifactArchiver>
   </publishers>
   <buildWrappers>
+    <hudson.plugins.ws__cleanup.PreBuildCleanup plugin="ws-cleanup@0.36">
+      <deleteDirs>false</deleteDirs>
+      <cleanupParameter></cleanupParameter>
+      <externalDelete></externalDelete>
+      <disableDeferredWipeout>false</disableDeferredWipeout>
+    </hudson.plugins.ws__cleanup.PreBuildCleanup>
+    <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.17">
+      <bindings>
+        <org.jenkinsci.plugins.credentialsbinding.impl.StringBinding>
+          <credentialsId>15f86f95-ff9c-4ec9-a51c-644549625bdb</credentialsId>
+          <variable>CODECOV_TOKEN</variable>
+        </org.jenkinsci.plugins.credentialsbinding.impl.StringBinding>
+      </bindings>
+    </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
     <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.19">
       <strategy class="hudson.plugins.build_timeout.impl.NoActivityTimeOutStrategy">
         <timeoutSecondsString>300</timeoutSecondsString>
@@ -107,6 +131,5 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
     <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.3">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
-    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.41"/>
   </buildWrappers>
 </project>

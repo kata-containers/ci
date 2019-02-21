@@ -12,7 +12,7 @@
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
-    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.2">
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.3">
       <projectUrl>https://github.com/kata-containers/agent/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
@@ -39,7 +39,7 @@
     <submoduleCfg class="list"/>
     <extensions/>
   </scm>
-  <assignedNode>ubuntu-1604</assignedNode>
+  <assignedNode>ubuntu-1604 || ubuntu1604_azure</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
@@ -141,7 +141,7 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
     </hudson.tasks.ArtifactArchiver>
   </publishers>
   <buildWrappers>
-    <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.16">
+    <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.17">
       <bindings>
         <org.jenkinsci.plugins.credentialsbinding.impl.StringBinding>
           <credentialsId>e4bdbb8b-5524-4799-98b2-eda8fa69cec0</credentialsId>
@@ -155,9 +155,9 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
       </strategy>
       <operationList/>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
-    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.2">
+    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.3">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
-    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.40"/>
+    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.41"/>
   </buildWrappers>
 </project>

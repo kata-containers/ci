@@ -167,7 +167,7 @@ sudo chgrp -R $(id -ng) ${WORKSPACE}</script>
     </hudson.tasks.ArtifactArchiver>
   </publishers>
   <buildWrappers>
-    <hudson.plugins.ws__cleanup.PreBuildCleanup plugin="ws-cleanup@0.36">
+    <hudson.plugins.ws__cleanup.PreBuildCleanup plugin="ws-cleanup@0.37">
       <deleteDirs>false</deleteDirs>
       <cleanupParameter></cleanupParameter>
       <externalDelete></externalDelete>
@@ -187,6 +187,7 @@ sudo chgrp -R $(id -ng) ${WORKSPACE}</script>
       </strategy>
       <operationList/>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
+    <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.8.10"/>
     <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.3">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>

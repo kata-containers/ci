@@ -12,7 +12,7 @@
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
-    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.2">
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.3">
       <projectUrl>https://github.com/kata-containers/tests/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
@@ -37,13 +37,13 @@
     <submoduleCfg class="list"/>
     <extensions/>
   </scm>
-  <assignedNode>ubuntu-1604</assignedNode>
+  <assignedNode>ubuntu-1604 || ubuntu1604_azure</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
-    <com.cloudbees.jenkins.GitHubPushTrigger plugin="github@1.29.2">
+    <com.cloudbees.jenkins.GitHubPushTrigger plugin="github@1.29.3">
       <spec></spec>
     </com.cloudbees.jenkins.GitHubPushTrigger>
   </triggers>
@@ -97,6 +97,12 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
     </hudson.tasks.ArtifactArchiver>
   </publishers>
   <buildWrappers>
+    <hudson.plugins.ws__cleanup.PreBuildCleanup plugin="ws-cleanup@0.37">
+      <deleteDirs>false</deleteDirs>
+      <cleanupParameter></cleanupParameter>
+      <externalDelete></externalDelete>
+      <disableDeferredWipeout>false</disableDeferredWipeout>
+    </hudson.plugins.ws__cleanup.PreBuildCleanup>
     <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.19">
       <strategy class="hudson.plugins.build_timeout.impl.NoActivityTimeOutStrategy">
         <timeoutSecondsString>300</timeoutSecondsString>
@@ -104,9 +110,9 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
       <operationList/>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
     <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.8.10"/>
-    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.2">
+    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.3">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
-    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.40"/>
+    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.41"/>
   </buildWrappers>
 </project>

@@ -37,7 +37,7 @@
     <submoduleCfg class="list"/>
     <extensions/>
   </scm>
-  <assignedNode>ubuntu-1604</assignedNode>
+  <assignedNode>ubuntu-1604 || ubuntu1604_azure</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
@@ -124,9 +124,9 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
       <operationList/>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
     <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.8.10"/>
-    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.2">
+    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.3">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
-    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.40"/>
+    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.41"/>
   </buildWrappers>
 </project>

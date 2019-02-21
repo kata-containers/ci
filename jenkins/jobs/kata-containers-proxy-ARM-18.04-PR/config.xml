@@ -177,7 +177,7 @@ sudo chgrp -R $(id -ng) ${WORKSPACE}</script>
       </strategy>
       <operationList/>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
-    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.3">
+    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.6.0">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
   </buildWrappers>

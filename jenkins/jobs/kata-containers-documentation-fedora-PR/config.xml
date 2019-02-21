@@ -21,7 +21,7 @@
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.1">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0-rc">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -39,7 +39,7 @@
     <submoduleCfg class="list"/>
     <extensions/>
   </scm>
-  <assignedNode>fedora-28</assignedNode>
+  <assignedNode>fedora-28 || fedora_azure</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
@@ -141,6 +141,6 @@ git rebase &quot;origin/${ghprbTargetBranch}&quot;
     <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.3">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
-    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.40"/>
+    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.42"/>
   </buildWrappers>
 </project>
