@@ -12,14 +12,6 @@
   <description>Job for running the e2e conformance tests from sonobuoy using Kata Containers and containerd.</description>
   <keepDependencies>false</keepDependencies>
   <properties>
-    <org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
-      <triggers>
-        <hudson.triggers.TimerTrigger>
-          <spec>TZ=America/Mexico_City
-H 0 * * *</spec>
-        </hudson.triggers.TimerTrigger>
-      </triggers>
-    </org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
     <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.3">
       <projectUrl>https://github.com/kata-containers/runtime/</projectUrl>
       <displayName></displayName>
@@ -28,11 +20,22 @@ H 0 * * *</spec>
       <autoRebuild>false</autoRebuild>
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
+    <org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
+      <triggers>
+        <hudson.triggers.TimerTrigger>
+          <spec>TZ=America/Mexico_City
+H 0 * * *</spec>
+        </hudson.triggers.TimerTrigger>
+      </triggers>
+    </org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
   </properties>
   <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.63">
     <script>pipeline{
-    agent { label &quot;ubuntu1604_azure&quot; }
-    
+    agent { label &quot;ubuntu1804_azure&quot; }
+    options {
+        timeout(time: 3, unit: &apos;HOURS&apos;)
+    }
+
     environment {
         CI_JOB       = &quot;CRI_CONTAINERD_K8S&quot;
         CI           = &quot;true&quot;
@@ -42,20 +45,20 @@ H 0 * * *</spec>
         RUNTIME_PATH = &quot;/usr/bin/kata-runtime&quot;
         RUNTIME      = &quot;kata-runtime&quot;
     }
-    
+
     stages {
         stage(&apos;Setup Environment&apos;) {
             steps {
                 sh &apos;&apos;&apos;
                 env
-				cd $HOME
-				git clone https://github.com/kata-containers/tests.git
-				cd tests
-				.ci/jenkins_job_build.sh &quot;github.com/kata-containers/runtime&quot;
+                                cd $HOME
+                                git clone https://github.com/kata-containers/tests.git
+                                cd tests
+                                .ci/jenkins_job_build.sh &quot;github.com/kata-containers/runtime&quot;
                 &apos;&apos;&apos;
             }
         }
-        
+
         stage(&apos;Initialize Kubernetes&apos;) {
             steps {
                 sh &apos;&apos;&apos;
