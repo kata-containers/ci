@@ -104,6 +104,26 @@
         name: unattended-upgrades
         state: absent
 
+    # We really don't want things happening in the background whilst
+    # we try to take stable measurements.
+    - name: Mask apt-daily.timer
+      systemd:
+        name: apt-daily.timer
+        state: stopped
+        enabled: false
+
+    - name: Mask apt-daily-upgrade.timer
+      systemd:
+        name: apt-daily-upgrade.timer
+        state: stopped
+        enabled: false
+
+    - name: Mask systemd-tmpfiles-clean.timer
+      systemd:
+        name: systemd-tmpfiles-clean.timer
+        state: stopped
+        enabled: false
+
     - name: Set golang in PATH
       copy:
         dest: /etc/profile.d/custom-path.sh
