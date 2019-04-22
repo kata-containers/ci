@@ -42,12 +42,12 @@ different for other distributions.
 
 | Dependency | Ubuntu package or method |
 | ----------- | ------------------------ |
-| go | Install latest from [golang.org](golang.org) |
+| go | Install latest from [golang.org](https://golang.org) |
 | jre | package default-jre |
 | libvirt | package libvirt-bin |
 | qemu-kvm | package qemu-kvm |
 | virtinst | package virtinst |
-| yq | Install latest with `go get` from [mikefarah/yq](github.com/mikefarah/yq)|
+| yq | Install latest with `go get` from [mikefarah/yq](https://github.com/mikefarah/yq)|
 
 ## The scripts
 
