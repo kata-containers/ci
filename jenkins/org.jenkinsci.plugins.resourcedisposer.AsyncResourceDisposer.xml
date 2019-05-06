@@ -5,7 +5,32 @@
     <unserializable-parents/>
     <java.util.Collections_-SetFromMap>
       <default>
-        <m class="concurrent-hash-map"/>
+        <m class="concurrent-hash-map">
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.37">
+                <node>arm01_slave</node>
+                <path>/home/jenkins/workspace/kata-containers-tests-ARM-18.04-PR_ws-cleanup_1555338528635</path>
+              </disposable>
+              <registered>2019-04-15 14:28:48.998 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace arm01_slave:/home/jenkins/workspace/kata-containers-tests-ARM-18.04-PR_ws-cleanup_1555338528635</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.37">
+                <node>arm01_slave</node>
+                <path>/home/jenkins/workspace/kata-containers-runtime-ARM-18.04-PR_ws-cleanup_1555556182977</path>
+              </disposable>
+              <registered>2019-04-18 02:56:23.374 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace arm01_slave:/home/jenkins/workspace/kata-containers-runtime-ARM-18.04-PR_ws-cleanup_1555556182977</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+        </m>
       </default>
     </java.util.Collections_-SetFromMap>
   </backlog>

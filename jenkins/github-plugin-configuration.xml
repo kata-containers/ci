@@ -1,10 +1,16 @@
 <?xml version='1.1' encoding='UTF-8'?>
-<github-plugin-configuration plugin="github@1.29.3">
+<github-plugin-configuration plugin="github@1.29.4">
   <configs>
     <github-server-config>
       <apiUrl>https://api.github.com</apiUrl>
       <manageHooks>true</manageHooks>
       <credentialsId>7515f144-2a26-4537-9685-c110b0a41e80</credentialsId>
+      <clientCacheSize>20</clientCacheSize>
+    </github-server-config>
+    <github-server-config>
+      <apiUrl>https://api.github.com</apiUrl>
+      <manageHooks>true</manageHooks>
+      <credentialsId>420d12df-2c7f-4f33-abd0-868fd1b08ac4</credentialsId>
       <clientCacheSize>20</clientCacheSize>
     </github-server-config>
   </configs>

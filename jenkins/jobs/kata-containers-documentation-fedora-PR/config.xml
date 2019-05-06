@@ -39,7 +39,7 @@
     <submoduleCfg class="list"/>
     <extensions/>
   </scm>
-  <assignedNode>fedora-28 || fedora_azure</assignedNode>
+  <assignedNode>fedora_azure</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
@@ -103,15 +103,20 @@ export ghprbPullId
 export ghprbTargetBranch
 export CI=true
 
-cd $HOME
-git clone https://github.com/kata-containers/tests.git
-cd tests
-
-.ci/install_go.sh -p
-
 export GOPATH=${WORKSPACE}/go
 export GOROOT=&quot;/usr/local/go&quot;
 export PATH=${GOPATH}/bin:/usr/local/go/bin:/usr/sbin:/sbin:${PATH}
+
+tests_repo_dir=&quot;${GOPATH}/src/github.com/kata-containers/tests&quot;
+mkdir -p &quot;${tests_repo_dir}&quot;
+
+git clone https://github.com/kata-containers/tests.git &quot;${tests_repo_dir}&quot;
+cd &quot;${tests_repo_dir}&quot;
+
+sudo dnf install -y make
+
+.ci/install_go.sh -p
+
 go get -d github.com/kata-containers/documentation || true
 
 cd &quot;${GOPATH}/src/github.com/kata-containers/documentation&quot;

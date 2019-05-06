@@ -6,17 +6,17 @@
   <properties>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
-        <daysToKeep>50</daysToKeep>
-        <numToKeep>50</numToKeep>
+        <daysToKeep>30</daysToKeep>
+        <numToKeep>100</numToKeep>
         <artifactDaysToKeep>30</artifactDaysToKeep>
         <artifactNumToKeep>30</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
-    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.3">
-      <projectUrl>https://github.com/kubernetes-incubator/cri-o/</projectUrl>
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.4">
+      <projectUrl>https://github.com/cri-o/cri-o/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
-    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.29">
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.30">
       <autoRebuild>false</autoRebuild>
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
@@ -104,7 +104,7 @@
     </hudson.model.ParametersDefinitionProperty>
   </properties>
   <scm class="hudson.scm.NullSCM"/>
-  <assignedNode>ubuntu1604-azure</assignedNode>
+  <assignedNode>ubuntu1604_azure</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
@@ -125,12 +125,15 @@ export PULL_BASE_REF
 export REPO_NAME
 export REPO_OWNER
 
+export LVM_DEVICE=/dev/sdb
+
 pr_number=&quot;${PULL_NUMBER}&quot;
 pr_branch=&quot;PR_${pr_number}&quot;
 
 export ghprbGhRepository=&quot;${REPO_OWNER}/${REPO_NAME}&quot;
 export GOROOT=&quot;/usr/local/go&quot;
 
+export JOBS=1
 
 # Put our go area into the Jenkins job WORKSPACE tree
 export GOPATH=${WORKSPACE}/go
@@ -141,7 +144,7 @@ git config --global user.email &quot;katacontainersbot@gmail.com&quot;
 git config --global user.name &quot;Kata Containers Bot&quot;
 
 # CRI-O repository
-crio_repo=&quot;github.com/kubernetes-sigs/cri-o&quot;
+crio_repo=&quot;github.com/cri-o/cri-o&quot;
 # Kata Containers Tests repository
 tests_repo=&quot;github.com/kata-containers/tests&quot;
 
@@ -166,6 +169,9 @@ git fetch origin &quot;pull/${pr_number}/head:${pr_branch}&quot;
 git checkout &quot;${pr_branch}&quot;
 git rebase &quot;origin/${PULL_BASE_REF}&quot;
 
+# And show what we rebased on top of to aid debugging
+git log --oneline master~1..HEAD
+
 # Run kata-containers setup
 cd &quot;${GOPATH}/src/${tests_repo}&quot;
 .ci/setup.sh
@@ -176,10 +182,10 @@ if systemctl is-active --quiet crio; then
 	sudo systemctl stop crio
 fi
 
-echo &quot;Ensure docker service is stopped before running the tests&quot;
-if systemctl is-active --quiet docker; then
-	sudo systemctl stop docker
-fi
+# echo &quot;Ensure docker service is stopped before running the tests&quot;
+# if systemctl is-active --quiet docker; then
+#	sudo systemctl stop docker
+# fi
 
 # Execute CRI-O tests using kata-containers runtime
 echo &quot;CRI-O Version to test:&quot;
@@ -228,10 +234,10 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
       </strategy>
       <operationList/>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
-    <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.8.10"/>
+    <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.9"/>
     <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.3">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
-    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.41"/>
+    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.44"/>
   </buildWrappers>
 </project>
