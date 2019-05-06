@@ -13,7 +13,7 @@
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
     <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.3">
-      <projectUrl>https://github.com/kata-containers/agent/</projectUrl>
+      <projectUrl>https://github.com/kata-containers/proxy/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
     <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.29">
@@ -21,13 +21,13 @@
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.1">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0-rc">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
         <name>origin</name>
         <refspec>+refs/pull/${ghprbPullId}/*:refs/remotes/origin/pr/${ghprbPullId}/*</refspec>
-        <url>https://github.com/kata-containers/agent.git</url>
+        <url>https://github.com/kata-containers/proxy.git</url>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
@@ -39,7 +39,7 @@
     <submoduleCfg class="list"/>
     <extensions/>
   </scm>
-  <assignedNode>ubuntu1604_azure</assignedNode>
+  <assignedNode>centos7_azure</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
@@ -53,7 +53,7 @@
       <orgslist>kata-containers</orgslist>
       <cron>H/5 * * * *</cron>
       <buildDescTemplate></buildDescTemplate>
-      <onlyTriggerPhrase>false</onlyTriggerPhrase>
+      <onlyTriggerPhrase>true</onlyTriggerPhrase>
       <useGitHubHooks>true</useGitHubHooks>
       <permitAll>false</permitAll>
       <whitelist></whitelist>
@@ -82,7 +82,7 @@
           <overrideGlobal>false</overrideGlobal>
         </org.jenkinsci.plugins.ghprb.extensions.build.GhprbCancelBuildsOnUpdate>
         <org.jenkinsci.plugins.ghprb.extensions.status.GhprbSimpleStatus>
-          <commitStatusContext>jenkins-ci-ubuntu-16-04-firecracker</commitStatusContext>
+          <commitStatusContext>jenkins-ci-centos-7-4-firecracker</commitStatusContext>
           <triggeredStatus>Build triggered</triggeredStatus>
           <startedStatus>Build running</startedStatus>
           <statusUrl></statusUrl>
@@ -109,7 +109,7 @@ cd $HOME
 git clone https://github.com/kata-containers/tests.git
 cd tests
 
-.ci/jenkins_job_build.sh &quot;github.com/kata-containers/agent&quot;</command>
+.ci/jenkins_job_build.sh &quot;github.com/kata-containers/proxy&quot;</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
@@ -148,7 +148,7 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
     <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.17">
       <bindings>
         <org.jenkinsci.plugins.credentialsbinding.impl.StringBinding>
-          <credentialsId>e4bdbb8b-5524-4799-98b2-eda8fa69cec0</credentialsId>
+          <credentialsId>62ba7b0f-6f74-4674-8c0f-31b928acbebc</credentialsId>
           <variable>CODECOV_TOKEN</variable>
         </org.jenkinsci.plugins.credentialsbinding.impl.StringBinding>
       </bindings>
