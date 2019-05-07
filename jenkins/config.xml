@@ -3,7 +3,7 @@
   <disabledAdministrativeMonitors>
     <string>hudson.diagnosis.TooManyJobsButNoView</string>
   </disabledAdministrativeMonitors>
-  <version>2.150.3</version>
+  <version>2.164.2</version>
   <installStateName>RUNNING</installStateName>
   <numExecutors>1</numExecutors>
   <mode>EXCLUSIVE</mode>
@@ -136,7 +136,7 @@
   <viewsTabBar class="hudson.views.DefaultViewsTabBar"/>
   <myViewsTabBar class="hudson.views.DefaultMyViewsTabBar"/>
   <clouds>
-    <jenkins.plugins.openstack.compute.JCloudsCloud plugin="openstack-cloud@2.42">
+    <jenkins.plugins.openstack.compute.JCloudsCloud plugin="openstack-cloud@2.44">
       <name>vexxhost</name>
       <credentialId>kata-openstack-credentials</credentialId>
       <endPointUrl>https://auth.vexxhost.net/v3</endPointUrl>
@@ -221,6 +221,19 @@
               </launcherFactory>
             </slaveOptions>
           </jenkins.plugins.openstack.compute.JCloudsSlaveTemplate>
+          <jenkins.plugins.openstack.compute.JCloudsSlaveTemplate>
+            <name>ubuntu-1804</name>
+            <labelString>ubuntu-1804</labelString>
+            <slaveOptions>
+              <bootSource class="jenkins.plugins.openstack.compute.slaveopts.BootSource$Image">
+                <name>Ubuntu 18.04 LTS (x86_64) [2018-05-09]</name>
+              </bootSource>
+              <userDataId>bd93267e-7277-44bc-b8e0-6ed5fbdd805a</userDataId>
+              <launcherFactory class="jenkins.plugins.openstack.compute.slaveopts.LauncherFactory$SSH">
+                <credentialsId>41ae6468-60e0-45a5-8278-099ba98fdd63</credentialsId>
+              </launcherFactory>
+            </slaveOptions>
+          </jenkins.plugins.openstack.compute.JCloudsSlaveTemplate>
         </c>
         <list reference="../c"/>
       </templates>
@@ -232,7 +245,7 @@
         <retentionTime>0</retentionTime>
       </slaveOptions>
     </jenkins.plugins.openstack.compute.JCloudsCloud>
-    <com.google.jenkins.plugins.computeengine.ComputeEngineCloud plugin="google-compute-engine@1.0.10">
+    <com.google.jenkins.plugins.computeengine.ComputeEngineCloud plugin="google-compute-engine@3.0.0">
       <name>gce-kata-containers gce</name>
       <instanceCap>3</instanceCap>
       <projectId>kata-containers</projectId>
@@ -296,11 +309,13 @@ git config --global user.name &quot;Kata Containers Bot&quot;
           <retentionTimeMinutesStr>10</retentionTimeMinutesStr>
           <launchTimeoutSecondsStr>600</launchTimeoutSecondsStr>
           <bootDiskSizeGbStr>15</bootDiskSizeGbStr>
+          <oneShot>false</oneShot>
           <template></template>
           <windows>false</windows>
           <windowsPasswordCredentialsId></windowsPasswordCredentialsId>
           <windowsPrivateKeyCredentialsId></windowsPrivateKeyCredentialsId>
           <windowsConfig/>
+          <createSnapshot>false</createSnapshot>
           <remoteFs>/tmp</remoteFs>
           <googleLabels>
             <entry>
@@ -319,7 +334,7 @@ git config --global user.name &quot;Kata Containers Bot&quot;
         </com.google.jenkins.plugins.computeengine.InstanceConfiguration>
       </configurations>
     </com.google.jenkins.plugins.computeengine.ComputeEngineCloud>
-    <com.microsoft.azure.vmagent.AzureVMCloud plugin="azure-vm-agents@0.8.0">
+    <com.microsoft.azure.vmagent.AzureVMCloud plugin="azure-vm-agents@0.9.0">
       <name>AzureVMAgents</name>
       <cloudName>AzureVMAgents</cloudName>
       <credentialsId>6fd57ac9-f917-468f-8231-5f820311655c</credentialsId>
@@ -480,7 +495,7 @@ sudo dd if=/dev/zero of=$device bs=128M count=1</initScript>
           <nsgName></nsgName>
           <jvmOptions></jvmOptions>
           <templateDisabled>false</templateDisabled>
-          <templateStatusDetails></templateStatusDetails>
+          <templateStatusDetails>Failed to create storage account with account name katastg, location eastus2, resourceGroupName kataCI: Status code 502, {&quot;error&quot;:{&quot;code&quot;:&quot;InvalidGatewayHost&quot;,&quot;message&quot;:&quot;Host name resolution failed for &apos;Microsoft.Storage&apos;; cannot fulfill the request.&quot;}}</templateStatusDetails>
           <templateVerified>false</templateVerified>
           <executeInitScriptAsRoot>false</executeInitScriptAsRoot>
           <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
@@ -575,7 +590,7 @@ echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers</initScri
           <isInstallGit>false</isInstallGit>
           <isInstallMaven>false</isInstallMaven>
           <isInstallDocker>false</isInstallDocker>
-          <image>https://katastg.blob.core.windows.net/kata/Fedora-Cloud-Azure-28-1.1.x86_64.vhd</image>
+          <image>https://katastg.blob.core.windows.net/kata/Fedora-Cloud-Azure-28-kernel-5.0.x86_64.Large.vhd</image>
           <osType>Linux</osType>
           <agentLaunchMethod>SSH</agentLaunchMethod>
           <preInstallSsh>true</preInstallSsh>
@@ -616,7 +631,7 @@ sudo dnf install -y java-1.8.0-openjdk </initScript>
         <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
           <templateName>ubuntu1804-azure</templateName>
           <templateDesc>ubuntu 1804 azure image</templateDesc>
-          <labels>ubuntu1804_azure ubuntu1804-azure</labels>
+          <labels>ubuntu1804_azure ubuntu1804-azure ubuntu-lts-latest-azure</labels>
           <location>East US 2</location>
           <availabilityType>unknown</availabilityType>
           <virtualMachineSize>Standard_D4s_v3</virtualMachineSize>
@@ -699,9 +714,222 @@ sudo dd if=/dev/zero of=$device bs=128M count=1</initScript>
           <enableMSI>false</enableMSI>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
         </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
+        <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
+          <templateName>opensuse15-azure</templateName>
+          <templateDesc>openSUSE Leap 15.0</templateDesc>
+          <labels>opensuse15_azure opensuse15-azure</labels>
+          <location>East US 2</location>
+          <availabilityType>unknown</availabilityType>
+          <virtualMachineSize>Standard_D4s_v3</virtualMachineSize>
+          <storageAccountNameReferenceType>new</storageAccountNameReferenceType>
+          <diskType>managed</diskType>
+          <osDiskSize>0</osDiskSize>
+          <newStorageAccountName>katastg</newStorageAccountName>
+          <existingStorageAccountName>katastg</existingStorageAccountName>
+          <storageAccountType>Standard_LRS</storageAccountType>
+          <noOfParallelJobs>1</noOfParallelJobs>
+          <usageMode>EXCLUSIVE</usageMode>
+          <shutdownOnIdle>false</shutdownOnIdle>
+          <imageTopLevelType>advanced</imageTopLevelType>
+          <imageReferenceType>reference</imageReferenceType>
+          <builtInImage>Windows Server 2016</builtInImage>
+          <isInstallGit>false</isInstallGit>
+          <isInstallMaven>false</isInstallMaven>
+          <isInstallDocker>false</isInstallDocker>
+          <osType>Linux</osType>
+          <imagePublisher>SUSE</imagePublisher>
+          <imageOffer>openSUSE-Leap</imageOffer>
+          <imageSku>15-0</imageSku>
+          <imageVersion>latest</imageVersion>
+          <agentLaunchMethod>SSH</agentLaunchMethod>
+          <preInstallSsh>false</preInstallSsh>
+          <initScript>#!/bin/bash
+
+set -x
+
+sudo zypper refresh
+sudo zypper -n install git
+sudo zypper -n install gcc
+sudo zypper -n install python
+sudo zypper -n install make
+
+# Install docker
+sudo zypper -n install yum-utils
+sudo zypper removelock docker
+sudo zypper -n  install &apos;docker&lt;18.09&apos;
+sudo zypper addlock docker
+
+sudo systemctl start docker
+sudo gpasswd -a jenkins docker
+sudo chmod g+rw /var/run/docker.sock
+
+# Install Java JRE and JDK for Jenkins agent
+sudo zypper -n install java-1_8_0-openjdk
+
+echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers
+
+sudo zypper removelock docker
+</initScript>
+          <credentialsId>a6317428-9508-4ce9-b123-82742f45ec74</credentialsId>
+          <agentWorkspace>/tmp/jenkins</agentWorkspace>
+          <retentionTimeInMin>0</retentionTimeInMin>
+          <virtualNetworkName></virtualNetworkName>
+          <virtualNetworkResourceGroupName></virtualNetworkResourceGroupName>
+          <subnetName></subnetName>
+          <usePrivateIP>false</usePrivateIP>
+          <nsgName></nsgName>
+          <jvmOptions></jvmOptions>
+          <templateDisabled>false</templateDisabled>
+          <templateStatusDetails></templateStatusDetails>
+          <templateVerified>false</templateVerified>
+          <executeInitScriptAsRoot>true</executeInitScriptAsRoot>
+          <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
+          <enableMSI>false</enableMSI>
+          <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
+        </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
+        <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
+          <templateName>sles12-sp3-azure</templateName>
+          <templateDesc>sles 12 sp3</templateDesc>
+          <labels>sles12-azure sles12_azure</labels>
+          <location>East US 2</location>
+          <availabilityType>unknown</availabilityType>
+          <virtualMachineSize>Standard_D4s_v3</virtualMachineSize>
+          <storageAccountNameReferenceType>new</storageAccountNameReferenceType>
+          <diskType>managed</diskType>
+          <osDiskSize>0</osDiskSize>
+          <newStorageAccountName>katastg</newStorageAccountName>
+          <existingStorageAccountName>katastg</existingStorageAccountName>
+          <storageAccountType>Standard_LRS</storageAccountType>
+          <noOfParallelJobs>1</noOfParallelJobs>
+          <usageMode>EXCLUSIVE</usageMode>
+          <shutdownOnIdle>false</shutdownOnIdle>
+          <imageTopLevelType>advanced</imageTopLevelType>
+          <imageReferenceType>reference</imageReferenceType>
+          <builtInImage>Windows Server 2016</builtInImage>
+          <isInstallGit>false</isInstallGit>
+          <isInstallMaven>false</isInstallMaven>
+          <isInstallDocker>false</isInstallDocker>
+          <osType>Linux</osType>
+          <imagePublisher>SUSE</imagePublisher>
+          <imageOffer>SLES-Standard</imageOffer>
+          <imageSku>12-SP3</imageSku>
+          <imageVersion>latest</imageVersion>
+          <agentLaunchMethod>SSH</agentLaunchMethod>
+          <preInstallSsh>false</preInstallSsh>
+          <initScript>#!/bin/bash
+
+set -x
+
+sudo zypper -n install git 
+sudo zypper -n install gcc
+sudo zypper -n install python
+sudo zypper -n install make
+
+sudo getenforce
+sudo setenforce 0
+
+# Install docker
+sudo zypper -n install yum-utils
+sudo zypper removelock docker
+sudo zypper -n  install &apos;docker&lt;18.09&apos;
+sudo zypper addlock docker
+
+sudo systemctl start docker
+sudo gpasswd -a jenkins docker
+sudo chmod g+rw /var/run/docker.sock
+
+# Install Java JRE and JDK for Jenkins agent
+sudo zypper -n install java-1_8_0-openjdk
+
+echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers
+sudo zypper removelock docker
+</initScript>
+          <credentialsId>a6317428-9508-4ce9-b123-82742f45ec74</credentialsId>
+          <agentWorkspace>/tmp/jenkins</agentWorkspace>
+          <retentionTimeInMin>0</retentionTimeInMin>
+          <virtualNetworkName></virtualNetworkName>
+          <virtualNetworkResourceGroupName></virtualNetworkResourceGroupName>
+          <subnetName></subnetName>
+          <usePrivateIP>false</usePrivateIP>
+          <nsgName></nsgName>
+          <jvmOptions></jvmOptions>
+          <templateDisabled>false</templateDisabled>
+          <templateStatusDetails></templateStatusDetails>
+          <templateVerified>false</templateVerified>
+          <executeInitScriptAsRoot>true</executeInitScriptAsRoot>
+          <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
+          <enableMSI>false</enableMSI>
+          <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
+        </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
+        <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
+          <templateName>rhel-7-azure</templateName>
+          <templateDesc>rhel 7.5</templateDesc>
+          <labels>rhel7-azure rhel7_azure</labels>
+          <location>East US 2</location>
+          <availabilityType>unknown</availabilityType>
+          <virtualMachineSize>Standard_D4s_v3</virtualMachineSize>
+          <storageAccountNameReferenceType>new</storageAccountNameReferenceType>
+          <diskType>managed</diskType>
+          <osDiskSize>0</osDiskSize>
+          <newStorageAccountName>katastg</newStorageAccountName>
+          <existingStorageAccountName>katastg</existingStorageAccountName>
+          <storageAccountType>Standard_LRS</storageAccountType>
+          <noOfParallelJobs>1</noOfParallelJobs>
+          <usageMode>EXCLUSIVE</usageMode>
+          <shutdownOnIdle>false</shutdownOnIdle>
+          <imageTopLevelType>advanced</imageTopLevelType>
+          <imageReferenceType>reference</imageReferenceType>
+          <builtInImage>Windows Server 2016</builtInImage>
+          <isInstallGit>false</isInstallGit>
+          <isInstallMaven>false</isInstallMaven>
+          <isInstallDocker>false</isInstallDocker>
+          <osType>Linux</osType>
+          <imagePublisher>RedHat</imagePublisher>
+          <imageOffer>RHEL</imageOffer>
+          <imageSku>7-RAW</imageSku>
+          <imageVersion>latest</imageVersion>
+          <agentLaunchMethod>SSH</agentLaunchMethod>
+          <preInstallSsh>false</preInstallSsh>
+          <initScript>#!/bin/bash
+
+set -x
+
+# Install git, gcc and python
+yum install -y git gcc python
+
+# Install docker
+yum install -y yum-utils
+yum-config-manager --add-repo &quot;https://download.docker.com/linux/centos/docker-ce.repo&quot;
+yum -y install docker-ce
+
+systemctl start docker
+gpasswd -a jenkins docker
+chmod g+rw /var/run/docker.sock
+
+# Install Java JRE and JDK for Jenkins agent
+yum install -y java-1.8.0-openjdk
+
+echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers</initScript>
+          <credentialsId>a6317428-9508-4ce9-b123-82742f45ec74</credentialsId>
+          <agentWorkspace>/tmp/jenkins</agentWorkspace>
+          <retentionTimeInMin>0</retentionTimeInMin>
+          <virtualNetworkName></virtualNetworkName>
+          <virtualNetworkResourceGroupName></virtualNetworkResourceGroupName>
+          <subnetName></subnetName>
+          <usePrivateIP>false</usePrivateIP>
+          <nsgName></nsgName>
+          <jvmOptions></jvmOptions>
+          <templateDisabled>false</templateDisabled>
+          <templateStatusDetails></templateStatusDetails>
+          <templateVerified>false</templateVerified>
+          <executeInitScriptAsRoot>true</executeInitScriptAsRoot>
+          <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
+          <enableMSI>false</enableMSI>
+          <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
+        </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
       </vmTemplates>
       <deploymentTimeout>1200</deploymentTimeout>
-      <approximateVirtualMachineCount>0</approximateVirtualMachineCount>
+      <approximateVirtualMachineCount>29</approximateVirtualMachineCount>
     </com.microsoft.azure.vmagent.AzureVMCloud>
   </clouds>
   <quietPeriod>5</quietPeriod>
@@ -727,11 +955,11 @@ sudo dd if=/dev/zero of=$device bs=128M count=1</initScript>
             <comparator class="hudson.util.CaseInsensitiveComparator"/>
           </jobNames>
           <jobFilters/>
-          <name>Known flaky tests</name>
+          <name>Unstable tests</name>
           <width>HALF</width>
           <alignment>LEFT</alignment>
-          <text>- package manager update test check apt-get update
-   issue: https://github.com/kata-containers/tests/issues/1002
+          <text>State Test on Fedora Jobs
+- https://github.com/kata-containers/tests/issues/1531
 </text>
           <style>NOTE</style>
         </hudson.plugins.sectioned__view.TextSection>
@@ -744,10 +972,7 @@ sudo dd if=/dev/zero of=$device bs=128M count=1</initScript>
           <width>HALF</width>
           <alignment>RIGHT</alignment>
           <text>- Debian Jobs.
-- Power 8 Job on proxy repo.
-- ARM CI failing (only on runtime repository checks)
-  - https://github.com/kata-containers/runtime/pull/1186#issuecomment-458902179
-  - https://github.com/kata-containers/ci/issues/30#issuecomment-460768777</text>
+- Power 8 Job on proxy repo.</text>
           <style>NOTE</style>
         </hudson.plugins.sectioned__view.TextSection>
       </sections>

@@ -122,16 +122,12 @@ cd tests
           <RunIfJobSuccessful>false</RunIfJobSuccessful>
           <script>#!/bin/bash&#xd;
 &#xd;
-set -e&#xd;
+export GOPATH=$WORKSPACE/go&#xd;
+export GOROOT=&quot;/usr/local/go&quot;&#xd;
+export PATH=${GOPATH}/bin:/usr/local/go/bin:/usr/sbin:/usr/local/bin:${PATH}&#xd;
 &#xd;
-export ghprbPullId&#xd;
-export ghprbTargetBranch&#xd;
-&#xd;
-cd $HOME&#xd;
-git clone https://github.com/kata-containers/tests.git&#xd;
-cd tests&#xd;
-&#xd;
-.ci/jenkins_job_build.sh &quot;github.com/kata-containers/shim&quot;</script>
+cd $GOPATH/src/github.com/kata-containers/tests&#xd;
+.ci/teardown.sh &quot;$WORKSPACE/artifacts&quot;</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>

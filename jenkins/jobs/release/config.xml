@@ -1,8 +1,8 @@
 <?xml version='1.1' encoding='UTF-8'?>
-<flow-definition plugin="workflow-job@2.31">
+<flow-definition plugin="workflow-job@2.32">
   <actions>
-    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin="pipeline-model-definition@1.3.4.1"/>
-    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipeline-model-definition@1.3.4.1">
+    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin="pipeline-model-definition@1.3.7"/>
+    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipeline-model-definition@1.3.7">
       <jobProperties/>
       <triggers/>
       <parameters>
@@ -31,114 +31,40 @@
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
+    <jenkins.model.BuildDiscarderProperty>
+      <strategy class="hudson.tasks.LogRotator">
+        <daysToKeep>1</daysToKeep>
+        <numToKeep>1</numToKeep>
+        <artifactDaysToKeep>-1</artifactDaysToKeep>
+        <artifactNumToKeep>-1</artifactNumToKeep>
+      </strategy>
+    </jenkins.model.BuildDiscarderProperty>
     <org.jenkinsci.plugins.workflow.job.properties.DisableConcurrentBuildsJobProperty/>
     <org.jenkinsci.plugins.workflow.job.properties.DisableResumeJobProperty/>
-    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.29">
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.30">
       <autoRebuild>false</autoRebuild>
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
   </properties>
-  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.61.1">
-    <script>pipeline { 
-    agent none
-    parameters {
-        string(
-            name: &apos;BRANCH&apos;,
-            defaultValue:&quot;master&quot;,
-            description: &quot;Kata Containers Branch&quot;
-            )
-        string(
-            name: &apos;NEW_VERSION&apos;,
-            defaultValue:&quot;&quot;,
-            description: &quot;Kata Containers version&quot;
-        )
-    }
-    
-    environment {
-        PATH=&quot;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/local/go/bin&quot;
-        BRANCH=&quot;${params.BRANCH}&quot;
-        NEW_VERSION=&quot;${params.NEW_VERSION}&quot;
-    }
-
-	stages {
-            stage(&apos;Bump repos&apos;) {
-                agent { label &apos;ubuntu-1710&apos; }
-                steps {
-                    withCredentials([string(credentialsId: &apos;7515f144-2a26-4537-9685-c110b0a41e80&apos;, variable: &apos;GITHUB_TOKEN&apos;)]) {
-                    sh &apos;&apos;&apos;
-                        echo &quot;Start Release ${NEW_VERSION} for branch $BRANCH&quot;
-                        export GITHUB_TOKEN=$GITHUB_TOKEN
-                        cat &lt;&lt; EOT &gt; /tmp/token.sh
-#!/bin/bash
-echo &quot;\$GITHUB_TOKEN&quot;
-#esac
-EOT
-                        chmod +x /tmp/token.sh
-                        export GIT_ASKPASS=/tmp/token.sh
-                        
-                        #cache credential
-                        git config --global credential.helper cache
-                        #setup credential
-                        git clone https://github.com/katabuilder/agent.git /tmp/agent
-                        cd /tmp/agent
-                        #this set the credential for first time
-                        git push
-                        # not needed anymore
-                        unset GIT_ASKPASS
-                        cd -
-                        #remove repo for credential setup
-                        rm -rf agent
-                    &apos;&apos;&apos;
-                    sh &apos;&apos;&apos;
-                        #Golang variables:
-                        export HUB_PROTOCOL=https
-                        export GOPATH=&quot;${WORKSPACE}/go&quot;
-                        export GOROOT=&quot;/usr/local/go&quot;
-                        export CI=&quot;true&quot;
-                        export tests_repo=&quot;github.com/kata-containers/tests&quot;
-                        export tests_repo_dir=&quot;${GOPATH}/src/${tests_repo}&quot;
-                        export packaging_repo=&quot;github.com/kata-containers/packaging&quot;
-                        export packaging_repo_dir=&quot;${GOPATH}/src/${packaging_repo}&quot;
-                        echo &apos;export PATH=$PATH:/usr/local/go/bin&apos; | sudo tee -a /etc/profile
-                        export PATH=$PATH:/usr/local/go/bin
-                        export GITHUB_TOKEN=$GITHUB_TOKEN
-                        
-                        mkdir -p &quot;${GOPATH}&quot;
-                        mkdir -p $(dirname &quot;${tests_repo_dir}&quot;)
-                        mkdir -p $(dirname &quot;${kata_repo_dir}&quot;)
-                        [ -d &quot;${tests_repo_dir}&quot; ] || git clone &quot;https://${tests_repo}.git&quot; &quot;${tests_repo_dir}&quot;
-                    
-                        &quot;${GOPATH}/src/${tests_repo}/.ci/install_go.sh&quot; -p -f
-                        go version
-    				
-                        sudo -E apt-get -y install apt-transport-https ca-certificates software-properties-common
-                        curl -sL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-                        arch=$(dpkg --print-architecture)
-                        sudo -E add-apt-repository &quot;deb [arch=${arch}] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable&quot;
-                        sudo -E apt-get update
-                        sudo -E apt-get -y install docker-ce
-    				
-                        [ -d &quot;${packaging_repo_dir}&quot; ] || git clone &quot;https://${packaging_repo}.git&quot; &quot;${packaging_repo_dir}&quot;
-                        #[ -d &quot;${packaging_repo_dir}&quot; ] || git clone &quot;https://github.com/jcvenegas/packaging-1.git&quot; &quot;${packaging_repo_dir}&quot;
-
-                        git config --global user.email &quot;katacontainersbot@katacontainers.io&quot;
-                        git config --global user.name &quot;katacontainers bot&quot;
-                        
-                        cd ${GOPATH}/src/github.com/kata-containers/packaging/release
-                        bash -x ./update-repository-version.sh -p ksm-throttler &quot;$NEW_VERSION&quot; &quot;$BRANCH&quot;
-                        ./update-repository-version.sh -p proxy &quot;$NEW_VERSION&quot; &quot;$BRANCH&quot;
-                        ./update-repository-version.sh -p shim &quot;$NEW_VERSION&quot; &quot;$BRANCH&quot;
-                        ./update-repository-version.sh -p runtime &quot;$NEW_VERSION&quot; &quot;$BRANCH&quot;
-                        [ &quot;$BRANCH&quot; == &quot;master&quot; ] &amp;&amp; ./update-repository-version.sh -p osbuilder &quot;$NEW_VERSION&quot; &quot;$BRANCH&quot;
-                        ./update-repository-version.sh -p agent &quot;$NEW_VERSION&quot; &quot;$BRANCH&quot;
-    				&apos;&apos;&apos;
-                }
-            }
-    	}
-
-    }
-}</script>
-    <sandbox>true</sandbox>
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsScmFlowDefinition" plugin="workflow-cps@2.65">
+    <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0-rc">
+      <configVersion>2</configVersion>
+      <userRemoteConfigs>
+        <hudson.plugins.git.UserRemoteConfig>
+          <url>https://github.com/kata-containers/packaging.git</url>
+        </hudson.plugins.git.UserRemoteConfig>
+      </userRemoteConfigs>
+      <branches>
+        <hudson.plugins.git.BranchSpec>
+          <name>*/master</name>
+        </hudson.plugins.git.BranchSpec>
+      </branches>
+      <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+      <submoduleCfg class="list"/>
+      <extensions/>
+    </scm>
+    <scriptPath>Jenkinsfiles/release_pieline/Jenkinsfile</scriptPath>
+    <lightweight>true</lightweight>
   </definition>
   <triggers/>
   <disabled>false</disabled>

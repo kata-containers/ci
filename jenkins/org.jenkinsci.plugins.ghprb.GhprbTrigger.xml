@@ -23,6 +23,13 @@
       <description>katacontainers bot connection</description>
       <secret>{AQAAABAAAAAQGW1kYsNU9yihjhBjcg3MMx5oggRbtZKAdJWo47AwSrk=}</secret>
     </org.jenkinsci.plugins.ghprb.GhprbGitHubAuth>
+    <org.jenkinsci.plugins.ghprb.GhprbGitHubAuth>
+      <serverAPIUrl>https://api.github.com</serverAPIUrl>
+      <credentialsId>420d12df-2c7f-4f33-abd0-868fd1b08ac4</credentialsId>
+      <id>86ab5d57-6637-420b-938a-9826f0f6822f</id>
+      <description></description>
+      <secret>{AQAAABAAAAAQU2uL2QeNANPVuXBX6g9h02w3evomdB77rYHwjpBCgRU=}</secret>
+    </org.jenkinsci.plugins.ghprb.GhprbGitHubAuth>
   </githubAuth>
   <adminlist>katacontainersbot</adminlist>
   <requestForTestingPhrase></requestForTestingPhrase>

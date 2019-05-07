@@ -1,8 +1,8 @@
 <?xml version='1.1' encoding='UTF-8'?>
-<flow-definition plugin="workflow-job@2.31">
+<flow-definition plugin="workflow-job@2.32">
   <actions>
-    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin="pipeline-model-definition@1.3.4.1"/>
-    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipeline-model-definition@1.3.4.1">
+    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin="pipeline-model-definition@1.3.7"/>
+    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipeline-model-definition@1.3.7">
       <jobProperties/>
       <triggers/>
       <parameters/>
@@ -12,11 +12,11 @@
   <description>Job for running the e2e conformance tests from sonobuoy using Kata Containers and containerd.</description>
   <keepDependencies>false</keepDependencies>
   <properties>
-    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.3">
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.4">
       <projectUrl>https://github.com/kata-containers/runtime/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
-    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.29">
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.30">
       <autoRebuild>false</autoRebuild>
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
@@ -29,21 +29,26 @@ H 0 * * *</spec>
       </triggers>
     </org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
   </properties>
-  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.63">
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.65">
     <script>pipeline{
     agent { label &quot;ubuntu1804_azure&quot; }
     options {
-        timeout(time: 3, unit: &apos;HOURS&apos;)
+        timeout(time: 4, unit: &apos;HOURS&apos;)
     }
 
     environment {
-        CI_JOB       = &quot;CRI_CONTAINERD_K8S&quot;
-        CI           = &quot;true&quot;
-        GOPATH       = &quot;${WORKSPACE}/go&quot;
-        PATH         = &quot;${GOPATH}/bin:/usr/local/go/bin:/usr/sbin:${PATH}&quot;
-        GOROOT       = &quot;/usr/local/go&quot;
-        RUNTIME_PATH = &quot;/usr/bin/kata-runtime&quot;
-        RUNTIME      = &quot;kata-runtime&quot;
+        CI_JOB            = &quot;CRI_CONTAINERD_K8S&quot;
+        CI                = &quot;true&quot;
+        GOPATH            = &quot;${WORKSPACE}/go&quot;
+        PATH              = &quot;${GOPATH}/bin:/usr/local/go/bin:/usr/sbin:${PATH}&quot;
+        GOROOT            = &quot;/usr/local/go&quot;
+        RUNTIME_PATH      = &quot;/usr/bin/kata-runtime&quot;
+        RUNTIME           = &quot;kata-runtime&quot;
+        GIT_BRANCH        = &quot;master&quot;
+        use_runtime_class = &quot;true&quot;
+        CRI_RUNTIME       = &quot;containerd&quot;
+        CRIO              = &quot;no&quot;
+        CRI_CONTAINERD    = &quot;yes&quot;
     }
 
     stages {
@@ -51,10 +56,10 @@ H 0 * * *</spec>
             steps {
                 sh &apos;&apos;&apos;
                 env
-                                cd $HOME
-                                git clone https://github.com/kata-containers/tests.git
-                                cd tests
-                                .ci/jenkins_job_build.sh &quot;github.com/kata-containers/runtime&quot;
+				cd $HOME
+				git clone https://github.com/kata-containers/tests.git
+				cd tests
+				.ci/jenkins_job_build.sh &quot;github.com/kata-containers/runtime&quot;
                 &apos;&apos;&apos;
             }
         }
@@ -76,11 +81,31 @@ H 0 * * *</spec>
                 sh &apos;&apos;&apos;
                 cd &quot;${WORKSPACE}/go/src/github.com/kata-containers/tests/integration/kubernetes/e2e_conformance&quot;
                 sed -i &apos;/pipefail/aset -x&apos; run.sh
-                sed -i &apos;s/Eq/E/&apos; run.sh
-                sed -i &apos;/done/asonobuoy status&apos; run.sh
+                # sed -i &apos;s/Eq/E/&apos; run.sh
+                sed -i &apos;/deleted/a\\ \\ - EmptyDir volumes&apos; skipped_tests_e2e.yaml
+                cat skipped_tests_e2e.yaml
                 ./run.sh
                 &apos;&apos;&apos;
             }
+        }
+    }
+
+    post {
+        always {
+            script {
+                try {
+                    sh &apos;&apos;&apos;
+                    cd &quot;${WORKSPACE}/go/src/github.com/kata-containers/tests&quot;
+                    ls &quot;/tmp&quot;
+                    .ci/teardown.sh &quot;$WORKSPACE/artifacts&quot; || ls &quot;${WORKSPACE}/artifacts&quot;
+                    &apos;&apos;&apos;
+                }
+                catch (err) {
+                    echo &quot;teardown produced some errors&quot;
+                }
+            }
+            archiveArtifacts artifacts: &apos;artifacts/*&apos;, fingerprint: true
+            //archiveArtifacts artifacts: &apos;/tmp/kata_e2e_results*&apos;, fingerprint: true
         }
     }
 }</script>
