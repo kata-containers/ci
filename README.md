@@ -1,5 +1,8 @@
 # Kata Containers CI
 
+* [CI Job Matrix](#ci-job-matrix)
+* [CI health status](#ci-health-status)
+
 This repository stores configuration for the Kata Containers Continuous Integration (CI) system.
 
 The default CI system for Kata Containers is [Jenkins](https://jenkins.io/). See
