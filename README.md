@@ -1,6 +1,8 @@
 # Kata Containers CI
 
 * [Jenkins CI](#jenkins-ci)
+    * [Jenkins CI slave deployment scripts](#jenkins-ci-slave-deployment-scripts)
+    * [Metrics CI](#metrics-ci)
 * [CI Job Matrix](#ci-job-matrix)
 * [CI health status](#ci-health-status)
 
@@ -10,6 +12,14 @@ This repository stores configuration for the Kata Containers Continuous Integrat
 
 The default CI system for Kata Containers is [Jenkins](https://jenkins.io/). See
 the [Jenkins Setup](Jenkins_setup.md) document for more details.
+
+## Jenkins CI slave deployment scripts
+
+See [the Jenkins CI slave deployment documentation](deployment/packet/README.md).
+
+## Metrics CI
+
+See [the metrics CI documentation](VMs/metrics/README.md).
 
 # CI Job Matrix
 
