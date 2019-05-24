@@ -1,5 +1,29 @@
 # Kata Containers metrics Jenkins CI VMs
 
+* [Background](#background)
+* [Overview](#overview)
+* [Pre-requisites](#pre-requisites)
+* [The scripts](#the-scripts)
+    * [`1_create_keys.sh`](#1-create-keys-sh)
+    * [`2_build_baseimage.sh config_dir`](#2-build-baseimage-sh-config-dir)
+    * [`3_complete_baseimage.sh config_dir`](#3-complete-baseimage-sh-config-dir)
+    * [`4_clone_vm.sh config_dir`](#4-clone-vm-sh-config-dir)
+    * [`5_login_clone.sh config_dir`](#5-login-clone-sh-config-dir)
+    * [`6_start_clone_agent.sh config_dir`](#6-start-clone-agent-sh-config-dir)
+    * [`7_delete_clone.sh config_dir`](#7-delete-clone-sh-config-dir)
+* [Example](#example)
+* [Configuring the user on the host](#configuring-the-user-on-the-host)
+    * [Add GOLANG `bin` directories to path](#add-golang-bin-directories-to-path)
+    * [Add user to VM groups](#add-user-to-vm-groups)
+    * [Installing the `agent.jar`](#installing-the-agent-jar)
+    * [Setup Jenkins SSH keypair login](#setup-jenkins-ssh-keypair-login)
+* [Configuring Jenkins](#configuring-jenkins)
+    * [Setup the pre-post scripts](#setup-the-pre-post-scripts)
+    * [Set up the short lived nodes](#set-up-the-short-lived-nodes)
+* [Node specific modifications](#node-specific-modifications)
+    * [Proxies](#proxies)
+    * [Tuning `checkmetrics.toml`](#tuning-checkmetrics-toml)
+
 This directory contains a set of configuration files and helper scripts
 to aid in setting up a [Jenkins](https://jenkins.io/) CI system to run
 the [Kata Containers metrics tests](https://github.com/kata-containers/tests/tree/master/metrics)

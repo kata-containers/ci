@@ -1,5 +1,15 @@
 # Kata Containers Jenkins CI slave deployment scripts
 
+* [Pre-requisites](#pre-requisites)
+* [Local setup](#local-setup)
+* [Creating an instance](#creating-an-instance)
+* [Configuring an instance](#configuring-an-instance)
+* [Testing the instance](#testing-the-instance)
+* [Installing the Metrics VMs](#installing-the-metrics-vms)
+* [Configuring `checkmetrics`](#configuring-checkmetrics)
+* [Integration into the Jenkins master](#integration-into-the-jenkins-master)
+* [Deleting an instance](#deleting-an-instance)
+
 This directory contains a set of [Ansible](https://docs.ansible.com/) scripts to help
 deploy Kata metrics CI build slaves on the [packet.net](https://www.packet.com/) cloud.
 
