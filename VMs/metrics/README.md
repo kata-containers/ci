@@ -11,24 +11,24 @@ Ideally the metrics are run on bare metal machines, in order to achieve the most
 repeatable results. However, occasionally a Pull Request can have unwanted side effects
 that then require the server to be rebooted, partially reconfigured, or re-installed.
 Sometimes such a workflow is not practical. In that situation the Pull Request metrics
-runs can be isolated from the bare metal machine by executing a 'clean' Virtual Machine
+runs can be isolated from the bare metal machine by executing a "clean" Virtual Machine
 on the system for each Pull Request.
 
-The downside is that running inside a VM will likely introduce more 'noise' into the
+The downside is that running inside a VM will likely introduce more "noise" into the
 test results.
 
 ## Overview
 
 The scripts in this directory help construct a Virtual Machine (QEMU qcow2) image
 suitable for running the metrics tests. The scripts are based around the use of
-[libvirt](https://libvirt.org/) and the [virsh](https://libvirt.org/virshcmdref.html) tool.
+[libvirt](https://libvirt.org/) and the [`virsh`](https://libvirt.org/virshcmdref.html) tool.
 
 Briefly, the scripts do the following:
 - Create an RSA keypair for SSH interaction between the host machine and the VMs.
 - Build a master VM image using `virt-install` and [cloud-init](https://cloudinit.readthedocs.io/en/latest/#).
 - Install all components needed for the metrics run into the VM image.
 - Enable the master image to be cloned:
-  - to ensure a 'clean' environment for each PR run.
+  - to ensure a "clean" environment for each PR run.
   - to preserve the master image from any corruption by a PR run.
 - Provide scripts for use from Jenkins to launch a cloned VM with a Jenkins agent and to
 delete a cloned VM.
@@ -42,12 +42,12 @@ different for other distributions.
 
 | Dependency | Ubuntu package or method |
 | ----------- | ------------------------ |
-| go | Install latest from [golang.org](https://golang.org) |
-| jre | package default-jre |
-| libvirt | package libvirt-bin |
-| qemu-kvm | package qemu-kvm |
-| virtinst | package virtinst |
-| yq | Install latest with `go get` from [mikefarah/yq](https://github.com/mikefarah/yq)|
+| `go` | Install latest from [golang.org](https://golang.org) |
+| `jre` | package `default-jre` |
+| `libvirt` | package `libvirt-bin` |
+| `qemu-kvm` | package `qemu-kvm` |
+| `virtinst` | package `virtinst` |
+| `yq` | Install latest with `go get` from [`mikefarah/yq`](https://github.com/mikefarah/yq)|
 
 ## The scripts
 
@@ -62,18 +62,18 @@ information about the VM setup or VM machine names. This enables the use of
 multiple configuration directories to enable VMs of different
 configuration setups (such as different distributions).
 
-### 1_create_keys.sh
+### `1_create_keys.sh`
 
 This script creates an RSA key pair using `ssh-keygen`. This key pair is used to
 `ssh` between the host system and the VMs.
 
 By default a single keypair is used for all VMs. You should not have to re-generate
-the keypair unless you accidently delete them or have some other issue.
+the keypair unless you accidentally delete them or have some other issue.
 
 If you re-generate the keypair you will need to re-generate or patch any existing
 VMs to use the new keys.
 
-### 2_build_baseimage.sh config_dir
+### `2_build_baseimage.sh config_dir`
 
 This is the main master VM creation script. It uses `virt-install` along with
 the `cloud-init` files found from the `config_dir` config files.
@@ -86,10 +86,10 @@ you see a `cloud-init` line similar to:
 [  123.456789] cloud-init[1234]: Cloud-init v. 18.2 finished at Tue, 29 May 2018 15:42:43 +000
 ```
 
-At this point detatch from the VM shell by pressing `^]` three times. This should drop you
+At this point detach from the VM shell by pressing `^]` three times. This should drop you
 back to your host system, but leaves the VM running for the next step.
 
-### 3_complete_baseimage.sh config_dir
+### `3_complete_baseimage.sh config_dir`
 
 This step completes the installation of the master VM by copying the final few files over
 and then shutting the master VM down.
@@ -97,16 +97,16 @@ and then shutting the master VM down.
 At this point the master VM is fully initialized and shut down and you should not
 need to modify the master VM for this configuration further.
 
-### 4_clone_vm.sh config_dir
+### `4_clone_vm.sh config_dir`
 
 This script is mainly for testing or for invocation by the CI system. It clones the
 master VM image in readiness to run it.
 
-### 5_login_clone.sh config_dir
+### `5_login_clone.sh config_dir`
 
 This script is mainly for testing. It runs a VM clone (which should have been created with `4_clone_vm.sh`), and `ssh`'s into it.
 
-### 6_start_clone_agent.sh config_dir
+### `6_start_clone_agent.sh config_dir`
 
 This script is designed to be launched by Jenkins. It clones and runs a VM from the
 master image, copies the Jenkins `agent.jar` file across to the image, and executes the
@@ -121,7 +121,7 @@ To aid with any potential debug, the majority of the code is invoked from a `mai
 function that has its input/output redirected to `/dev/null`. To debug, remove this
 indirection, but *do not* expect the `agent.jar` to connect to Jenkins successfully.
 
-### 7_delete_clone.sh config_dir
+### `7_delete_clone.sh config_dir`
 
 This script will shut down and remove a clone VM and its relevant storage items.
 This script is expected to be invoked either by Jenkins upon agent disconnect, or
@@ -159,7 +159,7 @@ A user needs to be chosen on the host system that will execute the VMs. That use
 requires some configuration.  The following steps document choosing and configuring
 a user called `jenkins` to execute the VMs on the host system.
 
-### Add golang `bin` directories to path
+### Add GOLANG `bin` directories to path
 
 Add the GOLANG binary directories to the `$PATH` variable by adding the following
 to `.profile`.
@@ -213,10 +213,10 @@ for guidance on setting up authentication. Details on precise slave setup are be
 
 To use these scripts we manipulate the Jenkins build node configuration somewhat.
 Ideally, we would use the [Jenkins Libvirt slaves plugin](https://plugins.jenkins.io/libvirt-slave)
-to manage our slave VMs, but upon testing, the 'revert' to the base clean VM function does
+to manage our slave VMs, but upon testing, the "revert" to the base clean VM function does
 not perform as expected.
 
-To that end, we manipulate the Jenkins 'ssh launch' pre/post command configuration to
+To that end, we manipulate the Jenkins `ssh launch` pre/post command configuration to
 actually launch and remove our VMs.
 
 We also add a small manipulation to prevent Jenkins from trying to launch the agent.jar
@@ -231,9 +231,9 @@ Our configuration is not perfect (the shortest time we can set to kill off an in
 node is one minute). Because of this, if another job is in the queue or arrives within
 one minute of a previous job completing, it is scheduled to build on the same VM instance.
 The expectation is that we have enough gaps that we acquire sufficient new VMs to vastly
-reduce the 'dirty node' instabilities we see with pure bare-metal builds.
+reduce the "dirty node" instabilities we see with pure bare-metal builds.
 
-In the event of getting a dirty VM node, executing a 'node offline/online' in the
+In the event of getting a dirty VM node, executing a `node offline/online` in the
 Jenkins UI runs a VM shutdown/clone/run cycle. This gets the system back to having
 a stable, clean VM on that node.
 
@@ -324,7 +324,7 @@ values you require.
 2. Perform a few runs (>= 3). Expect them to fail the `checkmetrics` check.
 3. Analyse the logs or the JSON files from those logs to determine the values
 your system produces.
-4. Edit the `checkmetrics.toml` file in the distro subdir on the agent machine.
+4. Edit the `checkmetrics.toml` file in the distro subdirectory on the agent machine.
 5. Disable the slave in your Jenkins Master, and wait for all builds to finish.
 One trick is to change any relevant slave label from say `metrics` to `metricsX` to
 stop new jobs being scheduled on that slave.

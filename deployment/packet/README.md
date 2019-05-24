@@ -26,7 +26,7 @@ configured on your host system:
 ## Local setup
 
 - Export your packet.net token into your environment, as detailed on the Ansible packet [documentation page](https://docs.ansible.com/ansible/latest/scenario_guides/guide_packet.html#requirements)
-- Place your packet.net root user SSH keys into your `${HOME}/.ssh` directory, ready for ansible to use later (expected name is `packet_rsa[.pub]`)
+- Place your packet.net root user SSH keys into your `${HOME}/.ssh` directory, ready for Ansible to use later (expected name is `packet_rsa[.pub]`)
 - Place your packet.net jenksin user SSH keys into your `${HOME}/.ssh` directory, ready to test later (expected name `kata-metric1[.pub]`)
 - Download a copy of the golang install tarball into this directory.
 
@@ -60,7 +60,7 @@ of the instance on the packet.net web interface.
 The instance now needs to be configured and have the correct packages and users installed
 before it can be used for Kata Containers metrics CI.
 
-Ansible achieves this by SSH'ing into the system as the `root` user to run the relevant
+Ansible achieves this by logging into the system using SSH as the `root` user to run the relevant
 configuration commands. Before executing the installation script, the root user SSH keys
 need to be configured and tested.
 
@@ -88,10 +88,10 @@ Your system may ask to add the instance key to your `known_hosts` file, which ma
 be necessary to perform the next step. Now exit the `ssh` session.
 
 You also need to configure Ansible to recognise the new instance as a valid host. This can
-be done with some local configuaration files.
+be done with some local configuration files.
 
 Create an `ansible.cfg` file in the current directory, with the following contents, whilst
-substituding the `<path to this directory>` with the full path to where these files are
+substituting the `<path to this directory>` with the full path to where these files are
 located on your system:
 
 ```
@@ -100,7 +100,7 @@ located on your system:
 inventory = <path to this directory>/ansible_hosts
 ```
 
-Create an 'ansible_hosts' file on in this directory, with the contents:
+Create an `ansible_hosts` file on in this directory, with the contents:
 
 ```
 AAA.BBB.CCC.DDD
@@ -119,12 +119,12 @@ $ ansible-playbook install_packet.yaml
 
 All steps should pass successfully, and Ansible should report no failures.
 Your instance should now be configured to execute Jenkins CI tasks either on the
-'bare metal', or inside a Metrics VM.
+"bare metal", or inside a Metrics VM.
 
 ## Testing the instance
 
-Now the instance is deployed and configured, we can test that the jenkins user is set up
-correctly. Add the jenkins user SSH key into your .ssh configuration:
+Now the instance is deployed and configured, we can test that the Jenkins user is set up
+correctly. Add the Jenkins user SSH key into your .ssh configuration:
 
 ```bash
 # packet c1small-test jenkins user
@@ -145,7 +145,7 @@ This should log you into the instance as the `jenkins` user.
 
 ## Installing the Metrics VMs
 
-If you are intending to use the metrics VMs, remain logged in as the jenkins user.
+If you are intending to use the metrics VMs, remain logged in as the Jenkins user.
 Execute the following to set the final necessary environment setting:
 
 ```bash
@@ -155,13 +155,13 @@ $ export PATH=/usr/local/go/bin:$PATH
 and follow the instructions on the [metrics VMs](https://github.com/kata-containers/ci/tree/master/VMs/metrics#example)
 page to complete the installation ready to deploy the instance into the CI Jenkins master.
 
-## Configuring checkmetrics
+## Configuring `checkmetrics`
 
 A metrics machine must have a valid `checkmetrics` configuration file in `/etc/checkmetrics`
 in order to verify the metrics CI results.
 
 To aid setup of this file on the bare metal metrics slaves, the `add_checkmetrics.yaml`
-ansible script can be used. A local checkmetrics toml file must be present in the same
+Ansible script can be used. A local `checkmetrics` TOML file must be present in the same`
 directory where you execute the script, with the name form `checkmetrics-json-<uname>.toml`,
 where `<uname>` is the name of the remote slave, as set in `create_packet.yaml`, and returned
 by `uname -n` on that slave.
