@@ -1,17 +1,18 @@
 * [Kata Containers Jenkins CI setup](#kata-containers-jenkins-ci-setup)
-   * [Types of jobs](#types-of-jobs)
-      * [PR builds](#pr-builds)
-      * [Master builds](#master-builds)
-      * [GitHub bandwidth and tokens](#github-bandwidth-and-tokens)
-   * [Job build script](#job-build-script)
-   * [Setting up Jenkins](#setting-up-jenkins)
-      * [Naming jobs](#naming-jobs)
-      * [Setting up the scripts](#setting-up-the-scripts)
-   * [Environment variables](#environment-variables)
-      * [Input variables](#input-variables)
-      * [Output variables](#output-variables)
-   * [Experienced users](#experienced-users)
-   * [Other CIs](#other-cis)
+    * [Types of jobs](#types-of-jobs)
+        * [PR builds](#pr-builds)
+        * [Master builds](#master-builds)
+        * [GitHub bandwidth and tokens](#github-bandwidth-and-tokens)
+    * [Job build script](#job-build-script)
+    * [Setting up Jenkins](#setting-up-jenkins)
+        * [Installing Plugins](#installing-plugins)
+        * [Naming jobs](#naming-jobs)
+        * [Setting up the scripts](#setting-up-the-scripts)
+    * [Environment variables](#environment-variables)
+        * [Input variables](#input-variables)
+        * [Output variables](#output-variables)
+    * [Experienced users](#experienced-users)
+    * [Other CIs](#other-cis)
 
 # Kata Containers Jenkins CI setup
 
@@ -21,7 +22,7 @@ Kata Containers Jenkins CI system.
 
 ## Types of jobs
 
-The Kata Containers Jenkins CI system uses Jenkins 'Freestyle Project' build jobs
+The Kata Containers Jenkins CI system uses Jenkins "Freestyle Project" build jobs
 to perform its builds. Kata Containers CI operates two types of CI builds:
 
 - [PR builds](#pr-builds)
@@ -39,7 +40,7 @@ plugin.
 
 The GHPRB plugin is configured to trigger through GitHub hooks. This is the preferred method
 to trigger on changes (more efficient than polling). Kata Containers integrates the CIs
-using the [katacontainersbot](https://github.com/katacontainersbot) user. Please discuss
+using the [`katacontainersbot`](https://github.com/katacontainersbot) user. Please discuss
 your requirements with the Kata Containers team who will then make the appropriate changes.
 
 Set the GHPRB triggers similar to the following:
@@ -51,7 +52,7 @@ Set the GHPRB `Trigger Setup` further options similar to the following:
 ### Master builds
 
 Master branch builds are tracked with the Jenkins [git Source Code Management](https://plugins.jenkins.io/git)
-(GITScm) plugin. GITScm GitHub hooks are used to trigger builds.
+(`GITScm`) plugin. `GITScm` GitHub hooks are used to trigger builds.
 
 The Jenkins setup should look similar to the following for the:
 
@@ -72,7 +73,7 @@ For Kata Containers CI we configure Jenkins with a GitHub [Personal API token](h
 ## Job build script
 
 Kata Containers Jenkins builds, for both PR and Master builds, are invoked using the top
-level [`jenkins_job_build.sh`](https://github.com/kata-containers/tests/blob/master/.ci/jenkins_job_build.sh) script from the [katacontainers/tests](https://github.com/kata-containers/tests)
+level [`jenkins_job_build.sh`](https://github.com/kata-containers/tests/blob/master/.ci/jenkins_job_build.sh) script from the [`katacontainers/tests`](https://github.com/kata-containers/tests)
 repository.
 
 This script takes a single argument (i.e. the path to the repository to build), and utilizes
@@ -154,7 +155,7 @@ The following variables influence the actions of the script:
 | ---------           | ---------------------------------------------------------------- |
 | `ghprbPullId`       | Is used in PR builds to locate the correct branch on GitHub to pull and build. |
 | `ghprbTargetBranch` | Is set by the GHPRB Jenkins plugin. Is only set for PR builds, and is used with `ghprbPullId` to distinguish between PR and Master builds. |
-| `KATA_DEV_MODE`     | Must not be set, or the script will not act as a CI script. `KATA_DEV_MODE` is a developer only option allowing the script to be run 'safely' in a development environment. |
+| `KATA_DEV_MODE`     | Must not be set, or the script will not act as a CI script. `KATA_DEV_MODE` is a developer only option allowing the script to be run "safely" in a development environment. |
 | `METRICS_CI`        | If set, will skip running the QA tests after the install/build phases (as the tests are not required for a metrics run). |
 | `WORKSPACE`         | Must be set. Is set by Jenkins to point at the directory the script will use as its workspace (scratch area) |
 
@@ -172,7 +173,7 @@ The following variables influence the actions of the script:
 
 For the more experienced Jenkins user, if you are comfortable reading Jenkins XML config files
 then you can find a backup of our Azure based Jenkins QA CI in this repository under the
-[jenkins sub folder](https://github.com/kata-containers/ci/tree/master/jenkins).
+[Jenkins sub folder](https://github.com/kata-containers/ci/tree/master/jenkins).
 
 ## Other CIs
 
