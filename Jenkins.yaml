@@ -1,0 +1,44 @@
+#
+# Copyright (c) 2019 Intel Corporation
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+#
+# Define the matrix of which CI tests get run on which repo/distro
+# combinations via the Jenkins pipeline defined in the Jenkinsfile.
+#
+# The structure is:
+#   repo:
+#     distro:
+#       test: value
+#
+# 'value' should be true or false. Generally a missing test/value pair
+# will be seen as a default of false, and the test will not be run.
+
+---
+kata-containers/agent:
+  Centos:
+    docker: false
+    k8s: true
+    cri-o: true
+  Fedora:
+    # docker: false  # Uses Jenkinsfile default if not set
+    k8s: true
+    cri-o: true
+  Ubuntu18.04:
+    docker: true
+    k8s: true
+    cri-o: false
+kata-containers/runtime:
+  Centos:
+    docker: false
+    k8s: true
+    cri-o: true
+  Fedora:
+    # docker: false  # Uses Jenkinsfile default if not set
+    k8s: true
+    cri-o: true
+  Ubuntu18.04:
+    docker: true
+    k8s: true
+    cri-o: false
