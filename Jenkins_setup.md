@@ -8,6 +8,10 @@
         * [Installing Plugins](#installing-plugins)
         * [Naming jobs](#naming-jobs)
         * [Setting up the scripts](#setting-up-the-scripts)
+    * [Setting up a bare metal Jenkins Slave Node](#setting-up-a-bare-metal-jenkins-slave-node)
+        * [Setting up a jenkins user](#setting-up-a-jenkins-user)
+        * [Providing SSH private keys](#providing-ssh-private-keys)
+        * [Pre-installed requirements](#pre-installed-requirements)
     * [Environment variables](#environment-variables)
         * [Input variables](#input-variables)
         * [Output variables](#output-variables)
@@ -141,6 +145,42 @@ cd $GOPATH/src/github.com/kata-containers/tests
 The teardown script is entered into the Jenkins Post-Build Actions dialog like:
 
 ![Jenkins Build dialog](pictures/jenkins_post_build.png)
+
+## Setting up a bare metal Jenkins Slave Node
+
+### Setting up a jenkins user
+
+Generally, Jenkins Master needs to log into the slave node as `jenkins` user to run the all Jenkins job.
+So you need to create a new user `jenkins` on your slave node and add this new user to the `sudo` group, which grants it `sudo` privileges.
+
+```
+$ sudo adduser jenkins
+$ sudo usermod -aG sudo jenkins
+```
+
+Not only just having `sudo` privileges, the `jenkins` user also needs to be able to run `sudo` without a password.
+Add following line at the end of the `/etc/sudoers` file.
+> **Note** You should never edit `/etc/sudoers` with a regular text editor, such as `Vim`
+> or `nano`, because they do not validate the syntax like the `visudo` editor.
+```
+$ echo "jenkins  ALL=(ALL) NOPASSWD:ALL" | (EDITOR="tee -a" visudo)
+```
+
+### Providing SSH private keys
+
+You will need to set up an SSH key-pair for the `jenkins` user on your Jenkins slave, and provide the SSH private key to the Kata Containers CI administrators to be stored in the Jenkins master secure key store.
+You could validate the SSH private key via `sudo ssh -i private_key jenkins@slave_node_ip`.
+
+> **Note** You could find a way [here](https://github.com/kata-containers/community#join-us) to get in touch with Kata Containers Community.
+
+### Pre-installled requirements
+
+You need to pre-install the following items in your bare metal Jenkins Slave CI node:
+
+- `git`
+- `golang`
+  the default minimum version used by this project is referred [here](https://github.com/kata-containers/runtime/blob/master/versions.yaml#L263).
+- a Java Runtime Environment (`JRE`) for the Jenkins agent.
 
 ## Environment variables
 
