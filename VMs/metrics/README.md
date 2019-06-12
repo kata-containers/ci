@@ -128,7 +128,7 @@ master VM image in readiness to run it.
 
 ### `5_login_clone.sh config_dir`
 
-This script is mainly for testing. It runs a VM clone (which should have been created with `4_clone_vm.sh`), and `ssh`'s into it.
+This script is mainly for testing. It runs a VM clone (which should have been created with `4_clone_vm.sh`), and uses `ssh` to login to it.
 
 ### `6_start_clone_agent.sh config_dir`
 
@@ -322,7 +322,7 @@ Jenkins does not currently allow us to configure the Idle delay to less than one
 
 If you need to make node specific modifications such as:
 
-- Modify the checkmetrics toml file to take into account the performance of your node.
+- Modify the `checkmetrics` TOML file to take into account the performance of your node.
 - Add in site specific configs, such as PROXY settings.
 - Modify paths, such as the `Jenkins` user HOME path or path to the scripts.
 

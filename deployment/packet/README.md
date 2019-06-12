@@ -37,7 +37,7 @@ configured on your host system:
 
 - Export your packet.net token into your environment, as detailed on the Ansible packet [documentation page](https://docs.ansible.com/ansible/latest/scenario_guides/guide_packet.html#requirements)
 - Place your packet.net root user SSH keys into your `${HOME}/.ssh` directory, ready for Ansible to use later (expected name is `packet_rsa[.pub]`)
-- Place your packet.net jenksin user SSH keys into your `${HOME}/.ssh` directory, ready to test later (expected name `kata-metric1[.pub]`)
+- Place your packet.net Jenkins user SSH keys into your `${HOME}/.ssh` directory, ready to test later (expected name `kata-metric1[.pub]`)
 - Download a copy of the golang install tarball into this directory.
 
 ## Creating an instance
@@ -176,7 +176,7 @@ directory where you execute the script, with the name form `checkmetrics-json-<u
 where `<uname>` is the name of the remote slave, as set in `create_packet.yaml`, and returned
 by `uname -n` on that slave.
 
-To copy the toml file to the slave, edit the `add_checkmetrics.yaml` file, replacing
+To copy the TOML file to the slave, edit the `add_checkmetrics.yaml` file, replacing
 `AAA.BBB.CCC.DDD` with the IP address of the instance. Then execute the following:
 
 ```bash
