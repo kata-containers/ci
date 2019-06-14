@@ -66,7 +66,7 @@ different for other distributions.
 
 | Dependency | Ubuntu package or method |
 | ----------- | ------------------------ |
-| `go` | Install latest from [golang.org](https://golang.org) |
+| `go` | Install latest from [`golang.org`](https://golang.org) |
 | `jre` | package `default-jre` |
 | `libvirt` | package `libvirt-bin` |
 | `qemu-kvm` | package `qemu-kvm` |
