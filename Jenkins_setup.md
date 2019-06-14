@@ -9,7 +9,7 @@
         * [Naming jobs](#naming-jobs)
         * [Setting up the scripts](#setting-up-the-scripts)
     * [Setting up a bare metal Jenkins Slave Node](#setting-up-a-bare-metal-jenkins-slave-node)
-        * [Setting up a jenkins user](#setting-up-a-jenkins-user)
+        * [Setting up a Jenkins user](#setting-up-a-jenkins-user)
         * [Providing SSH private keys](#providing-ssh-private-keys)
         * [Pre-installed requirements](#pre-installed-requirements)
     * [Environment variables](#environment-variables)
@@ -148,7 +148,7 @@ The teardown script is entered into the Jenkins Post-Build Actions dialog like:
 
 ## Setting up a bare metal Jenkins Slave Node
 
-### Setting up a jenkins user
+### Setting up a Jenkins user
 
 Generally, Jenkins Master needs to log into the slave node as `jenkins` user to run the all Jenkins job.
 So you need to create a new user `jenkins` on your slave node and add this new user to the `sudo` group, which grants it `sudo` privileges.
@@ -173,7 +173,7 @@ You could validate the SSH private key via `sudo ssh -i private_key jenkins@slav
 
 > **Note** You could find a way [here](https://github.com/kata-containers/community#join-us) to get in touch with Kata Containers Community.
 
-### Pre-installled requirements
+### Pre-installed requirements
 
 You need to pre-install the following items in your bare metal Jenkins Slave CI node:
 
