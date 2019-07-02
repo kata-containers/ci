@@ -127,7 +127,7 @@ pr_branch=&quot;PR_${pr_number}&quot;
 git fetch origin &quot;pull/${pr_number}/head:${pr_branch}&quot;
 git checkout &quot;${pr_branch}&quot;
 git rebase &quot;origin/${ghprbTargetBranch}&quot;
-    
+
 .ci/setup.sh
 .ci/run.sh</command>
     </hudson.tasks.Shell>
