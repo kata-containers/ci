@@ -4,6 +4,7 @@
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.7"/>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
         <daysToKeep>30</daysToKeep>
@@ -16,7 +17,7 @@
       <projectUrl>https://github.com/kata-containers/packaging/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
-    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.30">
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.31">
       <autoRebuild>false</autoRebuild>
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
@@ -115,13 +116,21 @@ export ghprbTargetBranch
 export OBS_USER
 export OBS_PASS
 
+export ghprbPullId
+export ghprbTargetBranch
+export GOPATH=&quot;${WORKSPACE}/go&quot;
+export TEST_CRIO=true
+export TEST_DOCKER=true
+
 env
 
 cat ${HOME}/.oscrc
 
-cd $HOME
-git clone https://github.com/kata-containers/tests.git
-cd tests
+tests_repo_dir=&quot;${GOPATH}/src/github.com/kata-containers/tests&quot;
+mkdir -p &quot;${tests_repo_dir}&quot;
+
+git clone https://github.com/kata-containers/tests.git &quot;${tests_repo_dir}&quot;
+cd &quot;${tests_repo_dir}&quot;
 
 sudo apt-get update
 sudo apt-get install make
@@ -175,6 +184,6 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
     <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.3">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
-    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.43"/>
+    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.47"/>
   </buildWrappers>
 </project>
