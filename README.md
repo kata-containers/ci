@@ -5,6 +5,7 @@
     * [Metrics CI](#metrics-ci)
 * [CI Job Matrix](#ci-job-matrix)
 * [CI health status](#ci-health-status)
+* [Controlling the CI](#controlling-the-ci)
 
 This repository stores configuration for the Kata Containers Continuous Integration (CI) system.
 
@@ -49,3 +50,9 @@ against them.
 # CI health status
 
 You can check for any known CI system issues [via this link](http://jenkins.katacontainers.io/view/CI%20Status/).
+
+# Controlling the CI
+
+The Jenkins CI jobs can be controlled (such as re-triggered or skipped) in a number of ways. Details of the
+control trigger phrases are listed on
+[a community repo wiki page](https://github.com/kata-containers/community/wiki/Controlling-the-CI).
