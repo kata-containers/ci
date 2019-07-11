@@ -4,6 +4,7 @@
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.8"/>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
         <daysToKeep>30</daysToKeep>
@@ -16,7 +17,7 @@
       <projectUrl>https://github.com/firecracker-microvm/firecracker/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
-    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.30">
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.31">
       <autoRebuild>false</autoRebuild>
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
@@ -25,6 +26,8 @@
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
+        <name>origin</name>
+        <refspec>+refs/pull/${ghprbPullId}/*:refs/remotes/origin/pr/${ghprbPullId}/*</refspec>
         <url>https://github.com/firecracker-microvm/firecracker</url>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
@@ -37,7 +40,7 @@
     <submoduleCfg class="list"/>
     <extensions/>
   </scm>
-  <assignedNode>centos7_azure</assignedNode>
+  <assignedNode>ubuntu1804-azure</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
@@ -67,7 +70,7 @@
           <branch></branch>
         </org.jenkinsci.plugins.ghprb.GhprbBranch>
       </blackListTargetBranches>
-      <gitHubAuthId>c217b635-ee39-4531-a4ed-db4048679d71</gitHubAuthId>
+      <gitHubAuthId>86ab5d57-6637-420b-938a-9826f0f6822f</gitHubAuthId>
       <triggerPhrase></triggerPhrase>
       <skipBuildPhrase>.*\[skip\W+ci\].*</skipBuildPhrase>
       <blackListCommitAuthor></blackListCommitAuthor>
@@ -91,13 +94,14 @@
     <hudson.tasks.Shell>
       <command>#!/bin/bash
 
-set -e
+set -ex
 
 # Export all environment variables needed.
 export CI=true
 export KATA_HYPERVISOR=&quot;firecracker&quot;
 export CI=&quot;true&quot;
 export CI_JOB=&quot;FIRECRACKER&quot;
+export TEST_DOCKER=true
 
 # export PR number and target branch from githubPullRequestBuilder envars.
 export ghprbPullId
@@ -139,28 +143,32 @@ cd &quot;${GOPATH}/src/${tests_repo}&quot;
 # ---------------------- Firecracker Setup -----------------------------
 
 # Firecracker repository
-fc_repo=&quot;github.com/firecracker-microvm/firecracker&quot;
+firecracker_repo=&quot;github.com/firecracker-microvm/firecracker&quot;
 
 # Clone Firecracker repository
-go get -d &quot;$fc_repo&quot; || true
+go get -d &quot;$firecracker_repo&quot; || true
 
 # Checkout to the PR commit and rebase with master
-cd &quot;${GOPATH}/src/${fc_repo}&quot;
+pushd &quot;${GOPATH}/src/${firecracker_repo}&quot;
 git fetch origin &quot;pull/${pr_number}/head:${pr_branch}&quot;
 git checkout &quot;${pr_branch}&quot;
 git rebase &quot;origin/${ghprbTargetBranch}&quot;
 
 # And show what we rebased on top of to aid debugging
+git status
 git log --oneline master~1..HEAD
 
 # Build and install Firecracker
-pushd &quot;${GOPATH}/src/${firecracker_repo}&quot;
 ./tools/devtool --unattended build --release -- --features vsock
-sudo install ${GOPATH}/src/${firecracker_repo}/build/release/firecracker /usr/bin/
+sudo install &quot;${GOPATH}/src/${firecracker_repo}/build/release-musl/firecracker&quot; /usr/bin/
+sudo install &quot;${GOPATH}/src/${firecracker_repo}/build/release-musl/jailer&quot; /usr/bin/
 popd
 
 
 # ------------------------------- Run Tests ----------------------------------
+
+# Run kata-env
+#sudo kata-runtime kata-env
 
 # Run kata-containers tests for Firecracker
 .ci/run.sh</command>
@@ -205,10 +213,10 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
       </strategy>
       <operationList/>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
-    <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.9"/>
+    <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.10"/>
     <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.3">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
-    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.44"/>
+    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.47"/>
   </buildWrappers>
 </project>
