@@ -4,7 +4,7 @@
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
-    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.7"/>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.8"/>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
         <daysToKeep>30</daysToKeep>
@@ -14,7 +14,7 @@
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
     <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.4">
-      <projectUrl>https://github.com/kata-containers/runtime/</projectUrl>
+      <projectUrl>https://github.com/kata-containers/shim/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
     <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.31">
@@ -28,7 +28,7 @@
       <hudson.plugins.git.UserRemoteConfig>
         <name>origin</name>
         <refspec>+refs/pull/${ghprbPullId}/*:refs/remotes/origin/pr/${ghprbPullId}/*</refspec>
-        <url>https://github.com/kata-containers/runtime.git</url>
+        <url>https://github.com/kata-containers/shim.git</url>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
@@ -40,7 +40,7 @@
     <submoduleCfg class="list"/>
     <extensions/>
   </scm>
-  <assignedNode>centos7_azure</assignedNode>
+  <assignedNode>ubuntu1804-azure</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
@@ -62,7 +62,7 @@
       <displayBuildErrorsOnDownstreamBuilds>false</displayBuildErrorsOnDownstreamBuilds>
       <whiteListTargetBranches>
         <org.jenkinsci.plugins.ghprb.GhprbBranch>
-          <branch></branch>
+          <branch>master</branch>
         </org.jenkinsci.plugins.ghprb.GhprbBranch>
       </whiteListTargetBranches>
       <blackListTargetBranches>
@@ -83,7 +83,7 @@
           <overrideGlobal>false</overrideGlobal>
         </org.jenkinsci.plugins.ghprb.extensions.build.GhprbCancelBuildsOnUpdate>
         <org.jenkinsci.plugins.ghprb.extensions.status.GhprbSimpleStatus>
-          <commitStatusContext>jenkins-ci-centos-7-4-firecracker</commitStatusContext>
+          <commitStatusContext>jenkins-ci-ubuntu-1804-firecracker</commitStatusContext>
           <triggeredStatus>Build triggered</triggeredStatus>
           <startedStatus>Build running</startedStatus>
           <statusUrl></statusUrl>
@@ -110,13 +110,14 @@ export GOPATH=${WORKSPACE}/go
 export PATH=${GOPATH}/bin:/usr/local/go/bin:/usr/sbin:${PATH}
 export GOROOT=&quot;/usr/local/go&quot;
 
-tests_repo_dir=&quot;${GOPATH}/src/github.com/kata-containers/tests&quot;
+tests_repo=&quot;github.com/kata-containers/tests&quot;
+tests_repo_dir=&quot;${GOPATH}/src/${tests_repo}&quot;
 mkdir -p &quot;${tests_repo_dir}&quot;
 
-git clone https://github.com/kata-containers/tests.git &quot;${tests_repo_dir}&quot;
+git clone &quot;https://${tests_repo}.git&quot; &quot;${tests_repo_dir}&quot;
 cd &quot;${tests_repo_dir}&quot;
 
-.ci/jenkins_job_build.sh &quot;github.com/kata-containers/runtime&quot;</command>
+.ci/jenkins_job_build.sh &quot;github.com/kata-containers/shim&quot;</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
@@ -152,13 +153,8 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
     </hudson.tasks.ArtifactArchiver>
   </publishers>
   <buildWrappers>
-    <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.18">
-      <bindings>
-        <org.jenkinsci.plugins.credentialsbinding.impl.StringBinding>
-          <credentialsId>15f86f95-ff9c-4ec9-a51c-644549625bdb</credentialsId>
-          <variable>CODECOV_TOKEN</variable>
-        </org.jenkinsci.plugins.credentialsbinding.impl.StringBinding>
-      </bindings>
+    <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.19">
+      <bindings class="empty-list"/>
     </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
     <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.19">
       <strategy class="hudson.plugins.build_timeout.impl.NoActivityTimeOutStrategy">
