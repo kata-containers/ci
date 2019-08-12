@@ -4,7 +4,7 @@
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
-    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.7"/>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.8"/>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
         <daysToKeep>60</daysToKeep>
@@ -44,6 +44,9 @@
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
+    <hudson.triggers.TimerTrigger>
+      <spec>H 0-23/6 * * 1-5</spec>
+    </hudson.triggers.TimerTrigger>
     <com.cloudbees.jenkins.GitHubPushTrigger plugin="github@1.29.4">
       <spec></spec>
     </com.cloudbees.jenkins.GitHubPushTrigger>
@@ -62,8 +65,8 @@ export DEBIAN_FRONTEND=noninteractive
 
 # Export all environment variables needed.
 export GOROOT=&quot;/usr/local/go&quot;
-export GOPATH=$WORKSPACE/go
 export PATH=${GOPATH}/bin:/usr/local/go/bin:/usr/sbin:/sbin:${PATH}
+export GOPATH=$WORKSPACE/go
 export tests_repo=&quot;${tests_repo:-github.com/kata-containers/tests}&quot;
 export tests_repo_dir=&quot;$GOPATH/src/$tests_repo&quot;
 
@@ -79,7 +82,8 @@ sed -i &apos;s/chronic //g&apos; ./.ci/setup_env_ubuntu.sh
 
 time ./.ci/setup_env_ubuntu.sh default
 ./.ci/install_nemu.sh
-./.ci/ci_cache_nemu.sh
+./.ci/ci_cache_components.sh -n
+
 sync
 popd</command>
     </hudson.tasks.Shell>
@@ -115,11 +119,11 @@ popd</command>
     </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
     <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.19">
       <strategy class="hudson.plugins.build_timeout.impl.NoActivityTimeOutStrategy">
-        <timeoutSecondsString>1200</timeoutSecondsString>
+        <timeoutSecondsString>1500</timeoutSecondsString>
       </strategy>
       <operationList/>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
-    <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.9"/>
+    <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.10"/>
     <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.3">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
