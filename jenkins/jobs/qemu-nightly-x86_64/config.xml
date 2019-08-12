@@ -7,8 +7,8 @@
     <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.8"/>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
-        <daysToKeep>60</daysToKeep>
-        <numToKeep>10</numToKeep>
+        <daysToKeep>30</daysToKeep>
+        <numToKeep>5</numToKeep>
         <artifactDaysToKeep>-1</artifactDaysToKeep>
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
@@ -45,7 +45,7 @@
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
     <hudson.triggers.TimerTrigger>
-      <spec>H 0-23/6 * * 1-5
+      <spec>H 0-23/12 * * 1-5
 </spec>
     </hudson.triggers.TimerTrigger>
     <com.cloudbees.jenkins.GitHubPushTrigger plugin="github@1.29.4">
@@ -66,26 +66,21 @@ export PATH=${GOPATH}/bin:/usr/local/go/bin:/usr/sbin:/sbin:${PATH}
 export GOPATH=$WORKSPACE/go
 export tests_repo=&quot;${tests_repo:-github.com/kata-containers/tests}&quot;
 export tests_repo_dir=&quot;$GOPATH/src/$tests_repo&quot;
-
-sudo -E apt install -y libelf-dev bc gcc flex
-
+export DEBIAN_FRONTEND=noninteractive
 
 mkdir -p $(dirname &quot;${tests_repo_dir}&quot;)
 [ -d &quot;${tests_repo_dir}&quot; ] || git clone &quot;https://${tests_repo}.git&quot; &quot;${tests_repo_dir}&quot;
 ${GOPATH}/src/${tests_repo}/.ci/install_go.sh -p -f
 pushd ${tests_repo_dir}
 
-./.ci/install_kata_image.sh
-./.ci/ci_cache_components.sh -i
+.ci/setup_env_ubuntu.sh default
+./cmd/container-manager/manage_ctr_mgr.sh docker install -f
 
-export TEST_INITRD=yes
-export AGENT_INIT=yes
-./.ci/install_kata_image.sh
-./.ci/ci_cache_components.sh -r
+.ci/install_qemu.sh
+.ci/ci_cache_components.sh -q
 
-sync
 popd
-</command>
+sync</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
@@ -119,7 +114,7 @@ popd
     </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
     <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.19">
       <strategy class="hudson.plugins.build_timeout.impl.NoActivityTimeOutStrategy">
-        <timeoutSecondsString>900</timeoutSecondsString>
+        <timeoutSecondsString>1200</timeoutSecondsString>
       </strategy>
       <operationList/>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
