@@ -4,7 +4,7 @@
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
-    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.8"/>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.9"/>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
         <daysToKeep>30</daysToKeep>
@@ -159,16 +159,27 @@ git status
 git log --oneline master~1..HEAD
 
 # Build and install Firecracker
-./tools/devtool --unattended build --release -- --features vsock
-sudo install &quot;${GOPATH}/src/${firecracker_repo}/build/release-musl/firecracker&quot; /usr/bin/
-sudo install &quot;${GOPATH}/src/${firecracker_repo}/build/release-musl/jailer&quot; /usr/bin/
+# ./tools/devtool --unattended build --release -- --features vsock
+./tools/devtool --unattended build --release
+command -v firecracker
+sudo rm -f /usr/bin/firecracker
+echo $?
+command -v jailer
+sudo rm -f /usr/bin/jailer
+echo $?
+sudo install &quot;${GOPATH}/src/${firecracker_repo}/build/cargo_target/x86_64-unknown-linux-musl/release/firecracker&quot; /usr/bin/
+sudo install &quot;${GOPATH}/src/${firecracker_repo}/build/cargo_target/x86_64-unknown-linux-musl/release/jailer&quot; /usr/bin/
 popd
 
 
 # ------------------------------- Run Tests ----------------------------------
 
 # Run kata-env
-#sudo kata-runtime kata-env
+sudo kata-runtime kata-env
+
+# Get firecracker version
+command -v firecracker
+sudo firecracker --version
 
 # Run kata-containers tests for Firecracker
 .ci/run.sh</command>

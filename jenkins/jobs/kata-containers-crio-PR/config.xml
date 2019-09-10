@@ -4,7 +4,7 @@
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
-    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.7"/>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.8"/>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
         <daysToKeep>30</daysToKeep>
@@ -181,12 +181,12 @@ cd &quot;${GOPATH}/src/${tests_repo}&quot;
 
 echo &quot;Ensure crio service is stopped before running the tests&quot;
 if systemctl is-active --quiet crio; then
-        sudo systemctl stop crio
+	sudo systemctl stop crio
 fi
 
 # echo &quot;Ensure docker service is stopped before running the tests&quot;
 # if systemctl is-active --quiet docker; then
-#       sudo systemctl stop docker
+#	sudo systemctl stop docker
 # fi
 
 # Execute CRI-O tests using kata-containers runtime
@@ -236,7 +236,7 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
       </strategy>
       <operationList/>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
-    <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.9"/>
+    <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.10"/>
     <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.3">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>

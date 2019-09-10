@@ -4,7 +4,7 @@
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
-    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.7"/>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.9"/>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
         <daysToKeep>30</daysToKeep>
@@ -60,6 +60,11 @@
       <whitelist></whitelist>
       <autoCloseFailedPullRequests>false</autoCloseFailedPullRequests>
       <displayBuildErrorsOnDownstreamBuilds>false</displayBuildErrorsOnDownstreamBuilds>
+      <whiteListTargetBranches>
+        <org.jenkinsci.plugins.ghprb.GhprbBranch>
+          <branch></branch>
+        </org.jenkinsci.plugins.ghprb.GhprbBranch>
+      </whiteListTargetBranches>
       <blackListTargetBranches>
         <org.jenkinsci.plugins.ghprb.GhprbBranch>
           <branch></branch>
@@ -98,6 +103,10 @@ export ghprbPullId
 export ghprbTargetBranch
 export GOPATH=&quot;${WORKSPACE}/go&quot;
 export use_runtime_class=true
+export CI_JOB=&quot;SANDBOX_CGROUP_ONLY&quot;
+export TEST_DOCKER=true
+
+
 
 pr_number=&quot;${ghprbPullId}&quot;
 pr_branch=&quot;PR_${pr_number}&quot;
@@ -154,7 +163,7 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
       </strategy>
       <operationList/>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
-    <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.9"/>
+    <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.10"/>
     <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.3">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
