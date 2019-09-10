@@ -4,6 +4,7 @@
   <description>Proxy PR build on IBM s390x servers.</description>
   <keepDependencies>false</keepDependencies>
   <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.8"/>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
         <daysToKeep>30</daysToKeep>
@@ -16,7 +17,7 @@
       <projectUrl>https://github.com/kata-containers/proxy/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
-    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.30">
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.31">
       <autoRebuild>false</autoRebuild>
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
@@ -49,7 +50,8 @@
       <spec>H/5 * * * *</spec>
       <configVersion>3</configVersion>
       <adminlist>tuan-hoang1
-alicefr</adminlist>
+alicefr
+jschintag</adminlist>
       <allowMembersOfWhitelistedOrgsAsAdmin>true</allowMembersOfWhitelistedOrgsAsAdmin>
       <orgslist>kata-containers</orgslist>
       <cron>H/5 * * * *</cron>
@@ -71,7 +73,7 @@ alicefr</adminlist>
         </org.jenkinsci.plugins.ghprb.GhprbBranch>
       </blackListTargetBranches>
       <gitHubAuthId>c217b635-ee39-4531-a4ed-db4048679d71</gitHubAuthId>
-      <triggerPhrase>.*(\n|^|\s)/(re)?test(\n|$|\s)+.*</triggerPhrase>
+      <triggerPhrase>.*(\n|^|\s)/(re)?test-s390x(\n|$|\s)+.*</triggerPhrase>
       <skipBuildPhrase>.*\[skip\W+ci\].*</skipBuildPhrase>
       <blackListCommitAuthor></blackListCommitAuthor>
       <blackListLabels></blackListLabels>
@@ -104,6 +106,8 @@ set -ex
 export ghprbPullId
 export ghprbTargetBranch
 export AGENT_INIT=yes TEST_INITRD=yes OSBUILDER_DISTRO=fedora
+export TEST_DOCKER=true
+export TEST_CRIO=true
 
 export REPO_NAME=&quot;github.com/kata-containers/proxy&quot;
 export TESTS_REPO_NAME=&quot;github.com/kata-containers/tests&quot;
@@ -165,13 +169,8 @@ sudo chgrp -R $(id -ng) ${WORKSPACE}</script>
       <externalDelete></externalDelete>
       <disableDeferredWipeout>false</disableDeferredWipeout>
     </hudson.plugins.ws__cleanup.PreBuildCleanup>
-    <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.18">
-      <bindings>
-        <org.jenkinsci.plugins.credentialsbinding.impl.StringBinding>
-          <credentialsId>62ba7b0f-6f74-4674-8c0f-31b928acbebc</credentialsId>
-          <variable>CODECOV_TOKEN</variable>
-        </org.jenkinsci.plugins.credentialsbinding.impl.StringBinding>
-      </bindings>
+    <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.19">
+      <bindings class="empty-list"/>
     </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
     <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.19">
       <strategy class="hudson.plugins.build_timeout.impl.NoActivityTimeOutStrategy">
@@ -179,7 +178,7 @@ sudo chgrp -R $(id -ng) ${WORKSPACE}</script>
       </strategy>
       <operationList/>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
-    <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.9"/>
+    <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.10"/>
     <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.3">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>

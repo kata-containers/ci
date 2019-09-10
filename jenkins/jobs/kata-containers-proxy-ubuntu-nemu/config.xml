@@ -4,6 +4,7 @@
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.7"/>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
         <daysToKeep>30</daysToKeep>
@@ -16,7 +17,7 @@
       <projectUrl>https://github.com/kata-containers/proxy/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
-    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.29">
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.31">
       <autoRebuild>false</autoRebuild>
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
@@ -61,7 +62,7 @@
       <displayBuildErrorsOnDownstreamBuilds>false</displayBuildErrorsOnDownstreamBuilds>
       <whiteListTargetBranches>
         <org.jenkinsci.plugins.ghprb.GhprbBranch>
-          <branch></branch>
+          <branch>master</branch>
         </org.jenkinsci.plugins.ghprb.GhprbBranch>
       </whiteListTargetBranches>
       <blackListTargetBranches>
@@ -100,20 +101,27 @@ set -e
 
 export KATA_HYPERVISOR=&quot;nemu&quot;
 export CI_JOB=&quot;NEMU&quot;
+export VIRTIO_FS=true
+export TEST_DOCKER=true
 
 export ghprbPullId
 export ghprbTargetBranch
-export GOPATH=&quot;${WORKSPACE}/go&quot;
+
 
 env
 
 pr_number=&quot;${ghprbPullId}&quot;
 pr_branch=&quot;PR_${pr_number}&quot;
 
-tests_repo_dir=&quot;${GOPATH}/src/github.com/kata-containers/tests&quot;
+export GOPATH=&quot;${WORKSPACE}/go&quot;
+export PATH=&quot;${GOPATH}/bin:/usr/local/go/bin:/usr/sbin:${PATH}&quot;
+export GOROOT=&quot;/usr/local/go&quot;
+
+tests_repo=&quot;github.com/kata-containers/tests&quot;
+tests_repo_dir=&quot;${GOPATH}/src/${tests_repo}&quot;
 mkdir -p &quot;${tests_repo_dir}&quot;
 
-git clone https://github.com/kata-containers/tests.git &quot;${tests_repo_dir}&quot;
+git clone &quot;https://${tests_repo}.git&quot; &quot;${tests_repo_dir}&quot;
 cd &quot;${tests_repo_dir}&quot;
 
 .ci/jenkins_job_build.sh &quot;github.com/kata-containers/proxy&quot;</command>
@@ -152,7 +160,7 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
     </hudson.tasks.ArtifactArchiver>
   </publishers>
   <buildWrappers>
-    <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.18">
+    <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.19">
       <bindings class="empty-list"/>
     </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
     <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.19">
@@ -165,6 +173,6 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
     <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.3">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
-    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.43"/>
+    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.47"/>
   </buildWrappers>
 </project>

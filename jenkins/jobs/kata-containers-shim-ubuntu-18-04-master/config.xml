@@ -4,6 +4,7 @@
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.7"/>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
         <daysToKeep>30</daysToKeep>
@@ -12,11 +13,11 @@
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
-    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.3">
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.4">
       <projectUrl>https://github.com/kata-containers/shim/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
-    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.29">
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.31">
       <autoRebuild>false</autoRebuild>
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
@@ -37,13 +38,13 @@
     <submoduleCfg class="list"/>
     <extensions/>
   </scm>
-  <assignedNode>ubuntu1804_azure</assignedNode>
+  <assignedNode>ubuntu-1804</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
-    <com.cloudbees.jenkins.GitHubPushTrigger plugin="github@1.29.3">
+    <com.cloudbees.jenkins.GitHubPushTrigger plugin="github@1.29.4">
       <spec></spec>
     </com.cloudbees.jenkins.GitHubPushTrigger>
   </triggers>
@@ -97,7 +98,7 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
     </hudson.tasks.ArtifactArchiver>
   </publishers>
   <buildWrappers>
-    <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.17">
+    <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.18">
       <bindings>
         <org.jenkinsci.plugins.credentialsbinding.impl.StringBinding>
           <credentialsId>3d868946-9a3e-4c2d-8c14-9a6e82612d1d</credentialsId>
@@ -115,6 +116,6 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
     <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.3">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
-    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.42"/>
+    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.47"/>
   </buildWrappers>
 </project>

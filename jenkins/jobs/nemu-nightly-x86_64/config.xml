@@ -4,7 +4,7 @@
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
-    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.8"/>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.9"/>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
         <daysToKeep>60</daysToKeep>
@@ -45,11 +45,8 @@
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
     <hudson.triggers.TimerTrigger>
-      <spec>H 0-23/6 * * 1-5</spec>
+      <spec>H 0-23/12 * * 1-5</spec>
     </hudson.triggers.TimerTrigger>
-    <com.cloudbees.jenkins.GitHubPushTrigger plugin="github@1.29.4">
-      <spec></spec>
-    </com.cloudbees.jenkins.GitHubPushTrigger>
   </triggers>
   <concurrentBuild>true</concurrentBuild>
   <builders>
@@ -59,30 +56,26 @@
 set -e
 set -x
 
-export KATA_HYPERVISOR=&quot;nemu&quot;
-export VIRTIO_FS=true
-export DEBIAN_FRONTEND=noninteractive
-
 # Export all environment variables needed.
+export DEBIAN_FRONTEND=noninteractive
 export GOROOT=&quot;/usr/local/go&quot;
 export PATH=${GOPATH}/bin:/usr/local/go/bin:/usr/sbin:/sbin:${PATH}
 export GOPATH=$WORKSPACE/go
 export tests_repo=&quot;${tests_repo:-github.com/kata-containers/tests}&quot;
 export tests_repo_dir=&quot;$GOPATH/src/$tests_repo&quot;
 
-
-sudo -E apt install -y libelf-dev bc gcc flex
-
+# Clone tests repo in GOPATH
 mkdir -p $(dirname &quot;${tests_repo_dir}&quot;)
 [ -d &quot;${tests_repo_dir}&quot; ] || git clone &quot;https://${tests_repo}.git&quot; &quot;${tests_repo_dir}&quot;
+
+# Install golang
 ${GOPATH}/src/${tests_repo}/.ci/install_go.sh -p -f
+
 pushd ${tests_repo_dir}
 
-sed -i &apos;s/chronic //g&apos; ./.ci/setup_env_ubuntu.sh
-
-time ./.ci/setup_env_ubuntu.sh default
-./.ci/install_nemu.sh
-./.ci/ci_cache_components.sh -n
+.ci/setup_env_ubuntu.sh default
+.ci/install_nemu.sh
+.ci/ci_cache_components.sh -n
 
 sync
 popd</command>
@@ -114,7 +107,7 @@ popd</command>
     </hudson.tasks.ArtifactArchiver>
   </publishers>
   <buildWrappers>
-    <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.19">
+    <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.20">
       <bindings class="empty-list"/>
     </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
     <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.19">

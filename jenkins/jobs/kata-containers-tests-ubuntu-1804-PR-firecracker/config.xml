@@ -49,7 +49,7 @@
     <org.jenkinsci.plugins.ghprb.GhprbTrigger plugin="ghprb@1.42.0">
       <spec>H/5 * * * *</spec>
       <configVersion>3</configVersion>
-      <adminlist>katacontainersbot</adminlist>
+      <adminlist></adminlist>
       <allowMembersOfWhitelistedOrgsAsAdmin>true</allowMembersOfWhitelistedOrgsAsAdmin>
       <orgslist>kata-containers</orgslist>
       <cron>H/5 * * * *</cron>
@@ -71,7 +71,7 @@
         </org.jenkinsci.plugins.ghprb.GhprbBranch>
       </blackListTargetBranches>
       <gitHubAuthId>c217b635-ee39-4531-a4ed-db4048679d71</gitHubAuthId>
-      <triggerPhrase>.*(\n|^|\s)/(re)?test(-fc)(\n|$|\s)+.*</triggerPhrase>
+      <triggerPhrase>.*(\n|^|\s)/(re)?test(-fc)?(\n|$|\s)+.*</triggerPhrase>
       <skipBuildPhrase>.*\[skip\W+ci\].*</skipBuildPhrase>
       <blackListCommitAuthor></blackListCommitAuthor>
       <blackListLabels></blackListLabels>

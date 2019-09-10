@@ -4,6 +4,7 @@
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.7"/>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
         <daysToKeep>30</daysToKeep>
@@ -12,11 +13,11 @@
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
-    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.3">
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.4">
       <projectUrl>https://github.com/kata-containers/proxy/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
-    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.29">
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.31">
       <autoRebuild>false</autoRebuild>
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
@@ -39,11 +40,11 @@
   </scm>
   <assignedNode>ubuntu1804_azure</assignedNode>
   <canRoam>false</canRoam>
-  <disabled>false</disabled>
+  <disabled>true</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
-    <com.cloudbees.jenkins.GitHubPushTrigger plugin="github@1.29.3">
+    <com.cloudbees.jenkins.GitHubPushTrigger plugin="github@1.29.4">
       <spec></spec>
     </com.cloudbees.jenkins.GitHubPushTrigger>
   </triggers>
@@ -60,9 +61,16 @@ export ghprbTargetBranch
 
 export AGENT_INIT=yes TEST_INITRD=yes OSBUILDER_DISTRO=alpine
 
-cd $HOME
-git clone https://github.com/kata-containers/tests.git
-cd tests
+export GOPATH=${WORKSPACE}/go
+export PATH=${GOPATH}/bin:/usr/local/go/bin:/usr/sbin:${PATH}
+export GOROOT=&quot;/usr/local/go&quot;
+
+tests_repo=&quot;github.com/kata-containers/tests&quot;
+tests_repo_dir=&quot;${GOPATH}/src/${tests_repo}&quot;
+mkdir -p &quot;${tests_repo_dir}&quot;
+
+git clone &quot;https://${tests_repo}.git&quot; &quot;${tests_repo_dir}&quot;
+cd &quot;${tests_repo_dir}&quot;
 
 .ci/jenkins_job_build.sh &quot;github.com/kata-containers/proxy&quot;</command>
     </hudson.tasks.Shell>
@@ -100,7 +108,7 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
     </hudson.tasks.ArtifactArchiver>
   </publishers>
   <buildWrappers>
-    <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.17">
+    <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.18">
       <bindings class="empty-list"/>
     </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
     <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.19">
@@ -110,6 +118,6 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
       <operationList/>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
     <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.9"/>
-    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.42"/>
+    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.47"/>
   </buildWrappers>
 </project>

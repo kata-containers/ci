@@ -4,6 +4,7 @@
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.7"/>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
         <daysToKeep>30</daysToKeep>
@@ -16,7 +17,7 @@
       <projectUrl>https://github.com/kata-containers/tests/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
-    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.30">
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.31">
       <autoRebuild>false</autoRebuild>
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
@@ -58,10 +59,14 @@ echo &quot;lvm_device: $LVM_DEVICE&quot;
 
 export ghprbPullId
 export ghprbTargetBranch
+export GOPATH=&quot;${WORKSPACE}/go&quot;
+export PATH=&quot;${GOPATH}/bin:/usr/local/go/bin:/usr/sbin:/sbin:/usr/local/bin:${PATH}&quot;
 
-cd $HOME
-git clone https://github.com/kata-containers/tests.git
-cd tests
+tests_repo_dir=&quot;${GOPATH}/src/github.com/kata-containers/tests&quot;
+mkdir -p &quot;${tests_repo_dir}&quot;
+
+git clone https://github.com/kata-containers/tests.git &quot;${tests_repo_dir}&quot;
+cd &quot;${tests_repo_dir}&quot;
 
 .ci/jenkins_job_build.sh &quot;github.com/kata-containers/tests&quot;</command>
     </hudson.tasks.Shell>
@@ -115,6 +120,6 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
     <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.3">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
-    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.44"/>
+    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.47"/>
   </buildWrappers>
 </project>
