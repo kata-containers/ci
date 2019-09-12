@@ -101,12 +101,14 @@ set -e
 
 export ghprbPullId
 export ghprbTargetBranch
-export GOPATH=&quot;${WORKSPACE}/go&quot;
-export use_runtime_class=true
+
+export GOPATH=${WORKSPACE}/go
+export PATH=${GOPATH}/bin:/usr/local/go/bin:/usr/sbin:${PATH}
+export GOROOT=&quot;/usr/local/go&quot;
+export CI=true
 export CI_JOB=&quot;SANDBOX_CGROUP_ONLY&quot;
 export TEST_DOCKER=true
-
-
+export TEST_CRIO=true
 
 pr_number=&quot;${ghprbPullId}&quot;
 pr_branch=&quot;PR_${pr_number}&quot;

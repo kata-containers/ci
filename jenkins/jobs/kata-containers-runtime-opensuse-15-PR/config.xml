@@ -106,10 +106,9 @@ export GOPATH=${WORKSPACE}/go
 export PATH=${GOPATH}/bin:/usr/local/go/bin:/usr/sbin:${PATH}
 export GOROOT=&quot;/usr/local/go&quot;
 export CI=true
-export TEST_DOCKER=true
-export use_runtime_class=true
 export CI_JOB=&quot;SANDBOX_CGROUP_ONLY&quot;
-export TEST_CRIO=false
+export TEST_DOCKER=true
+export TEST_CRIO=true
 
 tests_repo_dir=&quot;${GOPATH}/src/github.com/kata-containers/tests&quot;
 mkdir -p &quot;${tests_repo_dir}&quot;
