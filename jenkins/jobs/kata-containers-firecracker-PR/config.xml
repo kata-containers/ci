@@ -4,7 +4,7 @@
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
-    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.9"/>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
         <daysToKeep>30</daysToKeep>
@@ -13,7 +13,7 @@
         <artifactNumToKeep>30</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
-    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.4">
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.5">
       <projectUrl>https://github.com/firecracker-microvm/firecracker/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
@@ -135,12 +135,8 @@ mkdir -p $(dirname &quot;${tests_repo_dir}&quot;)
 # Install Go
 ${GOPATH}/src/${tests_repo}/.ci/install_go.sh -p
 
-# Run kata-containers setup
-cd &quot;${GOPATH}/src/${tests_repo}&quot;
-.ci/setup.sh
 
-
-# ---------------------- Firecracker Setup -----------------------------
+# ------------------------------- Firecracker Setup -----------------------------
 
 # Firecracker repository
 firecracker_repo=&quot;github.com/firecracker-microvm/firecracker&quot;
@@ -159,18 +155,16 @@ git status
 git log --oneline master~1..HEAD
 
 # Build and install Firecracker
-# ./tools/devtool --unattended build --release -- --features vsock
 ./tools/devtool --unattended build --release
-command -v firecracker
-sudo rm -f /usr/bin/firecracker
-echo $?
-command -v jailer
-sudo rm -f /usr/bin/jailer
-echo $?
-sudo install &quot;${GOPATH}/src/${firecracker_repo}/build/cargo_target/x86_64-unknown-linux-musl/release/firecracker&quot; /usr/bin/
-sudo install &quot;${GOPATH}/src/${firecracker_repo}/build/cargo_target/x86_64-unknown-linux-musl/release/jailer&quot; /usr/bin/
+
+#Install built fc binaries
+sudo install ${GOPATH}/src/${firecracker_repo}/build/cargo_target/x86_64-*-linux-musl/release/firecracker /usr/bin/
+sudo install ${GOPATH}/src/${firecracker_repo}/build/cargo_target/x86_64-*-linux-musl/release/jailer /usr/bin/
 popd
 
+# ------------------------------- kata-containers setup --------------------------
+cd &quot;${GOPATH}/src/${tests_repo}&quot;
+.ci/setup.sh
 
 # ------------------------------- Run Tests ----------------------------------
 
@@ -228,6 +222,6 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
     <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.3">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
-    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.47"/>
+    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.49"/>
   </buildWrappers>
 </project>

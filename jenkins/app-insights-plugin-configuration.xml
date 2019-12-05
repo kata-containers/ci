@@ -1,4 +1,4 @@
 <?xml version='1.1' encoding='UTF-8'?>
-<com.microsoft.jenkins.azurecommons.telemetry.AppInsightsGlobalConfig plugin="azure-commons@0.2.10">
+<com.microsoft.jenkins.azurecommons.telemetry.AppInsightsGlobalConfig plugin="azure-commons@1.0.4">
   <appInsightsEnabled>true</appInsightsEnabled>
 </com.microsoft.jenkins.azurecommons.telemetry.AppInsightsGlobalConfig>

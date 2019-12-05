@@ -4,7 +4,7 @@
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
-    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.8"/>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.9"/>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
         <daysToKeep>60</daysToKeep>
@@ -75,6 +75,8 @@ mkdir -p $(dirname &quot;${tests_repo_dir}&quot;)
 ${GOPATH}/src/${tests_repo}/.ci/install_go.sh -p -f
 pushd ${tests_repo_dir}
 
+./cmd/container-manager/manage_ctr_mgr.sh docker install -f
+
 ./.ci/install_kata_image.sh
 ./.ci/ci_cache_components.sh -i
 
@@ -114,7 +116,7 @@ popd
     </hudson.tasks.ArtifactArchiver>
   </publishers>
   <buildWrappers>
-    <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.19">
+    <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.20">
       <bindings class="empty-list"/>
     </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
     <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.19">
