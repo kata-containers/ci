@@ -4,7 +4,7 @@
   <description>Proxy PR build on IBM s390x servers.</description>
   <keepDependencies>false</keepDependencies>
   <properties>
-    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.8"/>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.9"/>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
         <daysToKeep>30</daysToKeep>
@@ -156,7 +156,10 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
 # And ensure the workspace tree is all owned by us before we quit, otherwise the later&#xd;
 # `delete workspace before run` may fail on file perms (as some tests leave things owned by root).&#xd;
 sudo chown -R ${USER} ${WORKSPACE}&#xd;
-sudo chgrp -R $(id -ng) ${WORKSPACE}</script>
+sudo chgrp -R $(id -ng) ${WORKSPACE}&#xd;
+&#xd;
+# clear logs&#xd;
+sudo journalctl --vacuum-time 1s</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
@@ -176,7 +179,7 @@ sudo chgrp -R $(id -ng) ${WORKSPACE}</script>
       <externalDelete></externalDelete>
       <disableDeferredWipeout>false</disableDeferredWipeout>
     </hudson.plugins.ws__cleanup.PreBuildCleanup>
-    <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.19">
+    <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.20">
       <bindings class="empty-list"/>
     </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
     <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.19">

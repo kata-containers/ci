@@ -4,7 +4,7 @@
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
-    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.8"/>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.11"/>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
         <daysToKeep>30</daysToKeep>
@@ -13,7 +13,7 @@
         <artifactNumToKeep>30</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
-    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.4">
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.5">
       <projectUrl>https://github.com/cri-o/cri-o/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
@@ -117,7 +117,7 @@
     <hudson.tasks.Shell>
       <command>#!/bin/bash
 
-set -e
+set -ex
 
 # Export all environment variables needed.
 export CI=true
@@ -127,10 +127,16 @@ export REPO_NAME
 export REPO_OWNER
 export TEST_CRIO=true
 
+# Print env variables in case we need to debug
+env
+
 export LVM_DEVICE=/dev/sdb
 
 pr_number=&quot;${PULL_NUMBER}&quot;
 pr_branch=&quot;PR_${pr_number}&quot;
+
+# get (only) the number of the branch that we are testing
+branch_release_number=$(echo ${PULL_BASE_REF} | cut -d&apos;-&apos; -f 2)
 
 export ghprbGhRepository=&quot;${REPO_OWNER}/${REPO_NAME}&quot;
 export GOROOT=&quot;/usr/local/go&quot;
@@ -174,27 +180,32 @@ git rebase &quot;origin/${PULL_BASE_REF}&quot;
 # And show what we rebased on top of to aid debugging
 git log --oneline master~1..HEAD
 
+# Change the critools version as latest does not work with 1.13 and 1.14.
+if [ &quot;$branch_release_number&quot; == &quot;1.13&quot; ] || [ &quot;$branch_release_number&quot; == &quot;1.14&quot; ]; then
+	critools_version=&quot;v${branch_release_number}.0&quot;
+	cd &quot;${GOPATH}/src/github.com/kata-containers/runtime&quot;
+	yq --trim=false w -i versions.yaml externals.critools.version &quot;$critools_version&quot;
+	yq r versions.yaml externals.critools.version
+fi
+
 # Run kata-containers setup
 cd &quot;${GOPATH}/src/${tests_repo}&quot;
 .ci/setup.sh
-
 
 echo &quot;Ensure crio service is stopped before running the tests&quot;
 if systemctl is-active --quiet crio; then
 	sudo systemctl stop crio
 fi
 
-# echo &quot;Ensure docker service is stopped before running the tests&quot;
-# if systemctl is-active --quiet docker; then
-#	sudo systemctl stop docker
-# fi
+cd &quot;${GOPATH}/src/${crio_repo}&quot;
+git log --oneline master~1..HEAD
 
+cd &quot;${GOPATH}/src/${tests_repo}&quot;
 # Execute CRI-O tests using kata-containers runtime
 echo &quot;CRI-O Version to test:&quot;
 sudo crio --version
 export RUNTIME=kata-runtime
-sudo -E PATH=$PATH make crio
-</command>
+sudo -E PATH=$PATH make crio</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
@@ -237,9 +248,9 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
       <operationList/>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
     <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.10"/>
-    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.3">
+    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.6.2">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
-    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.47"/>
+    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.50"/>
   </buildWrappers>
 </project>

@@ -1,5 +1,5 @@
 <?xml version='1.1' encoding='UTF-8'?>
-<hudson.plugins.tfs.TeamPluginGlobalConfig plugin="tfs@5.142.0">
+<hudson.plugins.tfs.TeamPluginGlobalConfig plugin="tfs@5.157.0">
   <collectionConfigurations/>
   <releaseWebHookConfigurations/>
   <configFolderPerNode>false</configFolderPerNode>

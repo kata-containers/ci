@@ -4,7 +4,7 @@
   <description>Runs stability tests under an AWS baremetal machine</description>
   <keepDependencies>false</keepDependencies>
   <properties>
-    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.9"/>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.11"/>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
         <daysToKeep>30</daysToKeep>
@@ -13,7 +13,7 @@
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
-    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.4">
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.5">
       <projectUrl>https://github.com/kata-containers/tests/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
@@ -22,7 +22,7 @@
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0-rc">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -38,7 +38,7 @@
     <submoduleCfg class="list"/>
     <extensions/>
   </scm>
-  <assignedNode>bm-ubuntu-aws-us-west-2a || bm-ubuntu-aws-us-west-2b</assignedNode>
+  <assignedNode>bm-ubuntu-aws-us-west-2b</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
@@ -66,7 +66,7 @@ export PATH=${GOPATH}/bin:/usr/local/go/bin:/usr/sbin:/sbin:${PATH}
 export RUNTIME=kata-runtime
 export RUNTIME_PATH=$(command -v $RUNTIME)
 
-export MAX_CONTAINERS=200
+export MAX_CONTAINERS=1000
 export ITERATIONS=2
 
 tests_repo=&quot;github.com/kata-containers/tests&quot;
@@ -88,19 +88,6 @@ ${GOPATH}/src/${tests_repo}/.ci/install_go.sh -p -f
 # Run environment setup
 cd ${GOPATH}/src/${kata_repo}
 .ci/setup.sh
-
-# Run k8s e2e conformance tests
-# cd ${GOPATH}/src/${tests_repo}/integration/kubernetes
-# ./init.sh
-
-# kubectl get pods --all-namespaces
-# pushd &quot;e2e_conformance&quot;
-# sed -i &apos;/pipefail/aset -x&apos; run.sh
-# ./run.sh
-# kubectl get pods --all-namespaces
-# popd
-# ./cleanup_env.sh
-
 
 # Run stability tests
 systemctl is-active --quiet docker || sudo systemctl start docker
@@ -149,7 +136,7 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
       <operationList/>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
     <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.10"/>
-    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.3">
+    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.6.2">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
   </buildWrappers>
