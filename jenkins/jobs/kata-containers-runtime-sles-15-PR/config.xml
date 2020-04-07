@@ -4,7 +4,7 @@
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
-    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.8"/>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.12"/>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
         <daysToKeep>30</daysToKeep>
@@ -13,8 +13,8 @@
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
-    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.4">
-      <projectUrl>https://github.com/kata-containers/shim/</projectUrl>
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.5">
+      <projectUrl>https://github.com/kata-containers/runtime/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
     <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.31">
@@ -22,13 +22,13 @@
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0-rc">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.2.2">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
         <name>origin</name>
         <refspec>+refs/pull/${ghprbPullId}/*:refs/remotes/origin/pr/${ghprbPullId}/*</refspec>
-        <url>https://github.com/kata-containers/shim.git</url>
+        <url>https://github.com/kata-containers/runtime.git</url>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
@@ -40,9 +40,9 @@
     <submoduleCfg class="list"/>
     <extensions/>
   </scm>
-  <assignedNode>sles12-azure</assignedNode>
+  <assignedNode>sles15-azure</assignedNode>
   <canRoam>false</canRoam>
-  <disabled>true</disabled>
+  <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
@@ -62,7 +62,7 @@
       <displayBuildErrorsOnDownstreamBuilds>false</displayBuildErrorsOnDownstreamBuilds>
       <whiteListTargetBranches>
         <org.jenkinsci.plugins.ghprb.GhprbBranch>
-          <branch>master</branch>
+          <branch></branch>
         </org.jenkinsci.plugins.ghprb.GhprbBranch>
       </whiteListTargetBranches>
       <blackListTargetBranches>
@@ -71,7 +71,7 @@
         </org.jenkinsci.plugins.ghprb.GhprbBranch>
       </blackListTargetBranches>
       <gitHubAuthId>c217b635-ee39-4531-a4ed-db4048679d71</gitHubAuthId>
-      <triggerPhrase>.*(\n|^|\s)/(re)?test(\n|$|\s)+.*</triggerPhrase>
+      <triggerPhrase>.*(\n|^|\s)/(re)?test(-sles)?(\n|$|\s)+.*</triggerPhrase>
       <skipBuildPhrase>.*\[skip\W+ci\].*</skipBuildPhrase>
       <blackListCommitAuthor></blackListCommitAuthor>
       <blackListLabels></blackListLabels>
@@ -83,7 +83,7 @@
           <overrideGlobal>false</overrideGlobal>
         </org.jenkinsci.plugins.ghprb.extensions.build.GhprbCancelBuildsOnUpdate>
         <org.jenkinsci.plugins.ghprb.extensions.status.GhprbSimpleStatus>
-          <commitStatusContext>jenkins-ci-sles-12</commitStatusContext>
+          <commitStatusContext>jenkins-ci-sles-15</commitStatusContext>
           <triggeredStatus>Build triggered</triggeredStatus>
           <startedStatus>Build running</startedStatus>
           <statusUrl></statusUrl>
@@ -105,15 +105,15 @@ export ghprbTargetBranch
 export GOPATH=${WORKSPACE}/go
 export PATH=${GOPATH}/bin:/usr/local/go/bin:/usr/sbin:${PATH}
 export GOROOT=&quot;/usr/local/go&quot;
+export CI=true
 
-tests_repo=&quot;github.com/kata-containers/tests&quot;
-tests_repo_dir=&quot;${GOPATH}/src/${tests_repo}&quot;
+tests_repo_dir=&quot;${GOPATH}/src/github.com/kata-containers/tests&quot;
 mkdir -p &quot;${tests_repo_dir}&quot;
 
-git clone &quot;https://${tests_repo}.git&quot; &quot;${tests_repo_dir}&quot;
+git clone https://github.com/kata-containers/tests.git &quot;${tests_repo_dir}&quot;
 cd &quot;${tests_repo_dir}&quot;
 
-.ci/jenkins_job_build.sh &quot;github.com/kata-containers/shim&quot;</command>
+.ci/jenkins_job_build.sh &quot;github.com/kata-containers/runtime&quot;</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
@@ -158,9 +158,9 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
       </strategy>
       <operationList/>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
-    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.3">
+    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.6.2">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
-    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.47"/>
+    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.51"/>
   </buildWrappers>
 </project>
