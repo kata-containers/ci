@@ -4,7 +4,7 @@
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
-    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.7"/>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.15"/>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
         <daysToKeep>30</daysToKeep>
@@ -13,8 +13,8 @@
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
-    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.4">
-      <projectUrl>https://github.com/kata-containers/tests/</projectUrl>
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.5">
+      <projectUrl>https://github.com/kata-containers/proxy/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
     <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.31">
@@ -22,13 +22,13 @@
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0-rc">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.2.2">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
         <name>origin</name>
         <refspec>+refs/pull/${ghprbPullId}/*:refs/remotes/origin/pr/${ghprbPullId}/*</refspec>
-        <url>https://github.com/kata-containers/tests.git</url>
+        <url>https://github.com/kata-containers/proxy.git</url>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
@@ -40,13 +40,13 @@
     <submoduleCfg class="list"/>
     <extensions/>
   </scm>
-  <assignedNode>centos7_azure</assignedNode>
+  <assignedNode>centos8_azure</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
-    <org.jenkinsci.plugins.ghprb.GhprbTrigger plugin="ghprb@1.42.0">
+    <org.jenkinsci.plugins.ghprb.GhprbTrigger plugin="ghprb@1.42.1">
       <spec>H/5 * * * *</spec>
       <configVersion>3</configVersion>
       <adminlist></adminlist>
@@ -62,12 +62,12 @@
       <displayBuildErrorsOnDownstreamBuilds>false</displayBuildErrorsOnDownstreamBuilds>
       <whiteListTargetBranches>
         <org.jenkinsci.plugins.ghprb.GhprbBranch>
-          <branch></branch>
+          <branch>master</branch>
         </org.jenkinsci.plugins.ghprb.GhprbBranch>
       </whiteListTargetBranches>
       <blackListTargetBranches>
         <org.jenkinsci.plugins.ghprb.GhprbBranch>
-          <branch></branch>
+          <branch>stable-1.9</branch>
         </org.jenkinsci.plugins.ghprb.GhprbBranch>
       </blackListTargetBranches>
       <gitHubAuthId>c217b635-ee39-4531-a4ed-db4048679d71</gitHubAuthId>
@@ -77,13 +77,13 @@
       <blackListLabels></blackListLabels>
       <whiteListLabels></whiteListLabels>
       <includedRegions></includedRegions>
-      <excludedRegions>.*\.md</excludedRegions>
+      <excludedRegions></excludedRegions>
       <extensions>
         <org.jenkinsci.plugins.ghprb.extensions.build.GhprbCancelBuildsOnUpdate>
           <overrideGlobal>false</overrideGlobal>
         </org.jenkinsci.plugins.ghprb.extensions.build.GhprbCancelBuildsOnUpdate>
         <org.jenkinsci.plugins.ghprb.extensions.status.GhprbSimpleStatus>
-          <commitStatusContext>jenkins-ci-centos-7-4-q-35</commitStatusContext>
+          <commitStatusContext>jenkins-ci-centos-8</commitStatusContext>
           <triggeredStatus>Build triggered</triggeredStatus>
           <startedStatus>Build running</startedStatus>
           <statusUrl></statusUrl>
@@ -101,25 +101,20 @@ set -e
 
 export ghprbPullId
 export ghprbTargetBranch
-export GOPATH=&quot;${WORKSPACE}/go&quot;
-export MACHINETYPE=&quot;q35&quot;
-export TEST_DOCKER=true
-export DEBUG=true
+export CI=true
 
-pr_number=&quot;${ghprbPullId}&quot;
-pr_branch=&quot;PR_${pr_number}&quot;
+export GOPATH=${WORKSPACE}/go
+export PATH=${GOPATH}/bin:/usr/local/go/bin:/usr/sbin:${PATH}
+export GOROOT=&quot;/usr/local/go&quot;
 
-tests_repo_dir=&quot;${GOPATH}/src/github.com/kata-containers/tests&quot;
+tests_repo=&quot;github.com/kata-containers/tests&quot;
+tests_repo_dir=&quot;${GOPATH}/src/${tests_repo}&quot;
 mkdir -p &quot;${tests_repo_dir}&quot;
 
-git clone https://github.com/kata-containers/tests.git &quot;${tests_repo_dir}&quot;
+git clone &quot;https://${tests_repo}.git&quot; &quot;${tests_repo_dir}&quot;
 cd &quot;${tests_repo_dir}&quot;
 
-git fetch origin &quot;pull/${pr_number}/head:${pr_branch}&quot;
-git checkout &quot;${pr_branch}&quot;
-git rebase &quot;origin/${ghprbTargetBranch}&quot;
-
-.ci/jenkins_job_build.sh &quot;github.com/kata-containers/tests&quot;</command>
+.ci/jenkins_job_build.sh &quot;github.com/kata-containers/proxy&quot;</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
@@ -155,19 +150,15 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
     </hudson.tasks.ArtifactArchiver>
   </publishers>
   <buildWrappers>
-    <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.19">
-      <bindings class="empty-list"/>
-    </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
-    <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.19">
+    <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.19.1">
       <strategy class="hudson.plugins.build_timeout.impl.NoActivityTimeOutStrategy">
-        <timeoutSecondsString>900</timeoutSecondsString>
+        <timeoutSecondsString>300</timeoutSecondsString>
       </strategy>
       <operationList/>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
-    <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.9"/>
-    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.3">
+    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.6.2">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
-    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.47"/>
+    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.52"/>
   </buildWrappers>
 </project>
