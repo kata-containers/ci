@@ -14,7 +14,7 @@
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
     <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.5">
-      <projectUrl>https://github.com/kata-containers/tests/</projectUrl>
+      <projectUrl>https://github.com/kata-containers/shim/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
     <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.31">
@@ -28,7 +28,7 @@
       <hudson.plugins.git.UserRemoteConfig>
         <name>origin</name>
         <refspec>+refs/pull/${ghprbPullId}/*:refs/remotes/origin/pr/${ghprbPullId}/*</refspec>
-        <url>https://github.com/kata-containers/tests.git</url>
+        <url>https://github.com/kata-containers/shim.git</url>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
@@ -40,7 +40,7 @@
     <submoduleCfg class="list"/>
     <extensions/>
   </scm>
-  <assignedNode>rhel_7_7_azure</assignedNode>
+  <assignedNode>rhel8_azure</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
@@ -62,7 +62,7 @@
       <displayBuildErrorsOnDownstreamBuilds>false</displayBuildErrorsOnDownstreamBuilds>
       <whiteListTargetBranches>
         <org.jenkinsci.plugins.ghprb.GhprbBranch>
-          <branch></branch>
+          <branch>master</branch>
         </org.jenkinsci.plugins.ghprb.GhprbBranch>
       </whiteListTargetBranches>
       <blackListTargetBranches>
@@ -77,13 +77,13 @@
       <blackListLabels></blackListLabels>
       <whiteListLabels></whiteListLabels>
       <includedRegions></includedRegions>
-      <excludedRegions>.*\.md</excludedRegions>
+      <excludedRegions></excludedRegions>
       <extensions>
         <org.jenkinsci.plugins.ghprb.extensions.build.GhprbCancelBuildsOnUpdate>
           <overrideGlobal>false</overrideGlobal>
         </org.jenkinsci.plugins.ghprb.extensions.build.GhprbCancelBuildsOnUpdate>
         <org.jenkinsci.plugins.ghprb.extensions.status.GhprbSimpleStatus>
-          <commitStatusContext>jenkins-ci-rhel-7-q35</commitStatusContext>
+          <commitStatusContext>jenkins-ci-rhel-8-q35</commitStatusContext>
           <triggeredStatus>Build triggered</triggeredStatus>
           <startedStatus>Build running</startedStatus>
           <statusUrl></statusUrl>
@@ -101,28 +101,23 @@ set -e
 
 export ghprbPullId
 export ghprbTargetBranch
-export GOPATH=&quot;${WORKSPACE}/go&quot;
-export use_runtime_class=true
+
+export GOPATH=${WORKSPACE}/go
+export PATH=${GOPATH}/bin:/usr/local/go/bin:/usr/sbin:${PATH}
+export GOROOT=&quot;/usr/local/go&quot;
 export MACHINETYPE=&quot;q35&quot;
 export TEST_DOCKER=true
 export KUBERNETES=&quot;no&quot;
 export TEST_CRIO=&quot;false&quot;
 
-pr_number=&quot;${ghprbPullId}&quot;
-pr_branch=&quot;PR_${pr_number}&quot;
-
-tests_repo_dir=&quot;${GOPATH}/src/github.com/kata-containers/tests&quot;
+tests_repo=&quot;github.com/kata-containers/tests&quot;
+tests_repo_dir=&quot;${GOPATH}/src/${tests_repo}&quot;
 mkdir -p &quot;${tests_repo_dir}&quot;
 
-git clone https://github.com/kata-containers/tests.git &quot;${tests_repo_dir}&quot;
+git clone &quot;https://${tests_repo}.git&quot; &quot;${tests_repo_dir}&quot;
 cd &quot;${tests_repo_dir}&quot;
 
-git fetch origin &quot;pull/${pr_number}/head:${pr_branch}&quot;
-git checkout &quot;${pr_branch}&quot;
-git rebase &quot;origin/${ghprbTargetBranch}&quot;
-
-.ci/jenkins_job_build.sh &quot;github.com/kata-containers/tests&quot;
-</command>
+.ci/jenkins_job_build.sh &quot;github.com/kata-containers/shim&quot;</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
@@ -158,16 +153,15 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
     </hudson.tasks.ArtifactArchiver>
   </publishers>
   <buildWrappers>
-    <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.22">
+    <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.23">
       <bindings class="empty-list"/>
     </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
     <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.19.1">
       <strategy class="hudson.plugins.build_timeout.impl.NoActivityTimeOutStrategy">
-        <timeoutSecondsString>1500</timeoutSecondsString>
+        <timeoutSecondsString>1000</timeoutSecondsString>
       </strategy>
       <operationList/>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
-    <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.11.3"/>
     <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.6.2">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>

@@ -40,7 +40,7 @@
     <submoduleCfg class="list"/>
     <extensions/>
   </scm>
-  <assignedNode>rhel_7_7_azure</assignedNode>
+  <assignedNode>rhel8_azure</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
@@ -83,7 +83,7 @@
           <overrideGlobal>false</overrideGlobal>
         </org.jenkinsci.plugins.ghprb.extensions.build.GhprbCancelBuildsOnUpdate>
         <org.jenkinsci.plugins.ghprb.extensions.status.GhprbSimpleStatus>
-          <commitStatusContext>jenkins-ci-rhel-7-q35</commitStatusContext>
+          <commitStatusContext>jenkins-ci-rhel-8-q35</commitStatusContext>
           <triggeredStatus>Build triggered</triggeredStatus>
           <startedStatus>Build running</startedStatus>
           <statusUrl></statusUrl>
@@ -153,7 +153,7 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
     </hudson.tasks.ArtifactArchiver>
   </publishers>
   <buildWrappers>
-    <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.22">
+    <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.23">
       <bindings>
         <org.jenkinsci.plugins.credentialsbinding.impl.StringBinding>
           <credentialsId>62ba7b0f-6f74-4674-8c0f-31b928acbebc</credentialsId>
