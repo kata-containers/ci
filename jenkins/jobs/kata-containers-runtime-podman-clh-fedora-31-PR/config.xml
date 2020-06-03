@@ -72,6 +72,9 @@
         <org.jenkinsci.plugins.ghprb.GhprbBranch>
           <branch>stable-1.10</branch>
         </org.jenkinsci.plugins.ghprb.GhprbBranch>
+        <org.jenkinsci.plugins.ghprb.GhprbBranch>
+          <branch>stable-1.11</branch>
+        </org.jenkinsci.plugins.ghprb.GhprbBranch>
       </blackListTargetBranches>
       <gitHubAuthId>c217b635-ee39-4531-a4ed-db4048679d71</gitHubAuthId>
       <triggerPhrase>.*(\n|^|\s)/(re)?test(-clh(-podman?)?)?(\n|$|\s)+.*</triggerPhrase>
