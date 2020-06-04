@@ -1,5 +1,5 @@
 <?xml version='1.1' encoding='UTF-8'?>
-<hudson.tasks.Mailer_-DescriptorImpl plugin="mailer@1.29">
+<hudson.tasks.Mailer_-DescriptorImpl plugin="mailer@1.30">
   <defaultSuffix></defaultSuffix>
   <useSsl>false</useSsl>
   <smtpPort></smtpPort>
