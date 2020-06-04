@@ -5,13 +5,14 @@
 This job would be chained in with another job, particularly say a metrics bare metal slave node build, to try and get the slave back to a known clean state after a build.</description>
   <keepDependencies>false</keepDependencies>
   <properties>
-    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.29">
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.14"/>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.31">
       <autoRebuild>false</autoRebuild>
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
   </properties>
   <scm class="hudson.scm.NullSCM"/>
-  <assignedNode>x86-ubuntu-1604 &amp;&amp; x86_metrics_slave</assignedNode>
+  <assignedNode>x86_metrics_slave</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>

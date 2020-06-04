@@ -76,6 +76,8 @@ pushd ${tests_repo_dir}
 .ci/setup_env_ubuntu.sh default
 ./cmd/container-manager/manage_ctr_mgr.sh docker install -f
 
+sed -i &apos;/gz/aCURRENT_QEMU_VERSION=3.99.99/&apos; .ci/install_qemu.sh
+
 .ci/install_qemu.sh
 .ci/ci_cache_components.sh -q
 

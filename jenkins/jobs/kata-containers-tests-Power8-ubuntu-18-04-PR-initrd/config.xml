@@ -4,7 +4,7 @@
   <description>Tests PR build on IBM Power8 servers.</description>
   <keepDependencies>false</keepDependencies>
   <properties>
-    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.15"/>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
         <daysToKeep>30</daysToKeep>
@@ -22,7 +22,7 @@
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0-rc">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.2.2">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -40,13 +40,13 @@
     <submoduleCfg class="list"/>
     <extensions/>
   </scm>
-  <assignedNode>power8_node &amp;&amp; power8-ubuntu-1604</assignedNode>
+  <assignedNode>power8_node</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
-    <org.jenkinsci.plugins.ghprb.GhprbTrigger plugin="ghprb@1.42.0">
+    <org.jenkinsci.plugins.ghprb.GhprbTrigger plugin="ghprb@1.42.1">
       <spec>H/5 * * * *</spec>
       <configVersion>3</configVersion>
       <adminlist>nitkon</adminlist>
@@ -67,7 +67,7 @@
       </whiteListTargetBranches>
       <blackListTargetBranches>
         <org.jenkinsci.plugins.ghprb.GhprbBranch>
-          <branch></branch>
+          <branch>2.0-dev</branch>
         </org.jenkinsci.plugins.ghprb.GhprbBranch>
       </blackListTargetBranches>
       <gitHubAuthId>c217b635-ee39-4531-a4ed-db4048679d71</gitHubAuthId>
@@ -95,7 +95,10 @@
       <command>#!/bin/bash
 
 # As we have set the shell to /bin/bash, we need to reset -e (and let&apos;s set -x as well eh)
-set -ex
+set -e
+echo ------------
+ps -ef
+echo ------------
 
 # These vars are required by the .ci scripts in the repos
 export ghprbPullId
@@ -103,6 +106,9 @@ export ghprbTargetBranch
 export AGENT_INIT=yes TEST_INITRD=yes OSBUILDER_DISTRO=fedora
 export TEST_DOCKER=true
 export TEST_CRIO=true
+
+pr_number=&quot;${ghprbPullId}&quot;
+pr_branch=&quot;PR_${pr_number}&quot;
 
 export REPO_NAME=&quot;github.com/kata-containers/tests&quot;
 export TESTS_REPO_NAME=&quot;github.com/kata-containers/tests&quot;
@@ -116,6 +122,10 @@ env
 #go get -d -u ${TESTS_REPO_NAME}
 git clone ${TESTS_GIT_NAME} ${GOPATH}/src/${TESTS_REPO_NAME}
 cd ${GOPATH}/src/${TESTS_REPO_NAME}
+
+git fetch origin &quot;pull/${pr_number}/head:${pr_branch}&quot;
+git checkout &quot;${pr_branch}&quot;
+git rebase &quot;origin/${ghprbTargetBranch}&quot;
 
 .ci/jenkins_job_build.sh &quot;${REPO_NAME}&quot;</command>
     </hudson.tasks.Shell>
@@ -159,23 +169,23 @@ sudo chgrp -R $(id -ng) ${WORKSPACE}</script>
     </hudson.tasks.ArtifactArchiver>
   </publishers>
   <buildWrappers>
-    <hudson.plugins.ws__cleanup.PreBuildCleanup plugin="ws-cleanup@0.37">
+    <hudson.plugins.ws__cleanup.PreBuildCleanup plugin="ws-cleanup@0.38">
       <deleteDirs>false</deleteDirs>
       <cleanupParameter></cleanupParameter>
       <externalDelete></externalDelete>
       <disableDeferredWipeout>true</disableDeferredWipeout>
     </hudson.plugins.ws__cleanup.PreBuildCleanup>
-    <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.20">
+    <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.22">
       <bindings class="empty-list"/>
     </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
-    <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.19">
+    <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.19.1">
       <strategy class="hudson.plugins.build_timeout.impl.NoActivityTimeOutStrategy">
         <timeoutSecondsString>600</timeoutSecondsString>
       </strategy>
       <operationList/>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
-    <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.10"/>
-    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.3">
+    <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.11.3"/>
+    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.6.2">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
   </buildWrappers>

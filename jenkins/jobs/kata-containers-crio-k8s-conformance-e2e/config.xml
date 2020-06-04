@@ -1,8 +1,8 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <flow-definition plugin="workflow-job@2.36">
   <actions>
-    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin="pipeline-model-definition@1.4.0"/>
-    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipeline-model-definition@1.4.0">
+    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobAction plugin="pipeline-model-definition@1.5.1"/>
+    <org.jenkinsci.plugins.pipeline.modeldefinition.actions.DeclarativeJobPropertyTrackerAction plugin="pipeline-model-definition@1.5.1">
       <jobProperties/>
       <triggers/>
       <parameters/>
@@ -12,15 +12,15 @@
   <description>Job for running the e2e conformance tests from sonobuoy using Kata Containers and cri-o.</description>
   <keepDependencies>false</keepDependencies>
   <properties>
-    <org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
-      <triggers>
-        <hudson.triggers.TimerTrigger>
-          <spec>TZ=America/Mexico_City
-H 0 * * *</spec>
-        </hudson.triggers.TimerTrigger>
-      </triggers>
-    </org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
-    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.11"/>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.12"/>
+    <jenkins.model.BuildDiscarderProperty>
+      <strategy class="hudson.tasks.LogRotator">
+        <daysToKeep>30</daysToKeep>
+        <numToKeep>30</numToKeep>
+        <artifactDaysToKeep>-1</artifactDaysToKeep>
+        <artifactNumToKeep>-1</artifactNumToKeep>
+      </strategy>
+    </jenkins.model.BuildDiscarderProperty>
     <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.5">
       <projectUrl>https://github.com/kata-containers/runtime/</projectUrl>
       <displayName></displayName>
@@ -29,12 +29,20 @@ H 0 * * *</spec>
       <autoRebuild>false</autoRebuild>
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
+    <org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
+      <triggers>
+        <hudson.triggers.TimerTrigger>
+          <spec>TZ=America/Mexico_City
+H 0 * * *</spec>
+        </hudson.triggers.TimerTrigger>
+      </triggers>
+    </org.jenkinsci.plugins.workflow.job.properties.PipelineTriggersJobProperty>
   </properties>
-  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.76">
+  <definition class="org.jenkinsci.plugins.workflow.cps.CpsFlowDefinition" plugin="workflow-cps@2.79">
     <script>pipeline{
-    agent { label &quot;fedora30_azure_big&quot; }
+    agent { label &quot;ubuntu1804_azure&quot; }
     options {
-        timeout(time: 3, unit: &apos;HOURS&apos;)
+        timeout(time: 5, unit: &apos;HOURS&apos;)
     }
 
     environment {
@@ -71,6 +79,8 @@ H 0 * * *</spec>
                 crictl --version
                 kubectl get runtimeclass
                 sleep 30
+                kubectl apply -f runtimeclass_workloads/kata-runtimeclass.yaml
+                kubectl describe runtimeclass kata
                 kubectl get pods --all-namespaces
                 &apos;&apos;&apos;
             }
@@ -80,8 +90,6 @@ H 0 * * *</spec>
                 sh &apos;&apos;&apos;
                 cd &quot;${WORKSPACE}/go/src/github.com/kata-containers/tests/integration/kubernetes/e2e_conformance&quot;
                 sed -i &apos;/pipefail/aset -x&apos; run.sh
-                sed -i &apos;/InitContainer/a\\ \\ - EmptyDir volumes&apos; skipped_tests_e2e.yaml
-                sed -i &apos;/InitContainer/a\\ \\ - Daemon set&apos; skipped_tests_e2e.yaml
                 cat skipped_tests_e2e.yaml
                 ./run.sh
                 &apos;&apos;&apos;
@@ -94,6 +102,8 @@ H 0 * * *</spec>
             script {
                 try {
                     sh &apos;&apos;&apos;
+                    sonobuoy status || true
+                    sonobuoy logs || true
                     cd &quot;${WORKSPACE}/go/src/github.com/kata-containers/tests&quot;
                     ls &quot;/tmp&quot;
                     .ci/teardown.sh &quot;$WORKSPACE/artifacts&quot; || ls &quot;${WORKSPACE}/artifacts&quot;
@@ -103,7 +113,7 @@ H 0 * * *</spec>
                     echo &quot;teardown produced some errors&quot;
                 }
             }
-            archiveArtifacts artifacts: &apos;artifacts/*&apos;, fingerprint: true
+            archiveArtifacts artifacts: &apos;artifacts/*&apos;, fingerprint: true, allowEmptyArchive: true
         }
     }
 }</script>
