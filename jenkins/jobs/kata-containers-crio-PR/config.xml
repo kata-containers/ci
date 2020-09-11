@@ -213,6 +213,14 @@ echo &quot;CRI-O Version to test:&quot;
 sudo crio --version
 crictl --version
 export RUNTIME=kata-runtime
+sudo -E PATH=$PATH make crio
+
+echo &quot;Ensure crio service is stopped before running the tests&quot;
+if systemctl is-active --quiet crio; then
+        sudo systemctl stop crio
+fi
+# Execute CRI-O tests using containerd-shim-kata-v2 runtime
+export RUNTIME=containerd-shim-kata-v2
 sudo -E PATH=$PATH make crio</command>
     </hudson.tasks.Shell>
   </builders>
