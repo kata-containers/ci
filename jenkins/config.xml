@@ -1208,6 +1208,9 @@ sed -i &apos;s/#mirrorlist/mirrorlist/g&apos; /etc/yum.repos.d/CentOS-AppStream.
 yum -v clean all
 yum -y update
 
+# Ensure there's no podman or buildah installed, as docker will be used
+yum -y erase podman buildah
+
 # Install git, gcc and python
 yum install -y git gcc python3
 
@@ -1220,7 +1223,6 @@ yum -y install docker-ce
 systemctl start docker
 gpasswd -a jenkins docker
 chmod g+rw /var/run/docker.sock
-
 
 # Install Java JRE and JDK for Jenkins agent
 yum install -y java-1.8.0-openjdk
@@ -1554,6 +1556,9 @@ resize2fs /dev/rootvg/varlv
 df -h
 
 # yum -y update
+
+# Ensure there's no podman or buildah installed, as docker will be used
+yum -y erase podman buildah
 
 # Install git, gcc and python
 yum install -y git gcc python3
