@@ -42,3 +42,7 @@ jenkins/credentials.xml
 # Include the deployment files
 !deployment
 !deployment/**
+
+# Include the Jenkins Job Builder files
+!job-builder
+!job-builder/**

@@ -1,0 +1,99 @@
+# Copyright (c) 2020 Red Hat, Inc.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+# Jobs definitions.
+---
+- repo_1x: &repo_1x
+    name: "repo"
+    repo:
+      - runtime
+      - agent
+      - shim
+      - proxy
+      - ksm-throttler
+      - osbuilder
+      - tests
+
+- os_list: &os_list
+    name: "os_list"
+    os:
+      - centos8
+      - debian10
+      - fedora32
+      - opensuse15
+      - rhel8
+      - ubuntu1804
+      - ubuntu1804_ARM
+
+- job-template:
+    name: 'kata-containers-{repo}-{os}-PR-{ci_job}'
+    description: |
+      Test pull requests for Kata Containers.
+        Repository - {repo}
+        OS - {os}
+    concurrent: true
+    logrotate:
+      daysToKeep: 30
+      numToKeep: 30
+    node: !include-jinja2: include/os2node.yaml.inc
+    scm:
+      - git:
+         url: https://github.com/kata-containers/{repo}
+         branches:
+          - '$sha1'
+    triggers:
+      - github-pull-request:
+          auth-id: "katacontainers bot connection"
+          github-hooks: true
+    builders:
+      - shell: |
+          #!/bin/bash
+          set -e
+          export ghprbPullId
+          export ghprbTargetBranch
+          export TEST_CRIO=true
+          export TEST_COMPATIBILITY=true
+
+          export GOPATH=${{WORKSPACE}}/go
+          export PATH=${{GOPATH}}/bin:/usr/local/go/bin:/usr/sbin:${{PATH}}
+          export GOROOT="/usr/local/go"
+
+          tests_repo="github.com/kata-containers/tests"
+          tests_repo_dir="${{GOPATH}}/src/${{tests_repo}}"
+          mkdir -p "${{tests_repo_dir}}"
+
+          git clone "https://${{tests_repo}}.git" "${{tests_repo_dir}}"
+          cd "${{tests_repo_dir}}"
+          git checkout "$ghprbTargetBranch"
+          .ci/jenkins_job_build.sh "github.com/kata-containers/{repo}"
+    publishers:
+      - post-tasks:
+          - matches:
+            - log-text: .*
+              operator: OR
+            script: |
+                #!/bin/bash
+
+                export GOPATH=$WORKSPACE/go
+                export GOROOT="/usr/local/go"
+                export PATH=${{GOPATH}}/bin:/usr/local/go/bin:/usr/sbin:/usr/local/bin:${{PATH}}
+
+                cd $GOPATH/src/github.com/kata-containers/tests
+                .ci/teardown.sh "$WORKSPACE/artifacts"
+      - archive:
+          artifacts: "artifacts/*"
+
+- project:
+    name: "Define standard pull request jobs"
+    <<: *repo_1x
+    <<: *os_list
+    ci_job:
+      - default
+      - vfio
+      - vsocks
+      - virtiofs
+      - q35
+      - crio
+    jobs:
+      - kata-containers-{repo}-{os}-PR-{ci_job}
