@@ -1,0 +1,146 @@
+# Copyright (c) 2021 Red Hat, Inc.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+# This file contains the configurations to generate the Kernel and QEMU jobs.
+#
+---
+###
+# Define shareable YAML snippets.
+###
+- common_job_properties: &common_job_properties
+    name: 'common_job_properties'
+    project-type: freestyle
+    disabled: false
+    concurrent: true
+    logrotate:
+      daysToKeep: 30
+      numToKeep: 5
+    # Convert the os variable to label name.
+    node: !include-jinja2: include/os2node.yaml.inc
+    scm:
+      - git:
+          url: https://github.com/kata-containers/kata-containers
+          branches:
+            - '*/{branch}'
+    wrappers:
+      - ansicolor:
+          colormap: "xterm"
+      - openstack:
+          single-use: True
+      - timestamps
+      - timeout:
+          timeout: 20
+          type: no-activity
+- default_publishers: &default_publishers
+    name: 'default_publishers'
+    publishers:
+      - archive:
+          artifacts: "artifacts/*"
+###
+# Define jobs templates.
+###
+- job-template:
+    name: kata-containers-{branch}-kernel-{flavor}-{arch}
+    <<: *common_job_properties
+    maintainers:
+      - Wainer dos Santos Moschetta <wainersm@redhat.com>
+    description:
+      !j2: |
+        Build Kernel for usage in Kata Containers CI jobs.
+        You should not use these artifacts on production.
+
+        Maintainers:
+        {% for i in maintainers -%}
+        - {{ i }}
+        {% endfor %}
+    triggers:
+      - timed: 'H 0-23/6 * * 1-5'
+    builders:
+      - shell:
+          !j2: |
+            #!/bin/bash
+            set -e
+            set -x
+
+            export GOPATH="${WORKSPACE}/go"
+            export GOROOT="/usr/local/go"
+
+            sudo apt install -y golang
+            source ci/lib.sh
+            export branch="{{branch}}"
+            export target_branch="$branch"
+            {% if flavor == "experimental" -%}
+            export experimental_kernel=true
+            {% endif %}
+            clone_tests_repo
+            ci/install_go.sh
+            cd "$tests_repo_dir"
+            ./.ci/install_kata_kernel.sh
+            ./.ci/ci_cache_components.sh -k
+    <<: *default_publishers
+- job-template:
+    name: kata-containers-{branch}-qemu-{arch}
+    <<: *common_job_properties
+    maintainers:
+      - Wainer dos Santos Moschetta <wainersm@redhat.com>
+    description:
+      # Passing a Jinja2 template.
+      !j2: |
+        Build QEMU for usage in Kata Containers CI jobs.
+        You should not use these artifacts on production.
+
+        Maintainers:
+        {% for i in maintainers -%}
+        - {{ i }}
+        {% endfor %}
+    triggers:
+      - github
+    builders:
+      - shell: |
+          #!/bin/bash
+          set -e
+          set -x
+
+          export GOPATH="$WORKSPACE/go"
+          export GOROOT="/usr/local/go"
+          export PATH="$PATH:$GOPATH/bin"
+
+          sudo apt install -y golang
+          source ci/lib.sh
+          export branch="{branch}"
+          export target_branch="$branch"
+          clone_tests_repo
+          ci/install_go.sh
+
+          cd "$tests_repo_dir"
+          ./.ci/setup_env_ubuntu.sh "default"
+          ./cmd/container-manager/manage_ctr_mgr.sh docker install -f
+          ./.ci/install_qemu.sh
+          ./.ci/ci_cache_components.sh -q
+    <<: *default_publishers
+###
+# Define the projects
+###
+- project:
+    name: "Create Kernel cache jobs"
+    flavor:
+      - vanilla
+      - experimental
+    branch:
+      - main
+    arch:
+      - x86_64
+    os: ubuntu1804
+    jobs:
+      - "kata-containers-{branch}-kernel-{flavor}-{arch}"
+- project:
+    name: "Create QEMU cache jobs"
+    branch:
+      - main
+      - stable-2.2
+    arch:
+      - x86_64
+    os: ubuntu1804
+    jobs:
+      - "kata-containers-{branch}-qemu-{arch}"
