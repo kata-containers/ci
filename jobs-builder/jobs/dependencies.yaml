@@ -1,0 +1,66 @@
+# This file contain the configurations to generate Kernel jobs.
+---
+- job-template:
+    name: 2.x-kernel-{flavor}-{arch}
+
+    # Template default variables
+    #
+    arch: x86_64
+    os: ubuntu1804
+
+    project-type: freestyle
+    description: Build Kernel(s) for Kata Containers usage
+    disabled: false
+    concurrent: true
+    logrotate:
+      daysToKeep: 60
+      numToKeep: 8
+    node: !include-jinja2: include/os2node.yaml.inc
+    scm:
+      - git:
+          url: https://github.com/kata-containers/kata-containers
+          branches:
+            - 'refs/heads/2.0-dev'
+    triggers:
+      - timed: 'H 0-23/6 * * 1-5'
+    wrappers:
+      - ansicolor:
+          colormap: "xterm"
+      - openstack:
+          single-use: True
+      - timestamps
+      - timeout:
+          timeout: 5
+          type: no-activity
+    builders:
+      - shell: |
+          #!/bin/bash
+          set -e
+          set -x
+
+          export GOPATH=$WORKSPACE/go
+          sudo apt install -y golang
+          source ci/lib.sh
+          clone_tests_repo
+          ci/install_go.sh
+
+          cd "$tests_repo_dir"
+          ./.ci/setup_env_ubuntu.sh "default"
+          flavor="{flavor}"
+          case "$flavor" in
+            "vanilla") export experimental_kernel=false;;
+            "experimental") export experimental_kernel=true;;
+            *) echo "Do not know $flavor flavor" && exit 1
+          esac
+          ./.ci/install_kata_kernel.sh
+          ./.ci/ci_cache_components.sh -k
+    publishers:
+      - archive:
+          artifacts: "artifacts/*"
+- project:
+    name: "Create Kernel jobs"
+    flavor:
+      - vanilla
+      - experimental
+    jobs:
+      - "2.x-kernel-{flavor}-{arch}"
