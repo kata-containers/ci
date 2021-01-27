@@ -1,0 +1,8 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<hudson.plugins.copyartifact.monitor.LegacyJobConfigMigrationMonitor plugin="copyartifact@1.45.2">
+  <id>copyArtifactLegacyJobConfigMigration</id>
+  <data>
+    <legacyJobInfos/>
+    <fullNameToKey/>
+  </data>
+</hudson.plugins.copyartifact.monitor.LegacyJobConfigMigrationMonitor>
