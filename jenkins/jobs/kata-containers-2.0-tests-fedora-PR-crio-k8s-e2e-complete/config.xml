@@ -33,23 +33,26 @@
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>${sha1}</name>
+        <name>main</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
     <submoduleCfg class="list"/>
     <extensions/>
   </scm>
-  <assignedNode>ubuntu1804-azure</assignedNode>
+  <assignedNode>fedora32_azure</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
+    <hudson.triggers.TimerTrigger>
+      <spec>H 0 * * *</spec>
+    </hudson.triggers.TimerTrigger>
     <org.jenkinsci.plugins.ghprb.GhprbTrigger plugin="ghprb@1.42.1">
       <spec>H/5 * * * *</spec>
       <configVersion>3</configVersion>
-      <adminlist></adminlist>
+      <adminlist>katacontainersbot</adminlist>
       <allowMembersOfWhitelistedOrgsAsAdmin>true</allowMembersOfWhitelistedOrgsAsAdmin>
       <orgslist>kata-containers</orgslist>
       <cron>H/5 * * * *</cron>
@@ -64,6 +67,9 @@
         <org.jenkinsci.plugins.ghprb.GhprbBranch>
           <branch>main</branch>
         </org.jenkinsci.plugins.ghprb.GhprbBranch>
+        <org.jenkinsci.plugins.ghprb.GhprbBranch>
+          <branch></branch>
+        </org.jenkinsci.plugins.ghprb.GhprbBranch>
       </whiteListTargetBranches>
       <blackListTargetBranches>
         <org.jenkinsci.plugins.ghprb.GhprbBranch>
@@ -72,9 +78,12 @@
         <org.jenkinsci.plugins.ghprb.GhprbBranch>
           <branch>stable-1.*</branch>
         </org.jenkinsci.plugins.ghprb.GhprbBranch>
+        <org.jenkinsci.plugins.ghprb.GhprbBranch>
+          <branch></branch>
+        </org.jenkinsci.plugins.ghprb.GhprbBranch>
       </blackListTargetBranches>
       <gitHubAuthId>c217b635-ee39-4531-a4ed-db4048679d71</gitHubAuthId>
-      <triggerPhrase>.*(\n|^|\s)/(re)?test(-ubuntu)?(\n|$|\s)+.*</triggerPhrase>
+      <triggerPhrase>/test-crio-k8s-e2e-complete</triggerPhrase>
       <skipBuildPhrase>.*\[skip\W+ci\].*</skipBuildPhrase>
       <blackListCommitAuthor></blackListCommitAuthor>
       <blackListLabels></blackListLabels>
@@ -82,11 +91,8 @@
       <includedRegions></includedRegions>
       <excludedRegions></excludedRegions>
       <extensions>
-        <org.jenkinsci.plugins.ghprb.extensions.build.GhprbCancelBuildsOnUpdate>
-          <overrideGlobal>false</overrideGlobal>
-        </org.jenkinsci.plugins.ghprb.extensions.build.GhprbCancelBuildsOnUpdate>
         <org.jenkinsci.plugins.ghprb.extensions.status.GhprbSimpleStatus>
-          <commitStatusContext>jenkins-ci-ubuntu-1804-containerd-k8s-e2e-minimal</commitStatusContext>
+          <commitStatusContext>jenkins-ci-fedora-32-crio-k8s-e2e-complete</commitStatusContext>
           <triggeredStatus>Build triggered</triggeredStatus>
           <startedStatus>Build running</startedStatus>
           <statusUrl></statusUrl>
@@ -104,7 +110,7 @@ set -e
 set -x
 
 curl -OL https://raw.githubusercontent.com/kata-containers/tests/master/.ci/ci_entry_point.sh
-export CI_JOB=&quot;CRI_CONTAINERD_K8S_MINIMAL&quot;
+export CI_JOB=&quot;CRIO_K8S_COMPLETE&quot;
 export DEBUG=true
 export SHIMV2_TEST=&quot;true&quot;
 bash -x ci_entry_point.sh &quot;${GIT_URL}&quot;</command>
@@ -150,7 +156,7 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
     </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
     <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.20">
       <strategy class="hudson.plugins.build_timeout.impl.NoActivityTimeOutStrategy">
-        <timeoutSecondsString>2400</timeoutSecondsString>
+        <timeoutSecondsString>18000</timeoutSecondsString>
       </strategy>
       <operationList/>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>

@@ -14,7 +14,7 @@
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
     <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.32.0">
-      <projectUrl>https://github.com/kata-containers/tests/</projectUrl>
+      <projectUrl>https://github.com/kata-containers/kata-containers/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
     <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.31">
@@ -28,7 +28,7 @@
       <hudson.plugins.git.UserRemoteConfig>
         <name>origin</name>
         <refspec>+refs/pull/${ghprbPullId}/*:refs/remotes/origin/pr/${ghprbPullId}/*</refspec>
-        <url>https://github.com/kata-containers/tests.git</url>
+        <url>https://github.com/kata-containers/kata-containers.git</url>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
@@ -64,6 +64,9 @@
         <org.jenkinsci.plugins.ghprb.GhprbBranch>
           <branch>main</branch>
         </org.jenkinsci.plugins.ghprb.GhprbBranch>
+        <org.jenkinsci.plugins.ghprb.GhprbBranch>
+          <branch>stable-2.*</branch>
+        </org.jenkinsci.plugins.ghprb.GhprbBranch>
       </whiteListTargetBranches>
       <blackListTargetBranches>
         <org.jenkinsci.plugins.ghprb.GhprbBranch>
@@ -74,7 +77,7 @@
         </org.jenkinsci.plugins.ghprb.GhprbBranch>
       </blackListTargetBranches>
       <gitHubAuthId>c217b635-ee39-4531-a4ed-db4048679d71</gitHubAuthId>
-      <triggerPhrase>.*(\n|^|\s)/(re)?test(-ubuntu)?(\n|$|\s)+.*</triggerPhrase>
+      <triggerPhrase>.*(\n|^|\s)/(re)?test(-ubuntu)?(-initrd)?(\n|$|\s)+.*</triggerPhrase>
       <skipBuildPhrase>.*\[skip\W+ci\].*</skipBuildPhrase>
       <blackListCommitAuthor></blackListCommitAuthor>
       <blackListLabels></blackListLabels>
@@ -86,7 +89,7 @@
           <overrideGlobal>false</overrideGlobal>
         </org.jenkinsci.plugins.ghprb.extensions.build.GhprbCancelBuildsOnUpdate>
         <org.jenkinsci.plugins.ghprb.extensions.status.GhprbSimpleStatus>
-          <commitStatusContext>jenkins-ci-ubuntu-1804-containerd-k8s-e2e-minimal</commitStatusContext>
+          <commitStatusContext>jenkins-ci-ubuntu-18-04-initrd</commitStatusContext>
           <triggeredStatus>Build triggered</triggeredStatus>
           <startedStatus>Build running</startedStatus>
           <statusUrl></statusUrl>
@@ -101,13 +104,41 @@
       <command>#!/bin/bash
 
 set -e
-set -x
 
-curl -OL https://raw.githubusercontent.com/kata-containers/tests/master/.ci/ci_entry_point.sh
-export CI_JOB=&quot;CRI_CONTAINERD_K8S_MINIMAL&quot;
+export ghprbPullId
+export ghprbTargetBranch
 export DEBUG=true
+export CI=&quot;true&quot;
+export CI_JOB=&quot;CRI_CONTAINERD_K8S&quot;
 export SHIMV2_TEST=&quot;true&quot;
-bash -x ci_entry_point.sh &quot;${GIT_URL}&quot;</command>
+
+export AGENT_INIT=yes
+export TEST_INITRD=yes
+
+export GOPATH=${WORKSPACE}/go
+export PATH=${GOPATH}/bin:/usr/local/go/bin:/usr/sbin:${PATH}
+export GOROOT=&quot;/usr/local/go&quot;
+
+# TEST
+kata_repo=&quot;github.com/kata-containers/kata-containers&quot;
+kata_repo_dir=&quot;${GOPATH}/src/${kata_repo}&quot;
+mkdir -p &quot;${kata_repo_dir}&quot;
+
+git clone &quot;https://${kata_repo}.git&quot; &quot;${kata_repo_dir}&quot;
+cd &quot;${kata_repo_dir}&quot;
+# Checkout to main
+git checkout &quot;$ghprbTargetBranch&quot;
+# END TEST
+
+tests_repo=&quot;github.com/kata-containers/tests&quot;
+tests_repo_dir=&quot;${GOPATH}/src/${tests_repo}&quot;
+mkdir -p &quot;${tests_repo_dir}&quot;
+
+git clone &quot;https://${tests_repo}.git&quot; &quot;${tests_repo_dir}&quot;
+cd &quot;${tests_repo_dir}&quot;
+# Checkout to Target Branch, which should be main
+git checkout &quot;$ghprbTargetBranch&quot;
+.ci/jenkins_job_build.sh &quot;github.com/kata-containers/kata-containers&quot;</command>
       <configuredLocalRules/>
     </hudson.tasks.Shell>
   </builders>
@@ -118,7 +149,7 @@ bash -x ci_entry_point.sh &quot;${GIT_URL}&quot;</command>
           <logTexts>
             <hudson.plugins.postbuildtask.LogProperties>
               <logText>.*</logText>
-              <operator>AND</operator>
+              <operator>OR</operator>
             </hudson.plugins.postbuildtask.LogProperties>
           </logTexts>
           <EscalateStatus>false</EscalateStatus>
@@ -136,7 +167,7 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
     </hudson.plugins.postbuildtask.PostbuildTask>
     <hudson.tasks.ArtifactArchiver>
       <artifacts>artifacts/*</artifacts>
-      <allowEmptyArchive>false</allowEmptyArchive>
+      <allowEmptyArchive>true</allowEmptyArchive>
       <onlyIfSuccessful>false</onlyIfSuccessful>
       <fingerprint>false</fingerprint>
       <defaultExcludes>true</defaultExcludes>
@@ -150,11 +181,10 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
     </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
     <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.20">
       <strategy class="hudson.plugins.build_timeout.impl.NoActivityTimeOutStrategy">
-        <timeoutSecondsString>2400</timeoutSecondsString>
+        <timeoutSecondsString>300</timeoutSecondsString>
       </strategy>
       <operationList/>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
-    <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.11.8"/>
     <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.7.3">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
