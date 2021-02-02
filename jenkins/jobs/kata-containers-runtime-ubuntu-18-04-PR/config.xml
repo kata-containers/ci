@@ -114,6 +114,7 @@ mkdir -p &quot;${tests_repo_dir}&quot;
 
 git clone &quot;https://${tests_repo}.git&quot; &quot;${tests_repo_dir}&quot;
 cd &quot;${tests_repo_dir}&quot;
+git checkout &quot;$ghprbTargetBranch&quot;
 .ci/jenkins_job_build.sh &quot;github.com/kata-containers/runtime&quot;</command>
     </hudson.tasks.Shell>
   </builders>
@@ -150,7 +151,7 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
     </hudson.tasks.ArtifactArchiver>
   </publishers>
   <buildWrappers>
-    <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.22">
+    <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.23">
       <bindings>
         <org.jenkinsci.plugins.credentialsbinding.impl.StringBinding>
           <credentialsId>15f86f95-ff9c-4ec9-a51c-644549625bdb</credentialsId>
