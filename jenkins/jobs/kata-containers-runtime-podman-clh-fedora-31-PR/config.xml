@@ -4,7 +4,7 @@
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
-    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.15"/>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.1.1"/>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
         <daysToKeep>30</daysToKeep>
@@ -13,7 +13,7 @@
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
-    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.5">
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.31.0">
       <projectUrl>https://github.com/kata-containers/runtime/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
@@ -22,7 +22,7 @@
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.2.2">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.4.4">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -77,7 +77,7 @@
         </org.jenkinsci.plugins.ghprb.GhprbBranch>
       </blackListTargetBranches>
       <gitHubAuthId>c217b635-ee39-4531-a4ed-db4048679d71</gitHubAuthId>
-      <triggerPhrase>.*(\n|^|\s)/(re)?test(-clh(-podman?)?)?(\n|$|\s)+.*</triggerPhrase>
+      <triggerPhrase>.*(\n|^|\s)/(re)?no-working-test(-clh(-podman?)?)?(\n|$|\s)+.*</triggerPhrase>
       <skipBuildPhrase>.*\[skip\W+ci\].*</skipBuildPhrase>
       <blackListCommitAuthor></blackListCommitAuthor>
       <blackListLabels></blackListLabels>
@@ -104,27 +104,12 @@
       <command>#!/bin/bash
 
 set -e
+set -x
 
-export ghprbPullId
-export ghprbTargetBranch
-export TEST_CGROUPSV2=&quot;true&quot;
+curl -OL https://raw.githubusercontent.com/kata-containers/tests/master/.ci/ci_entry_point.sh
 export CI_JOB=&quot;CLOUD-HYPERVISOR-PODMAN&quot;
-export use_runtime_class=true
-export KATA_DEV_MODE=&quot;false&quot;
-export KATA_HYPERVISOR=&quot;cloud-hypervisor&quot;
-export experimental_kernel=true
-
-export GOPATH=&quot;${WORKSPACE}/go&quot;
-export PATH=&quot;${GOPATH}/bin:/usr/local/go/bin:/usr/sbin:/sbin:/usr/local/bin:${PATH}&quot;
-export KATA_EXPERIMENTAL_FEATURES=true
-
-tests_repo_dir=&quot;${GOPATH}/src/github.com/kata-containers/tests&quot;
-mkdir -p &quot;${tests_repo_dir}&quot;
-
-git clone https://github.com/kata-containers/tests.git &quot;${tests_repo_dir}&quot;
-cd &quot;${tests_repo_dir}&quot;
-
-.ci/jenkins_job_build.sh &quot;github.com/kata-containers/runtime&quot;</command>
+bash -x ci_entry_point.sh &quot;${GIT_URL}&quot;</command>
+      <configuredLocalRules/>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
@@ -157,19 +142,20 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
       <fingerprint>false</fingerprint>
       <defaultExcludes>true</defaultExcludes>
       <caseSensitive>true</caseSensitive>
+      <followSymlinks>true</followSymlinks>
     </hudson.tasks.ArtifactArchiver>
   </publishers>
   <buildWrappers>
-    <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.19.1">
+    <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.20">
       <strategy class="hudson.plugins.build_timeout.impl.NoActivityTimeOutStrategy">
         <timeoutSecondsString>300</timeoutSecondsString>
       </strategy>
       <operationList/>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
-    <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.11.3"/>
-    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.6.2">
+    <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.11.5"/>
+    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.7.3">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
-    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.52"/>
+    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.55"/>
   </buildWrappers>
 </project>

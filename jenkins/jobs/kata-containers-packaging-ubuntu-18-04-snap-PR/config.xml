@@ -1,10 +1,10 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description></description>
+  <description>disabled  - we need ubuntu  to build qemu 5 statically</description>
   <keepDependencies>false</keepDependencies>
   <properties>
-    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.10"/>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.1.1"/>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
         <daysToKeep>30</daysToKeep>
@@ -13,7 +13,7 @@
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
-    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.4">
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.31.0">
       <projectUrl>https://github.com/kata-containers/packaging/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
@@ -22,7 +22,7 @@
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.0.0-rc">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.3.0">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -42,11 +42,11 @@
   </scm>
   <assignedNode>ubuntu1804-azure</assignedNode>
   <canRoam>false</canRoam>
-  <disabled>false</disabled>
+  <disabled>true</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
-    <org.jenkinsci.plugins.ghprb.GhprbTrigger plugin="ghprb@1.42.0">
+    <org.jenkinsci.plugins.ghprb.GhprbTrigger plugin="ghprb@1.42.1">
       <spec>H/5 * * * *</spec>
       <configVersion>3</configVersion>
       <adminlist></adminlist>
@@ -121,22 +121,14 @@ export ghprbTargetBranch
 export GOPATH=&quot;${WORKSPACE}/go&quot;
 export TEST_CRIO=true
 export TEST_DOCKER=true
+export CI_JOB=&quot;SNAP&quot;
 
 env
 
 cat ${HOME}/.oscrc
 
-tests_repo_dir=&quot;${GOPATH}/src/github.com/kata-containers/tests&quot;
-mkdir -p &quot;${tests_repo_dir}&quot;
-
-git clone https://github.com/kata-containers/tests.git &quot;${tests_repo_dir}&quot;
-cd &quot;${tests_repo_dir}&quot;
-
-sudo apt-get update
-sudo apt-get install make
-
 echo &quot;==========================================================&quot;
-bash -x .ci/jenkins_job_build.sh &quot;github.com/kata-containers/packaging&quot;
+bash -x .ci/snap_jenkins_job_build.sh &quot;github.com/kata-containers/packaging&quot;
 echo &quot;===================FINISH=================================&quot;
 
 </command>
@@ -172,18 +164,19 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
       <fingerprint>false</fingerprint>
       <defaultExcludes>true</defaultExcludes>
       <caseSensitive>true</caseSensitive>
+      <followSymlinks>true</followSymlinks>
     </hudson.tasks.ArtifactArchiver>
   </publishers>
   <buildWrappers>
-    <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.19">
+    <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.20">
       <strategy class="hudson.plugins.build_timeout.impl.NoActivityTimeOutStrategy">
         <timeoutSecondsString>3000</timeoutSecondsString>
       </strategy>
       <operationList/>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
-    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.5.3">
+    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.6.2">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
-    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.49"/>
+    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.54"/>
   </buildWrappers>
 </project>
