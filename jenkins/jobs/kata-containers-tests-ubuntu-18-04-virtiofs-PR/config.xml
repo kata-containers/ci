@@ -4,7 +4,7 @@
   <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
-    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.0.15"/>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.1.3"/>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
         <daysToKeep>30</daysToKeep>
@@ -13,7 +13,7 @@
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
-    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.29.5">
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.32.0">
       <projectUrl>https://github.com/kata-containers/tests/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
@@ -22,7 +22,7 @@
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.2.2">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.4.5">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -67,7 +67,10 @@
       </whiteListTargetBranches>
       <blackListTargetBranches>
         <org.jenkinsci.plugins.ghprb.GhprbBranch>
-          <branch>2.0-dev</branch>
+          <branch>main</branch>
+        </org.jenkinsci.plugins.ghprb.GhprbBranch>
+        <org.jenkinsci.plugins.ghprb.GhprbBranch>
+          <branch>stable-2.*</branch>
         </org.jenkinsci.plugins.ghprb.GhprbBranch>
       </blackListTargetBranches>
       <gitHubAuthId>c217b635-ee39-4531-a4ed-db4048679d71</gitHubAuthId>
@@ -128,7 +131,9 @@ git fetch origin &quot;pull/${pr_number}/head:${pr_branch}&quot;
 git checkout &quot;${pr_branch}&quot;
 git rebase &quot;origin/${ghprbTargetBranch}&quot;
 
+export CI_JOB=&quot;VIRTIOFS&quot;
 .ci/jenkins_job_build.sh &quot;github.com/kata-containers/tests&quot;</command>
+      <configuredLocalRules/>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
@@ -161,22 +166,23 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
       <fingerprint>false</fingerprint>
       <defaultExcludes>true</defaultExcludes>
       <caseSensitive>true</caseSensitive>
+      <followSymlinks>true</followSymlinks>
     </hudson.tasks.ArtifactArchiver>
   </publishers>
   <buildWrappers>
-    <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.23">
+    <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.24">
       <bindings class="empty-list"/>
     </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
-    <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.19.1">
+    <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.20">
       <strategy class="hudson.plugins.build_timeout.impl.NoActivityTimeOutStrategy">
         <timeoutSecondsString>900</timeoutSecondsString>
       </strategy>
       <operationList/>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
-    <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.11.3"/>
-    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.6.2">
+    <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.11.8"/>
+    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.7.3">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
-    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.52"/>
+    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.56"/>
   </buildWrappers>
 </project>

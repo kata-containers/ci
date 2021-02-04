@@ -74,19 +74,19 @@
         </org.jenkinsci.plugins.ghprb.GhprbBranch>
       </blackListTargetBranches>
       <gitHubAuthId>c217b635-ee39-4531-a4ed-db4048679d71</gitHubAuthId>
-      <triggerPhrase>.*(\n|^|\s)/(re)?test(-arm)?(\n|$|\s)+.*</triggerPhrase>
+      <triggerPhrase>.*(\n|^|\s)/(re)?test(-fc)?(\n|$|\s)+.*</triggerPhrase>
       <skipBuildPhrase>.*\[skip\W+ci\].*</skipBuildPhrase>
       <blackListCommitAuthor></blackListCommitAuthor>
       <blackListLabels></blackListLabels>
       <whiteListLabels></whiteListLabels>
       <includedRegions></includedRegions>
-      <excludedRegions></excludedRegions>
+      <excludedRegions>.*\.md</excludedRegions>
       <extensions>
         <org.jenkinsci.plugins.ghprb.extensions.build.GhprbCancelBuildsOnUpdate>
           <overrideGlobal>false</overrideGlobal>
         </org.jenkinsci.plugins.ghprb.extensions.build.GhprbCancelBuildsOnUpdate>
         <org.jenkinsci.plugins.ghprb.extensions.status.GhprbSimpleStatus>
-          <commitStatusContext>jenkins-ci-ARM-ubuntu-18-04</commitStatusContext>
+          <commitStatusContext>jenkins-ci-ARM-ubuntu-18-04-firecracker</commitStatusContext>
           <triggeredStatus>Build triggered</triggeredStatus>
           <startedStatus>Build running</startedStatus>
           <statusUrl></statusUrl>
@@ -112,12 +112,14 @@ sudo apt-get --allow-releaseinfo-change update
 export ghprbPullId
 export ghprbTargetBranch
 export TEST_DOCKER=true
-export TEST_CRIO=false
-export ARM64_ACPI_TEST=true
-
+export TEST_CRIO=true
+export KATA_DEV_MODE=&quot;false&quot;
+export KATA_HYPERVISOR=&quot;firecracker&quot;
+export CI=&quot;true&quot;
+export CI_JOB=&quot;FIRECRACKER&quot;
+export TEST_CRIO=&quot;false&quot;
 export GOPATH=&quot;${WORKSPACE}/go&quot;
-
-export BAREMENTAL
+export BAREMETAL
 export TMPDIR
 
 # Dump our env to aid initial debug
@@ -166,7 +168,7 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
 # `delete workspace before run` may fail on file perms (as some tests leave things owned by root).&#xd;
 sudo chown -R ${USER} ${WORKSPACE}&#xd;
 sudo chgrp -R $(id -ng) ${WORKSPACE}&#xd;
-sudo rm -rf &quot;${WORKSPACE}_*&quot;</script>
+sudo rm -rf &quot;{WORKSPACE}_*&quot;</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>

@@ -1,7 +1,7 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Proxy PR build on ARM servers.</description>
+  <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.1.3"/>
@@ -40,7 +40,7 @@
     <submoduleCfg class="list"/>
     <extensions/>
   </scm>
-  <assignedNode>arm_node &amp;&amp; arm-ubuntu-1804</assignedNode>
+  <assignedNode>ubuntu1804-azure</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
@@ -49,7 +49,7 @@
     <org.jenkinsci.plugins.ghprb.GhprbTrigger plugin="ghprb@1.42.1">
       <spec>H/5 * * * *</spec>
       <configVersion>3</configVersion>
-      <adminlist>Pennyzct</adminlist>
+      <adminlist></adminlist>
       <allowMembersOfWhitelistedOrgsAsAdmin>true</allowMembersOfWhitelistedOrgsAsAdmin>
       <orgslist>kata-containers</orgslist>
       <cron>H/5 * * * *</cron>
@@ -62,31 +62,31 @@
       <displayBuildErrorsOnDownstreamBuilds>false</displayBuildErrorsOnDownstreamBuilds>
       <whiteListTargetBranches>
         <org.jenkinsci.plugins.ghprb.GhprbBranch>
-          <branch>master</branch>
-        </org.jenkinsci.plugins.ghprb.GhprbBranch>
-        <org.jenkinsci.plugins.ghprb.GhprbBranch>
-          <branch>stable-1.*</branch>
+          <branch></branch>
         </org.jenkinsci.plugins.ghprb.GhprbBranch>
       </whiteListTargetBranches>
       <blackListTargetBranches>
         <org.jenkinsci.plugins.ghprb.GhprbBranch>
           <branch>main</branch>
         </org.jenkinsci.plugins.ghprb.GhprbBranch>
+        <org.jenkinsci.plugins.ghprb.GhprbBranch>
+          <branch>stable-2.*</branch>
+        </org.jenkinsci.plugins.ghprb.GhprbBranch>
       </blackListTargetBranches>
       <gitHubAuthId>c217b635-ee39-4531-a4ed-db4048679d71</gitHubAuthId>
-      <triggerPhrase>.*(\n|^|\s)/(re)?test(-arm)?(\n|$|\s)+.*</triggerPhrase>
+      <triggerPhrase>.*(\n|^|\s)/(re)?test(-clh(-minimal)?)?(\n|$|\s)+.*</triggerPhrase>
       <skipBuildPhrase>.*\[skip\W+ci\].*</skipBuildPhrase>
       <blackListCommitAuthor></blackListCommitAuthor>
       <blackListLabels></blackListLabels>
       <whiteListLabels></whiteListLabels>
       <includedRegions></includedRegions>
-      <excludedRegions></excludedRegions>
+      <excludedRegions>.*\.md</excludedRegions>
       <extensions>
         <org.jenkinsci.plugins.ghprb.extensions.build.GhprbCancelBuildsOnUpdate>
           <overrideGlobal>false</overrideGlobal>
         </org.jenkinsci.plugins.ghprb.extensions.build.GhprbCancelBuildsOnUpdate>
         <org.jenkinsci.plugins.ghprb.extensions.status.GhprbSimpleStatus>
-          <commitStatusContext>jenkins-ci-ARM-ubuntu-18-04</commitStatusContext>
+          <commitStatusContext>jenkins-ci-ubuntu-1804-cloud-hypervisor-minimal</commitStatusContext>
           <triggeredStatus>Build triggered</triggeredStatus>
           <startedStatus>Build running</startedStatus>
           <statusUrl></statusUrl>
@@ -100,44 +100,13 @@
     <hudson.tasks.Shell>
       <command>#!/bin/bash
 
-# As we have set the shell to /bin/bash, we need to reset -e (and let&apos;s set -x as well eh)
-set -ex
+set -e
+set -x
 
-sudo rm -rf /run/log/journal/ &amp;&amp; sudo systemctl restart systemd-journald
-
-sudo apt-get --allow-releaseinfo-change update
-
-
-# These vars are required by the .ci scripts in the repos
-export ghprbPullId
-export ghprbTargetBranch
-export TEST_DOCKER=true
-export TEST_CRIO=false
-export ARM64_ACPI_TEST=true
-
-export GOPATH=&quot;${WORKSPACE}/go&quot;
-
-export BAREMENTAL
-export TMPDIR
-
-# Dump our env to aid initial debug
-echo &quot;Our ENV looks like:&quot;
-env
-
-pr_number=&quot;${ghprbPullId}&quot;
-pr_branch=&quot;PR_${pr_number}&quot;
-
-tests_repo_dir=&quot;${GOPATH}/src/github.com/kata-containers/tests&quot;
-mkdir -p &quot;${tests_repo_dir}&quot;
-
-git clone https://github.com/kata-containers/tests.git &quot;${tests_repo_dir}&quot;
-cd &quot;${tests_repo_dir}&quot;
-
-git fetch origin &quot;pull/${pr_number}/head:${pr_branch}&quot;
-git checkout &quot;${pr_branch}&quot;
-git rebase &quot;origin/${ghprbTargetBranch}&quot;
-
-.ci/jenkins_job_build.sh &quot;github.com/kata-containers/tests&quot;</command>
+curl -OL https://raw.githubusercontent.com/kata-containers/tests/master/.ci/ci_entry_point.sh
+export CI_JOB=&quot;CLOUD-HYPERVISOR&quot;
+bash -x ci_entry_point.sh &quot;${GIT_URL}&quot;
+</command>
       <configuredLocalRules/>
     </hudson.tasks.Shell>
   </builders>
@@ -148,7 +117,7 @@ git rebase &quot;origin/${ghprbTargetBranch}&quot;
           <logTexts>
             <hudson.plugins.postbuildtask.LogProperties>
               <logText>.*</logText>
-              <operator>OR</operator>
+              <operator>AND</operator>
             </hudson.plugins.postbuildtask.LogProperties>
           </logTexts>
           <EscalateStatus>false</EscalateStatus>
@@ -160,19 +129,13 @@ export GOROOT=&quot;/usr/local/go&quot;&#xd;
 export PATH=${GOPATH}/bin:/usr/local/go/bin:/usr/sbin:/usr/local/bin:${PATH}&#xd;
 &#xd;
 cd $GOPATH/src/github.com/kata-containers/tests&#xd;
-.ci/teardown.sh &quot;$WORKSPACE/artifacts&quot;&#xd;
-&#xd;
-# And ensure the workspace tree is all owned by us before we quit, otherwise the later&#xd;
-# `delete workspace before run` may fail on file perms (as some tests leave things owned by root).&#xd;
-sudo chown -R ${USER} ${WORKSPACE}&#xd;
-sudo chgrp -R $(id -ng) ${WORKSPACE}&#xd;
-sudo rm -rf &quot;${WORKSPACE}_*&quot;</script>
+.ci/teardown.sh &quot;$WORKSPACE/artifacts&quot;</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
     <hudson.tasks.ArtifactArchiver>
       <artifacts>artifacts/*</artifacts>
-      <allowEmptyArchive>true</allowEmptyArchive>
+      <allowEmptyArchive>false</allowEmptyArchive>
       <onlyIfSuccessful>false</onlyIfSuccessful>
       <fingerprint>false</fingerprint>
       <defaultExcludes>true</defaultExcludes>
@@ -181,19 +144,8 @@ sudo rm -rf &quot;${WORKSPACE}_*&quot;</script>
     </hudson.tasks.ArtifactArchiver>
   </publishers>
   <buildWrappers>
-    <hudson.plugins.ws__cleanup.PreBuildCleanup plugin="ws-cleanup@0.38">
-      <deleteDirs>false</deleteDirs>
-      <cleanupParameter></cleanupParameter>
-      <externalDelete></externalDelete>
-      <disableDeferredWipeout>false</disableDeferredWipeout>
-    </hudson.plugins.ws__cleanup.PreBuildCleanup>
     <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.24">
-      <bindings>
-        <org.jenkinsci.plugins.credentialsbinding.impl.StringBinding>
-          <credentialsId>62ba7b0f-6f74-4674-8c0f-31b928acbebc</credentialsId>
-          <variable>CODECOV_TOKEN</variable>
-        </org.jenkinsci.plugins.credentialsbinding.impl.StringBinding>
-      </bindings>
+      <bindings class="empty-list"/>
     </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
     <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.20">
       <strategy class="hudson.plugins.build_timeout.impl.NoActivityTimeOutStrategy">
@@ -205,5 +157,6 @@ sudo rm -rf &quot;${WORKSPACE}_*&quot;</script>
     <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.7.3">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
+    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.56"/>
   </buildWrappers>
 </project>
