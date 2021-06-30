@@ -1,0 +1,68 @@
+---
+- job-template:
+    name: '{configuration}-nightly-x86_64'
+
+    # Template default variables
+    #
+    component: kernel
+    cache_flag: -k
+    experimental: "false"
+
+    # Job Configuration
+    #
+    description: Build {configuration} for Kata Containers.
+    concurrent: true
+    logrotate:
+      daysToKeep: 60
+      numToKeep: 8
+    node: ubuntu1804-azure
+    scm:
+      - git:
+          url: https://github.com/kata-containers/runtime
+          branches:
+            - 'refs/heads/master'
+    triggers:
+      - timed: 'H 0-23/6 * * 1-5'
+      - github
+
+    builders:
+      - shell: |
+          #!/bin/bash
+          set -e
+          set -x
+          # Export all environment variables needed.
+          export GOROOT="/usr/local/go"
+          export PATH=${{GOPATH}}/bin:/usr/local/go/bin:/usr/sbin:/sbin:${{PATH}}
+          export GOPATH=$WORKSPACE/go
+          export tests_repo="${{tests_repo:-github.com/kata-containers/tests}}"
+          export tests_repo_dir="$GOPATH/src/$tests_repo"
+          export experimental_{component}={experimental}
+          sudo -E apt install -y libelf-dev bc gcc bison flex
+          mkdir -p $(dirname "${{tests_repo_dir}}")
+          [ -d "${{tests_repo_dir}}" ] || git clone "https://${{tests_repo}}.git" "${{tests_repo_dir}}"
+          ${{GOPATH}}/src/${{tests_repo}}/.ci/install_go.sh -p -f
+          pushd ${{tests_repo_dir}}
+          ./cmd/container-manager/manage_ctr_mgr.sh docker install -f
+          ./.ci/install_kata_{component}.sh
+          ./.ci/ci_cache_components.sh {cache_flag}
+          sync
+          popd
+    publishers:
+      - archive:
+          artifacts: "artifacts/*"
+
+- project:
+    name: "Define jobs to build dependencies"
+    configuration:
+      - kernel
+      - kernel-experimental:
+          experimental: "true"
+      - qemu:
+          component: qemu
+          cache_flag: -q
+      - qemu-experimental:
+          component: qemu
+          cache_flag: -q
+          experimental: "true"
+    jobs:
+      - '{configuration}-nightly-x86_64'
