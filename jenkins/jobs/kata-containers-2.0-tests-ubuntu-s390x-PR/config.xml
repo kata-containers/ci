@@ -75,6 +75,12 @@
         <org.jenkinsci.plugins.ghprb.GhprbBranch>
           <branch>stable-1.*</branch>
         </org.jenkinsci.plugins.ghprb.GhprbBranch>
+        <org.jenkinsci.plugins.ghprb.GhprbBranch>
+          <branch>stable-2.1</branch>
+        </org.jenkinsci.plugins.ghprb.GhprbBranch>
+        <org.jenkinsci.plugins.ghprb.GhprbBranch>
+          <branch>stable-2.0</branch>
+        </org.jenkinsci.plugins.ghprb.GhprbBranch>
       </blackListTargetBranches>
       <gitHubAuthId>c217b635-ee39-4531-a4ed-db4048679d71</gitHubAuthId>
       <triggerPhrase>.*(\n|^|\s)/(re)?test(-s390x)?(\n|$|\s)+.*</triggerPhrase>
@@ -149,7 +155,8 @@ export GOROOT=&quot;/usr/local/go&quot;&#xd;
 export PATH=${GOPATH}/bin:/usr/local/go/bin:/usr/sbin:/usr/local/bin:${PATH}&#xd;
 &#xd;
 cd $GOPATH/src/github.com/kata-containers/tests&#xd;
-.ci/teardown.sh &quot;$WORKSPACE/artifacts&quot;</script>
+.ci/teardown.sh &quot;$WORKSPACE/artifacts&quot;&#xd;
+sudo rm -rf ${WORKSPACE}_*</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>

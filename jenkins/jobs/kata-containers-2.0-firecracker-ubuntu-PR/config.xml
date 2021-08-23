@@ -4,7 +4,7 @@
   <description>CI job for testing Kata Containers 2.0 pull requests</description>
   <keepDependencies>false</keepDependencies>
   <properties>
-    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.1.3"/>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.3"/>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
         <daysToKeep>30</daysToKeep>
@@ -13,16 +13,16 @@
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
-    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.32.0">
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.33.1">
       <projectUrl>https://github.com/kata-containers/kata-containers/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
-    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.31">
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.32">
       <autoRebuild>false</autoRebuild>
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.5.2">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.7.2">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -37,7 +37,7 @@
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
-    <submoduleCfg class="list"/>
+    <submoduleCfg class="empty-list"/>
     <extensions/>
   </scm>
   <assignedNode>ubuntu1804_azure</assignedNode>
@@ -46,7 +46,7 @@
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
-    <org.jenkinsci.plugins.ghprb.GhprbTrigger plugin="ghprb@1.42.1">
+    <org.jenkinsci.plugins.ghprb.GhprbTrigger plugin="ghprb@1.42.2">
       <spec>H/5 * * * *</spec>
       <configVersion>3</configVersion>
       <adminlist></adminlist>
@@ -64,9 +64,6 @@
         <org.jenkinsci.plugins.ghprb.GhprbBranch>
           <branch>main</branch>
         </org.jenkinsci.plugins.ghprb.GhprbBranch>
-        <org.jenkinsci.plugins.ghprb.GhprbBranch>
-          <branch>stable-2.*</branch>
-        </org.jenkinsci.plugins.ghprb.GhprbBranch>
       </whiteListTargetBranches>
       <blackListTargetBranches>
         <org.jenkinsci.plugins.ghprb.GhprbBranch>
@@ -74,6 +71,9 @@
         </org.jenkinsci.plugins.ghprb.GhprbBranch>
         <org.jenkinsci.plugins.ghprb.GhprbBranch>
           <branch>stable-1.*</branch>
+        </org.jenkinsci.plugins.ghprb.GhprbBranch>
+        <org.jenkinsci.plugins.ghprb.GhprbBranch>
+          <branch>stable-2.*</branch>
         </org.jenkinsci.plugins.ghprb.GhprbBranch>
       </blackListTargetBranches>
       <gitHubAuthId>c217b635-ee39-4531-a4ed-db4048679d71</gitHubAuthId>
@@ -105,9 +105,13 @@
 
 set -e
 
+export DEBUG=true
+export KATA_HYPERVISOR=&quot;firecracker&quot;
+export CI=&quot;true&quot;
 export CI_JOB=&quot;FIRECRACKER&quot;
+export SHIMV2_TEST=&quot;true&quot;
 
-curl -OL https://raw.githubusercontent.com/kata-containers/tests/master/.ci/ci_entry_point.sh
+curl -OL https://raw.githubusercontent.com/kata-containers/tests/main/.ci/ci_entry_point.sh
 bash -x ci_entry_point.sh &quot;${GIT_URL}&quot;</command>
       <configuredLocalRules/>
     </hudson.tasks.Shell>
@@ -146,7 +150,7 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
     </hudson.tasks.ArtifactArchiver>
   </publishers>
   <buildWrappers>
-    <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.24">
+    <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.25">
       <bindings class="empty-list"/>
     </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
     <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.20">
@@ -155,10 +159,10 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
       </strategy>
       <operationList/>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
-    <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.11.8"/>
-    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@0.7.4">
+    <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.13"/>
+    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@1.0.0">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
-    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.56"/>
+    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.58"/>
   </buildWrappers>
 </project>
