@@ -33,7 +33,7 @@
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>*/main</name>
+        <name>${sha1}</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
@@ -74,6 +74,12 @@
         </org.jenkinsci.plugins.ghprb.GhprbBranch>
         <org.jenkinsci.plugins.ghprb.GhprbBranch>
           <branch>stable-1.*</branch>
+        </org.jenkinsci.plugins.ghprb.GhprbBranch>
+        <org.jenkinsci.plugins.ghprb.GhprbBranch>
+          <branch>stable-2.1</branch>
+        </org.jenkinsci.plugins.ghprb.GhprbBranch>
+        <org.jenkinsci.plugins.ghprb.GhprbBranch>
+          <branch>stable-2.0</branch>
         </org.jenkinsci.plugins.ghprb.GhprbBranch>
       </blackListTargetBranches>
       <gitHubAuthId>c217b635-ee39-4531-a4ed-db4048679d71</gitHubAuthId>
@@ -159,7 +165,7 @@ cd $GOPATH/src/github.com/kata-containers/tests&#xd;
 .ci/teardown.sh &quot;$WORKSPACE/artifacts&quot;&#xd;
 sudo chown -R ${USER} ${WORKSPACE}&#xd;
 sudo chgrp -R $(id -ng) ${WORKSPACE}&#xd;
-sudo rm -rf &quot;${WORKSPACE}_*&quot;&#xd;
+sudo rm -rf ${WORKSPACE}_*&#xd;
 sudo rm -rf /etc/docker</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
