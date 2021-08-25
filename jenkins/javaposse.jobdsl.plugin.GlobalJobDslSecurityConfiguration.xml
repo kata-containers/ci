@@ -1,4 +1,4 @@
 <?xml version='1.1' encoding='UTF-8'?>
-<javaposse.jobdsl.plugin.GlobalJobDslSecurityConfiguration plugin="job-dsl@1.76">
+<javaposse.jobdsl.plugin.GlobalJobDslSecurityConfiguration plugin="job-dsl@1.77">
   <useScriptSecurity>true</useScriptSecurity>
 </javaposse.jobdsl.plugin.GlobalJobDslSecurityConfiguration>

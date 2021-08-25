@@ -1,14 +1,18 @@
 <?xml version='1.1' encoding='UTF-8'?>
-<hudson.plugins.emailext.ExtendedEmailPublisherDescriptor plugin="email-ext@2.68">
+<hudson.plugins.emailext.ExtendedEmailPublisherDescriptor plugin="email-ext@2.82">
   <mailAccount>
+    <smtpPort>25</smtpPort>
+    <smtpPassword>{AQAAABAAAAAQLshR4aUJHQDLcAmZS471Wd1C6plSlkX+S4zd9iiuwEo=}</smtpPassword>
     <useSsl>false</useSsl>
+    <advProperties></advProperties>
+    <defaultAccount>true</defaultAccount>
   </mailAccount>
   <addAccounts/>
   <charset>UTF-8</charset>
   <defaultContentType>text/plain</defaultContentType>
   <defaultSubject>$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!</defaultSubject>
-  <defaultBody>$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:&#xd;
-&#xd;
+  <defaultBody>$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
+
 Check console output at $BUILD_URL to view the results.</defaultBody>
   <defaultPresendScript></defaultPresendScript>
   <defaultPostsendScript></defaultPostsendScript>
@@ -16,12 +20,13 @@ Check console output at $BUILD_URL to view the results.</defaultBody>
   <defaultTriggerIds>
     <string>hudson.plugins.emailext.plugins.trigger.FailureTrigger</string>
   </defaultTriggerIds>
+  <emergencyReroute></emergencyReroute>
   <maxAttachmentSize>-1</maxAttachmentSize>
   <recipientList></recipientList>
   <defaultReplyTo></defaultReplyTo>
   <allowedDomains></allowedDomains>
   <excludedCommitters></excludedCommitters>
-  <overrideGlobalSettings>true</overrideGlobalSettings>
+  <listId></listId>
   <precedenceBulk>false</precedenceBulk>
   <debugMode>false</debugMode>
   <requireAdminForTemplateTesting>false</requireAdminForTemplateTesting>

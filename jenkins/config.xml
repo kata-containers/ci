@@ -8,9 +8,8 @@
     <string>OldData</string>
     <string>jenkins.security.QueueItemAuthenticatorMonitor</string>
   </disabledAdministrativeMonitors>
-  <version>2.263.3</version>
-  <installStateName>RUNNING</installStateName>
-  <numExecutors>1</numExecutors>
+  <version>2.289.2</version>
+  <numExecutors>0</numExecutors>
   <mode>EXCLUSIVE</mode>
   <useSecurity>true</useSecurity>
   <authorizationStrategy class="hudson.security.GlobalMatrixAuthorizationStrategy">
@@ -175,7 +174,7 @@
   <viewsTabBar class="hudson.views.DefaultViewsTabBar"/>
   <myViewsTabBar class="hudson.views.DefaultMyViewsTabBar"/>
   <clouds>
-    <jenkins.plugins.openstack.compute.JCloudsCloud plugin="openstack-cloud@2.56">
+    <jenkins.plugins.openstack.compute.JCloudsCloud plugin="openstack-cloud@2.58">
       <name>vexxhost</name>
       <endPointUrl>https://auth.vexxhost.net/v3</endPointUrl>
       <ignoreSsl>false</ignoreSsl>
@@ -291,7 +290,7 @@
       </templates>
       <credentialId>kata-openstack-credentials</credentialId>
     </jenkins.plugins.openstack.compute.JCloudsCloud>
-    <com.google.jenkins.plugins.computeengine.ComputeEngineCloud plugin="google-compute-engine@4.3.3">
+    <com.google.jenkins.plugins.computeengine.ComputeEngineCloud plugin="google-compute-engine@4.3.8">
       <name>gce-kata-containers gce</name>
       <instanceCap>3</instanceCap>
       <projectId>kata-containers</projectId>
@@ -380,7 +379,7 @@ git config --global user.name &quot;Kata Containers Bot&quot;
       </configurations>
       <noDelayProvisioning>false</noDelayProvisioning>
     </com.google.jenkins.plugins.computeengine.ComputeEngineCloud>
-    <com.microsoft.azure.vmagent.AzureVMCloud plugin="azure-vm-agents@1.5.1">
+    <com.microsoft.azure.vmagent.AzureVMCloud plugin="azure-vm-agents@783.v58077630847d">
       <name>AzureVMAgents</name>
       <cloudName>AzureVMAgents</cloudName>
       <credentialsId>6fd57ac9-f917-468f-8231-5f820311655c</credentialsId>
@@ -403,6 +402,7 @@ git config --global user.name &quot;Kata Containers Bot&quot;
           <newStorageAccountName>katastg</newStorageAccountName>
           <existingStorageAccountName>katacidiag</existingStorageAccountName>
           <storageAccountType>Standard_LRS</storageAccountType>
+          <osDiskStorageAccountType>Standard_LRS</osDiskStorageAccountType>
           <noOfParallelJobs>1</noOfParallelJobs>
           <usageMode>EXCLUSIVE</usageMode>
           <shutdownOnIdle>false</shutdownOnIdle>
@@ -459,6 +459,7 @@ echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers</initScri
           <virtualNetworkResourceGroupName></virtualNetworkResourceGroupName>
           <subnetName></subnetName>
           <usePrivateIP>false</usePrivateIP>
+          <spotInstance>false</spotInstance>
           <nsgName></nsgName>
           <jvmOptions></jvmOptions>
           <templateDisabled>false</templateDisabled>
@@ -468,9 +469,9 @@ echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers</initScri
           <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
           <enableMSI>false</enableMSI>
           <enableUAMI>false</enableUAMI>
-          <uamiID></uamiID>
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
+          <maximumDeploymentSize>0</maximumDeploymentSize>
         </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
         <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
           <templateName>ubuntu1604-azure</templateName>
@@ -486,6 +487,7 @@ echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers</initScri
           <newStorageAccountName>katastg</newStorageAccountName>
           <existingStorageAccountName>katacidiag</existingStorageAccountName>
           <storageAccountType>Standard_LRS</storageAccountType>
+          <osDiskStorageAccountType>Standard_LRS</osDiskStorageAccountType>
           <noOfParallelJobs>1</noOfParallelJobs>
           <usageMode>EXCLUSIVE</usageMode>
           <shutdownOnIdle>false</shutdownOnIdle>
@@ -552,6 +554,7 @@ sudo dd if=/dev/zero of=$device bs=128M count=1</initScript>
           <virtualNetworkResourceGroupName></virtualNetworkResourceGroupName>
           <subnetName></subnetName>
           <usePrivateIP>false</usePrivateIP>
+          <spotInstance>false</spotInstance>
           <nsgName></nsgName>
           <jvmOptions></jvmOptions>
           <templateDisabled>false</templateDisabled>
@@ -561,9 +564,9 @@ sudo dd if=/dev/zero of=$device bs=128M count=1</initScript>
           <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
           <enableMSI>false</enableMSI>
           <enableUAMI>false</enableUAMI>
-          <uamiID></uamiID>
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
+          <maximumDeploymentSize>0</maximumDeploymentSize>
         </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
         <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
           <templateName>centos7-azure</templateName>
@@ -579,6 +582,7 @@ sudo dd if=/dev/zero of=$device bs=128M count=1</initScript>
           <newStorageAccountName>katastg</newStorageAccountName>
           <existingStorageAccountName>katacidiag</existingStorageAccountName>
           <storageAccountType>Standard_LRS</storageAccountType>
+          <osDiskStorageAccountType>Standard_LRS</osDiskStorageAccountType>
           <noOfParallelJobs>1</noOfParallelJobs>
           <usageMode>EXCLUSIVE</usageMode>
           <shutdownOnIdle>false</shutdownOnIdle>
@@ -625,6 +629,7 @@ echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers</initScri
           <virtualNetworkResourceGroupName></virtualNetworkResourceGroupName>
           <subnetName></subnetName>
           <usePrivateIP>false</usePrivateIP>
+          <spotInstance>false</spotInstance>
           <nsgName></nsgName>
           <jvmOptions></jvmOptions>
           <templateDisabled>false</templateDisabled>
@@ -634,9 +639,9 @@ echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers</initScri
           <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
           <enableMSI>false</enableMSI>
           <enableUAMI>false</enableUAMI>
-          <uamiID></uamiID>
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
+          <maximumDeploymentSize>0</maximumDeploymentSize>
         </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
         <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
           <templateName>fedora28-azure</templateName>
@@ -652,6 +657,7 @@ echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers</initScri
           <newStorageAccountName>katastg</newStorageAccountName>
           <existingStorageAccountName>katacidiag</existingStorageAccountName>
           <storageAccountType>Standard_LRS</storageAccountType>
+          <osDiskStorageAccountType>Standard_LRS</osDiskStorageAccountType>
           <noOfParallelJobs>1</noOfParallelJobs>
           <usageMode>EXCLUSIVE</usageMode>
           <shutdownOnIdle>false</shutdownOnIdle>
@@ -694,6 +700,7 @@ sudo dnf install -y java-1.8.0-openjdk </initScript>
           <virtualNetworkResourceGroupName></virtualNetworkResourceGroupName>
           <subnetName></subnetName>
           <usePrivateIP>false</usePrivateIP>
+          <spotInstance>false</spotInstance>
           <nsgName></nsgName>
           <jvmOptions></jvmOptions>
           <templateDisabled>false</templateDisabled>
@@ -703,9 +710,9 @@ sudo dnf install -y java-1.8.0-openjdk </initScript>
           <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
           <enableMSI>false</enableMSI>
           <enableUAMI>false</enableUAMI>
-          <uamiID></uamiID>
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
+          <maximumDeploymentSize>0</maximumDeploymentSize>
         </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
         <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
           <templateName>ubuntu1804-azure</templateName>
@@ -721,6 +728,7 @@ sudo dnf install -y java-1.8.0-openjdk </initScript>
           <newStorageAccountName>katastg</newStorageAccountName>
           <existingStorageAccountName>katacidiag</existingStorageAccountName>
           <storageAccountType>Standard_LRS</storageAccountType>
+          <osDiskStorageAccountType>Standard_LRS</osDiskStorageAccountType>
           <noOfParallelJobs>1</noOfParallelJobs>
           <usageMode>EXCLUSIVE</usageMode>
           <shutdownOnIdle>false</shutdownOnIdle>
@@ -790,6 +798,7 @@ sudo dd if=/dev/zero of=$device bs=128M count=1</initScript>
           <virtualNetworkResourceGroupName></virtualNetworkResourceGroupName>
           <subnetName></subnetName>
           <usePrivateIP>false</usePrivateIP>
+          <spotInstance>false</spotInstance>
           <nsgName></nsgName>
           <jvmOptions></jvmOptions>
           <templateDisabled>false</templateDisabled>
@@ -799,9 +808,9 @@ sudo dd if=/dev/zero of=$device bs=128M count=1</initScript>
           <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
           <enableMSI>false</enableMSI>
           <enableUAMI>false</enableUAMI>
-          <uamiID></uamiID>
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
+          <maximumDeploymentSize>0</maximumDeploymentSize>
         </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
         <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
           <templateName>opensuse15-azure</templateName>
@@ -817,6 +826,7 @@ sudo dd if=/dev/zero of=$device bs=128M count=1</initScript>
           <newStorageAccountName>katastg</newStorageAccountName>
           <existingStorageAccountName>katacidiag</existingStorageAccountName>
           <storageAccountType>Standard_LRS</storageAccountType>
+          <osDiskStorageAccountType>Standard_LRS</osDiskStorageAccountType>
           <noOfParallelJobs>1</noOfParallelJobs>
           <usageMode>EXCLUSIVE</usageMode>
           <shutdownOnIdle>false</shutdownOnIdle>
@@ -875,18 +885,19 @@ sudo zypper removelock docker
           <virtualNetworkResourceGroupName></virtualNetworkResourceGroupName>
           <subnetName></subnetName>
           <usePrivateIP>false</usePrivateIP>
+          <spotInstance>false</spotInstance>
           <nsgName></nsgName>
           <jvmOptions></jvmOptions>
           <templateDisabled>false</templateDisabled>
-          <templateStatusDetails>Failed to validate the provided image reference: Invalid image version</templateStatusDetails>
+          <templateStatusDetails></templateStatusDetails>
           <templateVerified>false</templateVerified>
           <executeInitScriptAsRoot>true</executeInitScriptAsRoot>
           <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
           <enableMSI>false</enableMSI>
           <enableUAMI>false</enableUAMI>
-          <uamiID></uamiID>
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
+          <maximumDeploymentSize>0</maximumDeploymentSize>
         </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
         <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
           <templateName>sles15sp1-azure</templateName>
@@ -902,6 +913,7 @@ sudo zypper removelock docker
           <newStorageAccountName>katastg</newStorageAccountName>
           <existingStorageAccountName>katacidiag</existingStorageAccountName>
           <storageAccountType>Standard_LRS</storageAccountType>
+          <osDiskStorageAccountType>Standard_LRS</osDiskStorageAccountType>
           <noOfParallelJobs>1</noOfParallelJobs>
           <usageMode>EXCLUSIVE</usageMode>
           <shutdownOnIdle>false</shutdownOnIdle>
@@ -951,6 +963,7 @@ sudo zypper removelock docker
           <virtualNetworkResourceGroupName></virtualNetworkResourceGroupName>
           <subnetName></subnetName>
           <usePrivateIP>false</usePrivateIP>
+          <spotInstance>false</spotInstance>
           <nsgName></nsgName>
           <jvmOptions></jvmOptions>
           <templateDisabled>false</templateDisabled>
@@ -960,9 +973,9 @@ sudo zypper removelock docker
           <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
           <enableMSI>false</enableMSI>
           <enableUAMI>false</enableUAMI>
-          <uamiID></uamiID>
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
+          <maximumDeploymentSize>0</maximumDeploymentSize>
         </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
         <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
           <templateName>rhel-7-azure</templateName>
@@ -978,6 +991,7 @@ sudo zypper removelock docker
           <newStorageAccountName>katastg</newStorageAccountName>
           <existingStorageAccountName>katacidiag</existingStorageAccountName>
           <storageAccountType>Standard_LRS</storageAccountType>
+          <osDiskStorageAccountType>Standard_LRS</osDiskStorageAccountType>
           <noOfParallelJobs>1</noOfParallelJobs>
           <usageMode>EXCLUSIVE</usageMode>
           <shutdownOnIdle>false</shutdownOnIdle>
@@ -1026,6 +1040,7 @@ echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers</initScri
           <virtualNetworkResourceGroupName></virtualNetworkResourceGroupName>
           <subnetName></subnetName>
           <usePrivateIP>false</usePrivateIP>
+          <spotInstance>false</spotInstance>
           <nsgName></nsgName>
           <jvmOptions></jvmOptions>
           <templateDisabled>false</templateDisabled>
@@ -1035,9 +1050,9 @@ echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers</initScri
           <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
           <enableMSI>false</enableMSI>
           <enableUAMI>false</enableUAMI>
-          <uamiID></uamiID>
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
+          <maximumDeploymentSize>0</maximumDeploymentSize>
         </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
         <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
           <templateName>fedora30</templateName>
@@ -1053,6 +1068,7 @@ echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers</initScri
           <newStorageAccountName>katastg</newStorageAccountName>
           <existingStorageAccountName>katacidiag</existingStorageAccountName>
           <storageAccountType>Standard_LRS</storageAccountType>
+          <osDiskStorageAccountType>Standard_LRS</osDiskStorageAccountType>
           <noOfParallelJobs>1</noOfParallelJobs>
           <usageMode>EXCLUSIVE</usageMode>
           <shutdownOnIdle>false</shutdownOnIdle>
@@ -1096,6 +1112,7 @@ sudo dnf install -y java-1.8.0-openjdk </initScript>
           <virtualNetworkResourceGroupName></virtualNetworkResourceGroupName>
           <subnetName></subnetName>
           <usePrivateIP>false</usePrivateIP>
+          <spotInstance>false</spotInstance>
           <nsgName></nsgName>
           <jvmOptions></jvmOptions>
           <templateDisabled>false</templateDisabled>
@@ -1105,9 +1122,9 @@ sudo dnf install -y java-1.8.0-openjdk </initScript>
           <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
           <enableMSI>false</enableMSI>
           <enableUAMI>false</enableUAMI>
-          <uamiID></uamiID>
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
+          <maximumDeploymentSize>0</maximumDeploymentSize>
         </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
         <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
           <templateName>fedora31</templateName>
@@ -1123,6 +1140,7 @@ sudo dnf install -y java-1.8.0-openjdk </initScript>
           <newStorageAccountName>katastg</newStorageAccountName>
           <existingStorageAccountName>katacidiag</existingStorageAccountName>
           <storageAccountType>Standard_LRS</storageAccountType>
+          <osDiskStorageAccountType>Standard_LRS</osDiskStorageAccountType>
           <noOfParallelJobs>1</noOfParallelJobs>
           <usageMode>EXCLUSIVE</usageMode>
           <shutdownOnIdle>false</shutdownOnIdle>
@@ -1169,6 +1187,7 @@ echo &quot;*  -   memlock   16384&quot; | sudo tee /etc/security/limits.d/95-mem
           <virtualNetworkResourceGroupName></virtualNetworkResourceGroupName>
           <subnetName></subnetName>
           <usePrivateIP>false</usePrivateIP>
+          <spotInstance>false</spotInstance>
           <nsgName></nsgName>
           <jvmOptions></jvmOptions>
           <templateDisabled>false</templateDisabled>
@@ -1178,9 +1197,9 @@ echo &quot;*  -   memlock   16384&quot; | sudo tee /etc/security/limits.d/95-mem
           <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
           <enableMSI>false</enableMSI>
           <enableUAMI>false</enableUAMI>
-          <uamiID></uamiID>
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
+          <maximumDeploymentSize>0</maximumDeploymentSize>
         </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
         <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
           <templateName>centos8</templateName>
@@ -1196,15 +1215,16 @@ echo &quot;*  -   memlock   16384&quot; | sudo tee /etc/security/limits.d/95-mem
           <newStorageAccountName>katastg</newStorageAccountName>
           <existingStorageAccountName>katacidiag</existingStorageAccountName>
           <storageAccountType>Standard_LRS</storageAccountType>
+          <osDiskStorageAccountType>Standard_LRS</osDiskStorageAccountType>
           <noOfParallelJobs>1</noOfParallelJobs>
           <usageMode>EXCLUSIVE</usageMode>
           <shutdownOnIdle>false</shutdownOnIdle>
           <imageTopLevelType>advanced</imageTopLevelType>
           <imageReference>
             <publisher>OpenLogic</publisher>
-            <offer>Centos</offer>
-            <sku>8_2</sku>
-            <version>8.2.2020062400</version>
+            <offer>CentOS</offer>
+            <sku>8_1-gen2</sku>
+            <version>8.1.2020111901</version>
             <type>REFERENCE</type>
           </imageReference>
           <builtInImage>Windows Server 2016</builtInImage>
@@ -1219,7 +1239,7 @@ echo &quot;*  -   memlock   16384&quot; | sudo tee /etc/security/limits.d/95-mem
 set -x
 
 
-sed -i &apos;s/#mirrorlist/mirrorlist/g&apos; /etc/yum.repos.d/CentOS-AppStream.repo
+#sed -i &apos;s/#mirrorlist/mirrorlist/g&apos; /etc/yum.repos.d/CentOS-AppStream.repo
 
 yum -v clean all
 yum -y update
@@ -1254,6 +1274,7 @@ echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers</initScri
           <virtualNetworkResourceGroupName></virtualNetworkResourceGroupName>
           <subnetName></subnetName>
           <usePrivateIP>false</usePrivateIP>
+          <spotInstance>false</spotInstance>
           <nsgName></nsgName>
           <jvmOptions></jvmOptions>
           <templateDisabled>false</templateDisabled>
@@ -1263,9 +1284,9 @@ echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers</initScri
           <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
           <enableMSI>false</enableMSI>
           <enableUAMI>false</enableUAMI>
-          <uamiID></uamiID>
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
+          <maximumDeploymentSize>0</maximumDeploymentSize>
         </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
         <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
           <templateName>fedora31podman</templateName>
@@ -1281,6 +1302,7 @@ echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers</initScri
           <newStorageAccountName>katastg</newStorageAccountName>
           <existingStorageAccountName>katacidiag</existingStorageAccountName>
           <storageAccountType>Standard_LRS</storageAccountType>
+          <osDiskStorageAccountType>Standard_LRS</osDiskStorageAccountType>
           <noOfParallelJobs>1</noOfParallelJobs>
           <usageMode>EXCLUSIVE</usageMode>
           <shutdownOnIdle>false</shutdownOnIdle>
@@ -1325,6 +1347,7 @@ sudo chmod g+rw /dev/&quot;${TRUSTED_GROUP}&quot;
           <virtualNetworkResourceGroupName></virtualNetworkResourceGroupName>
           <subnetName></subnetName>
           <usePrivateIP>false</usePrivateIP>
+          <spotInstance>false</spotInstance>
           <nsgName></nsgName>
           <jvmOptions></jvmOptions>
           <templateDisabled>false</templateDisabled>
@@ -1334,9 +1357,9 @@ sudo chmod g+rw /dev/&quot;${TRUSTED_GROUP}&quot;
           <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
           <enableMSI>false</enableMSI>
           <enableUAMI>false</enableUAMI>
-          <uamiID></uamiID>
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
+          <maximumDeploymentSize>0</maximumDeploymentSize>
         </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
         <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
           <templateName>rhel77azure</templateName>
@@ -1352,6 +1375,7 @@ sudo chmod g+rw /dev/&quot;${TRUSTED_GROUP}&quot;
           <newStorageAccountName>katastg</newStorageAccountName>
           <existingStorageAccountName>katacidiag</existingStorageAccountName>
           <storageAccountType>Standard_LRS</storageAccountType>
+          <osDiskStorageAccountType>Standard_LRS</osDiskStorageAccountType>
           <noOfParallelJobs>1</noOfParallelJobs>
           <usageMode>EXCLUSIVE</usageMode>
           <shutdownOnIdle>false</shutdownOnIdle>
@@ -1402,6 +1426,7 @@ echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers</initScri
           <virtualNetworkResourceGroupName></virtualNetworkResourceGroupName>
           <subnetName></subnetName>
           <usePrivateIP>false</usePrivateIP>
+          <spotInstance>false</spotInstance>
           <nsgName></nsgName>
           <jvmOptions></jvmOptions>
           <templateDisabled>false</templateDisabled>
@@ -1411,9 +1436,9 @@ echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers</initScri
           <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
           <enableMSI>false</enableMSI>
           <enableUAMI>false</enableUAMI>
-          <uamiID></uamiID>
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
+          <maximumDeploymentSize>0</maximumDeploymentSize>
         </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
         <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
           <templateName>ubuntu20</templateName>
@@ -1429,6 +1454,7 @@ echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers</initScri
           <newStorageAccountName>katastg</newStorageAccountName>
           <existingStorageAccountName>katacidiag</existingStorageAccountName>
           <storageAccountType>Standard_LRS</storageAccountType>
+          <osDiskStorageAccountType>Standard_LRS</osDiskStorageAccountType>
           <noOfParallelJobs>1</noOfParallelJobs>
           <usageMode>EXCLUSIVE</usageMode>
           <shutdownOnIdle>false</shutdownOnIdle>
@@ -1492,6 +1518,7 @@ sudo dd if=/dev/zero of=$device bs=128M count=1</initScript>
           <virtualNetworkResourceGroupName></virtualNetworkResourceGroupName>
           <subnetName></subnetName>
           <usePrivateIP>false</usePrivateIP>
+          <spotInstance>false</spotInstance>
           <nsgName></nsgName>
           <jvmOptions></jvmOptions>
           <templateDisabled>false</templateDisabled>
@@ -1501,9 +1528,9 @@ sudo dd if=/dev/zero of=$device bs=128M count=1</initScript>
           <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
           <enableMSI>false</enableMSI>
           <enableUAMI>false</enableUAMI>
-          <uamiID></uamiID>
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
+          <maximumDeploymentSize>0</maximumDeploymentSize>
         </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
         <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
           <templateName>rhel8azure</templateName>
@@ -1519,6 +1546,7 @@ sudo dd if=/dev/zero of=$device bs=128M count=1</initScript>
           <newStorageAccountName>katastg</newStorageAccountName>
           <existingStorageAccountName>katacidiag</existingStorageAccountName>
           <storageAccountType>Standard_LRS</storageAccountType>
+          <osDiskStorageAccountType>Standard_LRS</osDiskStorageAccountType>
           <noOfParallelJobs>1</noOfParallelJobs>
           <usageMode>NORMAL</usageMode>
           <shutdownOnIdle>false</shutdownOnIdle>
@@ -1608,6 +1636,7 @@ echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers
           <virtualNetworkResourceGroupName></virtualNetworkResourceGroupName>
           <subnetName></subnetName>
           <usePrivateIP>false</usePrivateIP>
+          <spotInstance>false</spotInstance>
           <nsgName></nsgName>
           <jvmOptions></jvmOptions>
           <templateDisabled>false</templateDisabled>
@@ -1617,9 +1646,9 @@ echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers
           <doNotUseMachineIfInitFails>false</doNotUseMachineIfInitFails>
           <enableMSI>false</enableMSI>
           <enableUAMI>false</enableUAMI>
-          <uamiID></uamiID>
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
+          <maximumDeploymentSize>0</maximumDeploymentSize>
         </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
         <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
           <templateName>fedoradocker32</templateName>
@@ -1635,6 +1664,7 @@ echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers
           <newStorageAccountName>katastg</newStorageAccountName>
           <existingStorageAccountName>katacidiag</existingStorageAccountName>
           <storageAccountType>Standard_LRS</storageAccountType>
+          <osDiskStorageAccountType>Standard_LRS</osDiskStorageAccountType>
           <noOfParallelJobs>1</noOfParallelJobs>
           <usageMode>EXCLUSIVE</usageMode>
           <shutdownOnIdle>false</shutdownOnIdle>
@@ -1679,6 +1709,7 @@ sudo dnf install -y java-1.8.0-openjdk
           <virtualNetworkResourceGroupName></virtualNetworkResourceGroupName>
           <subnetName></subnetName>
           <usePrivateIP>false</usePrivateIP>
+          <spotInstance>false</spotInstance>
           <nsgName></nsgName>
           <jvmOptions></jvmOptions>
           <templateDisabled>false</templateDisabled>
@@ -1688,9 +1719,9 @@ sudo dnf install -y java-1.8.0-openjdk
           <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
           <enableMSI>false</enableMSI>
           <enableUAMI>false</enableUAMI>
-          <uamiID></uamiID>
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
+          <maximumDeploymentSize>0</maximumDeploymentSize>
         </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
         <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
           <templateName>ubuntu20</templateName>
@@ -1706,6 +1737,7 @@ sudo dnf install -y java-1.8.0-openjdk
           <newStorageAccountName>katastg</newStorageAccountName>
           <existingStorageAccountName>katacidiag</existingStorageAccountName>
           <storageAccountType>Standard_LRS</storageAccountType>
+          <osDiskStorageAccountType>Standard_LRS</osDiskStorageAccountType>
           <noOfParallelJobs>1</noOfParallelJobs>
           <usageMode>EXCLUSIVE</usageMode>
           <shutdownOnIdle>false</shutdownOnIdle>
@@ -1736,22 +1768,23 @@ sudo pkill -f apt-get
 sudo rm -f /var/lib/dpkg/lock
 sudo rm -f /var/lib/apt/lists/lock
 sudo rm -f /var/cache/apt/archives/lock
+sudo apt get clean
 
 # Install git, make and gcc
 sudo apt update -y
-sudo apt install -y git make gcc
+sudo killall apt apt-get
+sudo apt install -y git make gcc default-jre
+sudo killall apt apt-get
 
 # Install docker
 sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 sudo add-apt-repository &quot;deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable&quot;
-sudo apt update -y
 sudo apt install -y docker-ce
 sudo gpasswd -a jenkins docker
 sudo chmod g+rw /var/run/docker.sock
 
 # Install Java JRE and JDK for Jenkins agent
-sudo apt update -y
 sudo apt install -y openjdk-8-jre
 git config --global user.email &quot;katacontainersbot@gmail.com&quot;
 git config --global user.name &quot;Kata Containers Bot&quot;
@@ -1771,6 +1804,7 @@ sudo dd if=/dev/zero of=$device bs=128M count=1</initScript>
           <virtualNetworkResourceGroupName></virtualNetworkResourceGroupName>
           <subnetName></subnetName>
           <usePrivateIP>false</usePrivateIP>
+          <spotInstance>false</spotInstance>
           <nsgName></nsgName>
           <jvmOptions></jvmOptions>
           <templateDisabled>false</templateDisabled>
@@ -1780,15 +1814,15 @@ sudo dd if=/dev/zero of=$device bs=128M count=1</initScript>
           <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
           <enableMSI>false</enableMSI>
           <enableUAMI>false</enableUAMI>
-          <uamiID></uamiID>
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
+          <maximumDeploymentSize>0</maximumDeploymentSize>
         </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
       </vmTemplates>
       <deploymentTimeout>1200</deploymentTimeout>
-      <approximateVirtualMachineCount>1</approximateVirtualMachineCount>
+      <approximateVirtualMachineCount>9</approximateVirtualMachineCount>
     </com.microsoft.azure.vmagent.AzureVMCloud>
-    <hudson.plugins.ec2.EC2Cloud plugin="ec2@1.56">
+    <hudson.plugins.ec2.EC2Cloud plugin="ec2@1.62">
       <name>ec2-aws-jenkins</name>
       <useInstanceProfileForCredentials>false</useInstanceProfileForCredentials>
       <roleArn></roleArn>
@@ -1871,7 +1905,6 @@ git config --global user.name &quot;Kata Containers Bot&quot;</initScript>
           <connectionStrategy>PUBLIC_IP</connectionStrategy>
           <hostKeyVerificationStrategy>CHECK_NEW_SOFT</hostKeyVerificationStrategy>
           <associatePublicIp>true</associatePublicIp>
-          <useDedicatedTenancy>false</useDedicatedTenancy>
           <amiType class="hudson.plugins.ec2.UnixData">
             <rootCommandPrefix></rootCommandPrefix>
             <slaveCommandPrefix></slaveCommandPrefix>
@@ -1883,6 +1916,10 @@ git config --global user.name &quot;Kata Containers Bot&quot;</initScript>
           <maxTotalUses>1</maxTotalUses>
           <nodeProperties/>
           <nextSubnet>0</nextSubnet>
+          <tenancy>Default</tenancy>
+          <ebsEncryptRootVolume>DEFAULT</ebsEncryptRootVolume>
+          <amiOwners></amiOwners>
+          <amiUsers></amiUsers>
           <usePrivateDnsName>false</usePrivateDnsName>
           <connectUsingPublicIp>true</connectUsingPublicIp>
         </hudson.plugins.ec2.SlaveTemplate>
@@ -1960,7 +1997,6 @@ git config --global user.name &quot;Kata Containers Bot&quot;</initScript>
           <connectionStrategy>PUBLIC_IP</connectionStrategy>
           <hostKeyVerificationStrategy>CHECK_NEW_SOFT</hostKeyVerificationStrategy>
           <associatePublicIp>true</associatePublicIp>
-          <useDedicatedTenancy>false</useDedicatedTenancy>
           <amiType class="hudson.plugins.ec2.UnixData">
             <rootCommandPrefix></rootCommandPrefix>
             <slaveCommandPrefix></slaveCommandPrefix>
@@ -1972,11 +2008,16 @@ git config --global user.name &quot;Kata Containers Bot&quot;</initScript>
           <maxTotalUses>1</maxTotalUses>
           <nodeProperties/>
           <nextSubnet>0</nextSubnet>
+          <tenancy>Default</tenancy>
+          <ebsEncryptRootVolume>DEFAULT</ebsEncryptRootVolume>
+          <amiOwners></amiOwners>
+          <amiUsers></amiUsers>
           <usePrivateDnsName>false</usePrivateDnsName>
           <connectUsingPublicIp>true</connectUsingPublicIp>
         </hudson.plugins.ec2.SlaveTemplate>
       </templates>
       <region>us-west-2</region>
+      <altEC2Endpoint></altEC2Endpoint>
       <noDelayProvisioning>false</noDelayProvisioning>
     </hudson.plugins.ec2.EC2Cloud>
   </clouds>
@@ -2026,35 +2067,60 @@ git config --global user.name &quot;Kata Containers Bot&quot;</initScript>
     </hudson.plugins.sectioned__view.SectionedView>
     <listView>
       <owner class="hudson" reference="../../.."/>
-      <name>Kata 2.0</name>
+      <name>Kata 2.x</name>
       <filterExecutors>false</filterExecutors>
       <filterQueue>false</filterQueue>
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../hudson.plugins.sectioned__view.SectionedView/sections/hudson.plugins.sectioned__view.TextSection/jobNames/comparator"/>
+        <string>kata-containers-2-crio-PR</string>
         <string>kata-containers-2.0-centos-PR</string>
         <string>kata-containers-2.0-clh-containerd-k8s-conformance-e2e</string>
         <string>kata-containers-2.0-clh-crio-ubuntu-PR</string>
+        <string>kata-containers-2.0-crio-rhel-initrd-s390x-PR</string>
         <string>kata-containers-2.0-debian-PR</string>
         <string>kata-containers-2.0-fedora-PR</string>
         <string>kata-containers-2.0-fedora-PR-crio-k8s-e2e-minimal</string>
+        <string>kata-containers-2.0-firecracker-jailer-ubuntu-PR</string>
+        <string>kata-containers-2.0-firecracker-ubuntu-PR</string>
+        <string>kata-containers-2.0-metrics-ubuntu-20-04-PR</string>
+        <string>kata-containers-2.0-Power9-containerd-k8s-ubuntu-20-04-PR</string>
+        <string>kata-containers-2.0-Power9-crio-k8s-ubuntu-20-04-PR</string>
         <string>kata-containers-2.0-tests-centos-PR</string>
+        <string>kata-containers-2.0-tests-clh-crio-ubuntu-PR</string>
         <string>kata-containers-2.0-tests-debian-PR</string>
         <string>kata-containers-2.0-tests-fedora-PR</string>
         <string>kata-containers-2.0-tests-fedora-PR-crio-k8s-e2e-complete</string>
         <string>kata-containers-2.0-tests-fedora-PR-crio-k8s-e2e-minimal</string>
+        <string>kata-containers-2.0-tests-firecracker-jailer-ubuntu-PR</string>
         <string>kata-containers-2.0-tests-firecracker-ubuntu-PR</string>
-        <string>kata-containers-2.0-tests-metrics-ubuntu-18-04-PR</string>
+        <string>kata-containers-2.0-tests-metrics-clh-ubuntu-20-04-PR</string>
+        <string>kata-containers-2.0-tests-metrics-ubuntu-20-04-PR</string>
+        <string>kata-containers-2.0-tests-pmem-ubuntu-20.04-PR</string>
         <string>kata-containers-2.0-tests-ubuntu-clh-virtiofs-PR</string>
-        <string>kata-containers-2.0-tests-ubuntu-PR</string>
         <string>kata-containers-2.0-tests-ubuntu-PR-clh-containerd-k8s-minimal</string>
         <string>kata-containers-2.0-tests-ubuntu-PR-containerd-k8s-minimal</string>
+        <string>kata-containers-2.0-tests-ubuntu-s390x-PR</string>
+        <string>kata-containers-2.0-tests-ubuntu20.04-PR</string>
+        <string>kata-containers-2.0-tests-ubuntu20.04-rootless-PR</string>
         <string>kata-containers-2.0-tests-vfio-PR</string>
+        <string>kata-containers-2.0-ubuntu-20.04-PR</string>
+        <string>kata-containers-2.0-ubuntu-20.04-PR-sev-amd</string>
         <string>kata-containers-2.0-ubuntu-PR</string>
+        <string>kata-containers-2.0-ubuntu-PR-Arm-clh-containerd-k8s-minimal</string>
         <string>kata-containers-2.0-ubuntu-PR-clh-containerd-k8s-minimal</string>
         <string>kata-containers-2.0-ubuntu-PR-containerd-k8s-minimal</string>
+        <string>kata-containers-2.0-ubuntu-s390x-PR</string>
         <string>kata-containers-2.0-vfio-PR</string>
-        <string>kata-containers-tests-ubuntu-PR-containerd-k8s-complete</string>
+        <string>kata-containers-CCv0-fedora-PR</string>
+        <string>kata-containers-CCv0-firecracker-ubuntu-PR</string>
+        <string>kata-containers-CCv0-tests-fedora-PR</string>
+        <string>kata-containers-CCv0-tests-firecracker-ubuntu-PR</string>
+        <string>kata-containers-CCv0-tests-ubuntu-20.04-PR</string>
+        <string>kata-containers-CCv0-ubuntu-20.04-PR</string>
+        <string>kata-containers-experimental-virtiofs-PR-metrics</string>
+        <string>kata-containers-main-experimental-virtiofs</string>
+        <string>kata-main-tarball</string>
       </jobNames>
       <jobFilters/>
       <columns>
@@ -2066,12 +2132,42 @@ git config --global user.name &quot;Kata Containers Bot&quot;</initScript>
         <hudson.views.LastDurationColumn/>
         <hudson.views.BuildButtonColumn/>
         <org.jenkins.plugins.builton.BuiltOnColumn plugin="built-on-column@1.1"/>
-        <hudson.plugins.favorite.column.FavoriteColumn plugin="favorite@2.3.2"/>
+        <hudson.plugins.favorite.column.FavoriteColumn plugin="favorite@2.3.3"/>
+      </columns>
+      <includeRegex>kata-containers-2.*</includeRegex>
+      <recurse>false</recurse>
+    </listView>
+    <listView>
+      <owner class="hudson" reference="../../.."/>
+      <name>CCv0</name>
+      <filterExecutors>false</filterExecutors>
+      <filterQueue>false</filterQueue>
+      <properties class="hudson.model.View$PropertyList"/>
+      <jobNames>
+        <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../hudson.plugins.sectioned__view.SectionedView/sections/hudson.plugins.sectioned__view.TextSection/jobNames/comparator"/>
+        <string>kata-containers-CCv0-fedora-PR</string>
+        <string>kata-containers-CCv0-firecracker-ubuntu-PR</string>
+        <string>kata-containers-CCv0-tests-fedora-PR</string>
+        <string>kata-containers-CCv0-tests-firecracker-ubuntu-PR</string>
+        <string>kata-containers-CCv0-tests-ubuntu-20.04-PR</string>
+        <string>kata-containers-CCv0-ubuntu-20.04-PR</string>
+      </jobNames>
+      <jobFilters/>
+      <columns>
+        <hudson.views.StatusColumn/>
+        <hudson.views.WeatherColumn/>
+        <hudson.views.JobColumn/>
+        <hudson.views.LastSuccessColumn/>
+        <hudson.views.LastFailureColumn/>
+        <hudson.views.LastDurationColumn/>
+        <hudson.views.BuildButtonColumn/>
+        <org.jenkins.plugins.builton.BuiltOnColumn plugin="built-on-column@1.1"/>
+        <hudson.plugins.favorite.column.FavoriteColumn plugin="favorite@2.3.3"/>
       </columns>
       <recurse>false</recurse>
     </listView>
   </views>
-  <primaryView>all</primaryView>
+  <primaryView>Kata 2.x</primaryView>
   <slaveAgentPort>-1</slaveAgentPort>
   <label>master</label>
   <crumbIssuer class="hudson.security.csrf.DefaultCrumbIssuer">
