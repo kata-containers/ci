@@ -1,5 +1,5 @@
 <?xml version='1.1' encoding='UTF-8'?>
-<github-plugin-configuration plugin="github@1.29.5">
+<github-plugin-configuration plugin="github@1.33.1">
   <configs>
     <github-server-config>
       <apiUrl>https://api.github.com</apiUrl>
@@ -14,7 +14,9 @@
       <clientCacheSize>20</clientCacheSize>
     </github-server-config>
   </configs>
-  <hookSecretConfig>
-    <credentialsId>7515f144-2a26-4537-9685-c110b0a41e80</credentialsId>
-  </hookSecretConfig>
+  <hookSecretConfigs>
+    <org.jenkinsci.plugins.github.config.HookSecretConfig>
+      <credentialsId>7515f144-2a26-4537-9685-c110b0a41e80</credentialsId>
+    </org.jenkinsci.plugins.github.config.HookSecretConfig>
+  </hookSecretConfigs>
 </github-plugin-configuration>
