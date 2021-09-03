@@ -1,0 +1,4 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<jenkins.plugins.jclouds.blobstore.BlobStorePublisher_-DescriptorImpl plugin="jclouds-jenkins@2.23">
+  <profiles/>
+</jenkins.plugins.jclouds.blobstore.BlobStorePublisher_-DescriptorImpl>
