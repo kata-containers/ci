@@ -8,7 +8,7 @@
     <string>OldData</string>
     <string>jenkins.security.QueueItemAuthenticatorMonitor</string>
   </disabledAdministrativeMonitors>
-  <version>2.289.2</version>
+  <version>2.303.1</version>
   <numExecutors>0</numExecutors>
   <mode>EXCLUSIVE</mode>
   <useSecurity>true</useSecurity>
@@ -174,7 +174,7 @@
   <viewsTabBar class="hudson.views.DefaultViewsTabBar"/>
   <myViewsTabBar class="hudson.views.DefaultMyViewsTabBar"/>
   <clouds>
-    <jenkins.plugins.openstack.compute.JCloudsCloud plugin="openstack-cloud@2.58">
+    <jenkins.plugins.openstack.compute.JCloudsCloud plugin="openstack-cloud@2.60">
       <name>vexxhost</name>
       <endPointUrl>https://auth.vexxhost.net/v3</endPointUrl>
       <ignoreSsl>false</ignoreSsl>
@@ -1820,9 +1820,9 @@ sudo dd if=/dev/zero of=$device bs=128M count=1</initScript>
         </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
       </vmTemplates>
       <deploymentTimeout>1200</deploymentTimeout>
-      <approximateVirtualMachineCount>9</approximateVirtualMachineCount>
+      <approximateVirtualMachineCount>17</approximateVirtualMachineCount>
     </com.microsoft.azure.vmagent.AzureVMCloud>
-    <hudson.plugins.ec2.EC2Cloud plugin="ec2@1.62">
+    <hudson.plugins.ec2.EC2Cloud plugin="ec2@1.63">
       <name>ec2-aws-jenkins</name>
       <useInstanceProfileForCredentials>false</useInstanceProfileForCredentials>
       <roleArn></roleArn>
@@ -1918,6 +1918,9 @@ git config --global user.name &quot;Kata Containers Bot&quot;</initScript>
           <nextSubnet>0</nextSubnet>
           <tenancy>Default</tenancy>
           <ebsEncryptRootVolume>DEFAULT</ebsEncryptRootVolume>
+          <metadataEndpointEnabled>true</metadataEndpointEnabled>
+          <metadataTokensRequired>false</metadataTokensRequired>
+          <metadataHopsLimit>1</metadataHopsLimit>
           <amiOwners></amiOwners>
           <amiUsers></amiUsers>
           <usePrivateDnsName>false</usePrivateDnsName>
@@ -2010,6 +2013,9 @@ git config --global user.name &quot;Kata Containers Bot&quot;</initScript>
           <nextSubnet>0</nextSubnet>
           <tenancy>Default</tenancy>
           <ebsEncryptRootVolume>DEFAULT</ebsEncryptRootVolume>
+          <metadataEndpointEnabled>true</metadataEndpointEnabled>
+          <metadataTokensRequired>false</metadataTokensRequired>
+          <metadataHopsLimit>1</metadataHopsLimit>
           <amiOwners></amiOwners>
           <amiUsers></amiUsers>
           <usePrivateDnsName>false</usePrivateDnsName>
@@ -2075,8 +2081,6 @@ git config --global user.name &quot;Kata Containers Bot&quot;</initScript>
         <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../hudson.plugins.sectioned__view.SectionedView/sections/hudson.plugins.sectioned__view.TextSection/jobNames/comparator"/>
         <string>kata-containers-2-crio-PR</string>
         <string>kata-containers-2.0-centos-PR</string>
-        <string>kata-containers-2.0-clh-containerd-k8s-conformance-e2e</string>
-        <string>kata-containers-2.0-clh-crio-ubuntu-PR</string>
         <string>kata-containers-2.0-crio-rhel-initrd-s390x-PR</string>
         <string>kata-containers-2.0-debian-PR</string>
         <string>kata-containers-2.0-fedora-PR</string>
@@ -2084,21 +2088,18 @@ git config --global user.name &quot;Kata Containers Bot&quot;</initScript>
         <string>kata-containers-2.0-firecracker-jailer-ubuntu-PR</string>
         <string>kata-containers-2.0-firecracker-ubuntu-PR</string>
         <string>kata-containers-2.0-metrics-ubuntu-20-04-PR</string>
+        <string>kata-containers-2.0-pmem-ubuntu-20.04-PR</string>
         <string>kata-containers-2.0-Power9-containerd-k8s-ubuntu-20-04-PR</string>
         <string>kata-containers-2.0-Power9-crio-k8s-ubuntu-20-04-PR</string>
         <string>kata-containers-2.0-tests-centos-PR</string>
-        <string>kata-containers-2.0-tests-clh-crio-ubuntu-PR</string>
         <string>kata-containers-2.0-tests-debian-PR</string>
         <string>kata-containers-2.0-tests-fedora-PR</string>
         <string>kata-containers-2.0-tests-fedora-PR-crio-k8s-e2e-complete</string>
         <string>kata-containers-2.0-tests-fedora-PR-crio-k8s-e2e-minimal</string>
         <string>kata-containers-2.0-tests-firecracker-jailer-ubuntu-PR</string>
         <string>kata-containers-2.0-tests-firecracker-ubuntu-PR</string>
-        <string>kata-containers-2.0-tests-metrics-clh-ubuntu-20-04-PR</string>
         <string>kata-containers-2.0-tests-metrics-ubuntu-20-04-PR</string>
         <string>kata-containers-2.0-tests-pmem-ubuntu-20.04-PR</string>
-        <string>kata-containers-2.0-tests-ubuntu-clh-virtiofs-PR</string>
-        <string>kata-containers-2.0-tests-ubuntu-PR-clh-containerd-k8s-minimal</string>
         <string>kata-containers-2.0-tests-ubuntu-PR-containerd-k8s-minimal</string>
         <string>kata-containers-2.0-tests-ubuntu-s390x-PR</string>
         <string>kata-containers-2.0-tests-ubuntu20.04-PR</string>
@@ -2106,10 +2107,16 @@ git config --global user.name &quot;Kata Containers Bot&quot;</initScript>
         <string>kata-containers-2.0-tests-vfio-PR</string>
         <string>kata-containers-2.0-ubuntu-20.04-PR</string>
         <string>kata-containers-2.0-ubuntu-20.04-PR-sev-amd</string>
+        <string>kata-containers-2.0-ubuntu-main-branch-x86_64-cloud-hypervisor-k8s-containerd-full-tests-repo</string>
         <string>kata-containers-2.0-ubuntu-PR</string>
         <string>kata-containers-2.0-ubuntu-PR-Arm-clh-containerd-k8s-minimal</string>
-        <string>kata-containers-2.0-ubuntu-PR-clh-containerd-k8s-minimal</string>
         <string>kata-containers-2.0-ubuntu-PR-containerd-k8s-minimal</string>
+        <string>kata-containers-2.0-ubuntu-PR-x86_64-clh-containerd-k8s-minimal-kata-repo</string>
+        <string>kata-containers-2.0-ubuntu-PR-x86_64-clh-containerd-k8s-minimal-tests-repo</string>
+        <string>kata-containers-2.0-ubuntu-PR-x86_64-clh-crio-kata-repo</string>
+        <string>kata-containers-2.0-ubuntu-PR-x86_64-clh-crio-tests-repo</string>
+        <string>kata-containers-2.0-ubuntu-PR-x86_64-cloud-hypervisor-k8s-containerd-tests-repo</string>
+        <string>kata-containers-2.0-ubuntu-PR-x86_64-metrics-clh-test-repo</string>
         <string>kata-containers-2.0-ubuntu-s390x-PR</string>
         <string>kata-containers-2.0-vfio-PR</string>
         <string>kata-containers-CCv0-fedora-PR</string>
@@ -2166,6 +2173,56 @@ git config --global user.name &quot;Kata Containers Bot&quot;</initScript>
       </columns>
       <recurse>false</recurse>
     </listView>
+    <hudson.plugins.sectioned__view.SectionedView plugin="sectioned-view@1.25">
+      <owner class="hudson" reference="../../.."/>
+      <name>Cloud-Hypervisor-Jobs</name>
+      <description>Maintainer @jcvenegas @likebreath</description>
+      <filterExecutors>false</filterExecutors>
+      <filterQueue>false</filterQueue>
+      <properties class="hudson.model.View$PropertyList"/>
+      <sections>
+        <hudson.plugins.sectioned__view.ListViewSection>
+          <jobNames>
+            <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../../../hudson.plugins.sectioned__view.SectionedView/sections/hudson.plugins.sectioned__view.TextSection/jobNames/comparator"/>
+          </jobNames>
+          <jobFilters/>
+          <name>Cloud Hypervisor List jobs</name>
+          <includeRegex>(.*clh.*)|(.*cloud-hypervisor.*)</includeRegex>
+          <width>FULL</width>
+          <alignment>LEFT</alignment>
+          <columns>
+            <hudson.views.StatusColumn/>
+            <hudson.views.WeatherColumn/>
+            <hudson.views.JobColumn/>
+            <hudson.views.LastSuccessColumn/>
+            <hudson.views.LastFailureColumn/>
+            <hudson.views.LastDurationColumn/>
+            <hudson.views.BuildButtonColumn/>
+          </columns>
+        </hudson.plugins.sectioned__view.ListViewSection>
+        <hudson.plugins.sectioned__view.TextSection>
+          <jobNames>
+            <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../../../hudson.plugins.sectioned__view.SectionedView/sections/hudson.plugins.sectioned__view.TextSection/jobNames/comparator"/>
+          </jobNames>
+          <jobFilters/>
+          <name>Notes</name>
+          <width>FULL</width>
+          <alignment>CENTER</alignment>
+          <text>job maintainers @jcvenega @likebreath
+
+ kata-containers-2.0-ubuntu-PR-x86_64-clh-containerd-k8s-minimal-kata-repo
+  ▲                             ▲          ▲ ▲         ▲                                           ▲
+  │                 ┌────┘           │   │         │                                            │
+  │                 │                        │   └─┐    └──┐                                    │
+  │                 │                        │         │            │                                    │
+  │                 │             ┌───┘         │            │             ┌────────┘
+  │                 │             │                    │            │             │
+  &lt;project&gt;-&lt;distro&gt;-&lt;PR|branch&gt;-&lt;arch&gt;-&lt;job-id&gt;-&lt;repo&gt;-repo
+</text>
+          <style>NONE</style>
+        </hudson.plugins.sectioned__view.TextSection>
+      </sections>
+    </hudson.plugins.sectioned__view.SectionedView>
   </views>
   <primaryView>Kata 2.x</primaryView>
   <slaveAgentPort>-1</slaveAgentPort>
