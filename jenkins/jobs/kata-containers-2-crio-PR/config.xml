@@ -1,0 +1,278 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.3"/>
+    <jenkins.model.BuildDiscarderProperty>
+      <strategy class="hudson.tasks.LogRotator">
+        <daysToKeep>30</daysToKeep>
+        <numToKeep>100</numToKeep>
+        <artifactDaysToKeep>30</artifactDaysToKeep>
+        <artifactNumToKeep>30</artifactNumToKeep>
+      </strategy>
+    </jenkins.model.BuildDiscarderProperty>
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.33.1">
+      <projectUrl>https://github.com/cri-o/cri-o/</projectUrl>
+      <displayName></displayName>
+    </com.coravy.hudson.plugins.github.GithubProjectProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.32">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <hudson.model.StringParameterDefinition>
+          <name>JOB_NAME</name>
+          <trim>true</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>JOB_TYPE</name>
+          <trim>true</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>JOB_SPEC</name>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>BUILD_ID</name>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>PROW_JOB_ID</name>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>BUILD_NUMBER</name>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>REPO_OWNER</name>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>REPO_NAME</name>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>PULL_BASE_REF</name>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>PULL_BASE_SHA</name>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>PULL_REFS</name>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>PULL_NUMBER</name>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>PULL_PULL_SHA</name>
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+  </properties>
+  <scm class="hudson.scm.NullSCM"/>
+  <assignedNode>fedora32_azure</assignedNode>
+  <canRoam>false</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <authToken>C1rvZVEjqPWfKrKwmRvv99WPesf7ALyk</authToken>
+  <triggers/>
+  <concurrentBuild>true</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>#!/bin/bash
+
+set -ex
+
+uname -a
+
+# Export all environment variables needed.
+
+export CI=&quot;true&quot;
+export CRIO=&quot;yes&quot;
+export INSTALL_KATA=&quot;yes&quot;
+export KATA_HYPERVISOR=&quot;qemu&quot;
+export KUBERNETES=&quot;yes&quot;
+export MINIMAL_CONTAINERD_K8S_E2E=&quot;true&quot;
+export MINIMAL_K8S_E2E=&quot;true&quot;
+export GO111MODULE=auto
+
+
+export PULL_BASE_REF
+export PULL_NUMBER
+export REPO_NAME
+export REPO_OWNER
+
+# Print env variables in case we need to debug
+env
+
+latest_release=&quot;1.21&quot;
+
+sudo bash -c &quot;cat &lt;&lt;EOF &gt; /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+name=Kubernetes
+baseurl=&quot;https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64&quot;
+enabled=1
+gpgcheck=1
+repo_gpgcheck=1
+gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg
+EOF&quot;
+
+pr_number=&quot;${PULL_NUMBER}&quot;
+pr_branch=&quot;PR_${pr_number}&quot;
+
+# get (only) the number of the branch that we are testing
+branch_release_number=$(echo ${PULL_BASE_REF} | cut -d&apos;-&apos; -f 2)
+[ &quot;$branch_release_number&quot; == &quot;master&quot; ] &amp;&amp; branch_release_number=${latest_release}
+
+export ghprbGhRepository=&quot;${REPO_OWNER}/${REPO_NAME}&quot;
+export GOROOT=&quot;/usr/local/go&quot;
+
+export JOBS=1
+
+# Put our go area into the Jenkins job WORKSPACE tree
+export GOPATH=${WORKSPACE}/go
+export PATH=${GOPATH}/bin:/usr/local/go/bin:/usr/sbin:/sbin:${PATH}
+mkdir -p &quot;${GOPATH}&quot;
+
+git config --global user.email &quot;katacontainersbot@gmail.com&quot;
+git config --global user.name &quot;Kata Containers Bot&quot;
+
+github=&quot;github.com&quot;
+crio_github=&quot;${github}/cri-o&quot;
+kata_github=&quot;${github}/kata-containers&quot;
+
+# CRI-O repository
+crio_repo=&quot;${crio_github}/cri-o&quot;
+crio_repo_dir=&quot;${GOPATH}/src/${crio_repo}&quot;
+
+# Kata Containers Tests repository
+tests_repo=&quot;${kata_github}/tests&quot;
+tests_repo_dir=&quot;${GOPATH}/src/${tests_repo}&quot;
+
+# Kata Containers repository
+kata_repo=&quot;${kata_github}/kata-containers&quot;
+kata_repo_dir=&quot;${GOPATH}/src/${kata_repo}&quot;
+
+echo &quot;This Job will test CRI-O changes using Kata Containers runtime.&quot;
+echo &quot;Testing PR number ${pr_number}.&quot;
+
+# Clone the tests repository
+mkdir -p $(dirname &quot;${tests_repo_dir}&quot;)
+[ -d &quot;${tests_repo_dir}&quot; ] || git clone &quot;https://${tests_repo}.git&quot; &quot;${tests_repo_dir}&quot;
+
+# Clone the kata-containers repository
+mkdir -p $(dirname &quot;${kata_repo_dir}&quot;)
+[ -d &quot;${kata_repo_dir}&quot; ] || git clone &quot;https://${kata_repo}.git&quot; &quot;${kata_repo_dir}&quot;
+
+# Clone the crio repository
+mkdir -p $(dirname &quot;${crio_repo_dir}&quot;)
+[ -d &quot;${crio_repo_dir}&quot; ] || git clone &quot;https://${crio_repo}.git&quot; &quot;${crio_repo_dir}&quot;
+
+# Checkout to the PR commit and rebase with master
+cd &quot;${crio_repo_dir}&quot;
+git fetch origin &quot;pull/${pr_number}/head:${pr_branch}&quot;
+git checkout &quot;${pr_branch}&quot;
+git rebase &quot;origin/${PULL_BASE_REF}&quot;
+
+# And show what we rebased on top of to aid debugging
+git log --oneline master~1..HEAD
+
+# Edit critools &amp; kubernetes versions
+cd &quot;${kata_repo_dir}&quot;
+
+# Install yq
+${GOPATH}/src/${tests_repo}/.ci/install_yq.sh
+
+critools_version=&quot;${branch_release_number}.0&quot;
+echo &quot;Using critools ${critools_version}&quot;
+yq w -i versions.yaml externals.critools.version &quot;${critools_version}&quot;
+yq r versions.yaml externals.critools.version
+
+latest_kubernetes_from_repo=`LC_ALL=C sudo dnf -y repository-packages kubernetes info --available kubelet-${branch_release_number}* | grep Version | cut -d&apos;:&apos; -f 2 | xargs`
+kubernetes_version=&quot;${latest_kubernetes_from_repo}-00&quot;
+echo &quot;Using kubernetes ${kubernetes_version}&quot;
+yq w -i versions.yaml externals.kubernetes.version &quot;${kubernetes_version}&quot;
+yq r versions.yaml externals.kubernetes.version
+
+# Run kata-containers setup
+cd &quot;${tests_repo_dir}&quot;
+.ci/setup.sh
+
+#echo &quot;CRI-O Version to test:&quot;
+#crio --version
+
+sudo -E PATH=$PATH make kubernetes
+sudo -E PATH=$PATH make kubernetes-e2e
+
+#cleanup
+sudo systemctl stop kubelet
+PODLIST=`sudo crictl pods -q`
+sudo crictl stopp $PODLIST
+sudo crictl rmp $PODLIST
+sudo systemctl stop crio
+sudo nmcli dev delete cni0
+
+sudo dnf install -y parallel
+export TEST_CRIO=true
+export JOBS=1
+sudo -E PATH=$PATH make crio </command>
+      <configuredLocalRules/>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers>
+    <hudson.plugins.postbuildtask.PostbuildTask plugin="postbuild-task@1.9">
+      <tasks>
+        <hudson.plugins.postbuildtask.TaskProperties>
+          <logTexts>
+            <hudson.plugins.postbuildtask.LogProperties>
+              <logText>.*</logText>
+              <operator>OR</operator>
+            </hudson.plugins.postbuildtask.LogProperties>
+          </logTexts>
+          <EscalateStatus>false</EscalateStatus>
+          <RunIfJobSuccessful>false</RunIfJobSuccessful>
+          <script>#!/bin/bash&#xd;
+&#xd;
+export GOPATH=$WORKSPACE/go&#xd;
+export GOROOT=&quot;/usr/local/go&quot;&#xd;
+export PATH=${GOPATH}/bin:/usr/local/go/bin:/usr/sbin:/usr/local/bin:${PATH}&#xd;
+&#xd;
+cd $GOPATH/src/github.com/kata-containers/tests&#xd;
+.ci/teardown.sh &quot;$WORKSPACE/artifacts&quot;</script>
+        </hudson.plugins.postbuildtask.TaskProperties>
+      </tasks>
+    </hudson.plugins.postbuildtask.PostbuildTask>
+    <hudson.tasks.ArtifactArchiver>
+      <artifacts>artifacts/*</artifacts>
+      <allowEmptyArchive>true</allowEmptyArchive>
+      <onlyIfSuccessful>false</onlyIfSuccessful>
+      <fingerprint>false</fingerprint>
+      <defaultExcludes>true</defaultExcludes>
+      <caseSensitive>true</caseSensitive>
+      <followSymlinks>true</followSymlinks>
+    </hudson.tasks.ArtifactArchiver>
+  </publishers>
+  <buildWrappers>
+    <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.20">
+      <strategy class="hudson.plugins.build_timeout.impl.NoActivityTimeOutStrategy">
+        <timeoutSecondsString>300</timeoutSecondsString>
+      </strategy>
+      <operationList/>
+    </hudson.plugins.build__timeout.BuildTimeoutWrapper>
+    <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.13"/>
+    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@1.0.0">
+      <colorMapName>xterm</colorMapName>
+    </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
+    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.58"/>
+  </buildWrappers>
+</project>
