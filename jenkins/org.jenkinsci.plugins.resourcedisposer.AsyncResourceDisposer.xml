@@ -10,11 +10,23 @@
             <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
               <disposer reference="../../../../../../.."/>
               <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.39">
-                <node>s390x_node_01_ubuntu2004</node>
-                <path>/home/jenkins/workspace/kata-containers-2.0-tests-ubuntu-s390x-PR_ws-cleanup_1630700477863</path>
+                <node>arm03_slave</node>
+                <path>/home/jenkins/workspace/kata-containers-2.0-ubuntu-ARM-PR_ws-cleanup_1637613834935</path>
               </disposable>
-              <registered>2021-09-03 20:21:17.906 UTC</registered>
-              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace s390x_node_01_ubuntu2004:/home/jenkins/workspace/kata-containers-2.0-tests-ubuntu-s390x-PR_ws-cleanup_1630700477863</disposableInfo>
+              <registered>2021-11-22 20:43:55.26 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace arm03_slave:/home/jenkins/workspace/kata-containers-2.0-ubuntu-ARM-PR_ws-cleanup_1637613834935</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.39">
+                <node>arm01_slave</node>
+                <path>/home/jenkins/workspace/kata-containers-2.0-tests-ubuntu-ARM-PR_ws-cleanup_1639016085572</path>
+              </disposable>
+              <registered>2021-12-09 02:14:45.662 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace arm01_slave:/home/jenkins/workspace/kata-containers-2.0-tests-ubuntu-ARM-PR_ws-cleanup_1639016085572</disposableInfo>
             </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
             <boolean>true</boolean>
           </entry>

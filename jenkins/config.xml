@@ -8,7 +8,7 @@
     <string>OldData</string>
     <string>jenkins.security.QueueItemAuthenticatorMonitor</string>
   </disabledAdministrativeMonitors>
-  <version>2.303.1</version>
+  <version>2.303.3</version>
   <numExecutors>0</numExecutors>
   <mode>EXCLUSIVE</mode>
   <useSecurity>true</useSecurity>
@@ -52,6 +52,7 @@
     <permission>hudson.model.Hudson.Administer:chavafg</permission>
     <permission>hudson.model.Hudson.Administer:devimc</permission>
     <permission>hudson.model.Hudson.Administer:kata-containers*jenkins-admin</permission>
+    <permission>hudson.model.Hudson.Administer:wainersm</permission>
     <permission>hudson.model.Hudson.Read:anonymous</permission>
     <permission>hudson.model.Hudson.Read:authenticated</permission>
     <permission>hudson.model.Hudson.Read:chavafg</permission>
@@ -162,14 +163,16 @@
     <githubWebUri>https://github.com</githubWebUri>
     <githubApiUri>https://api.github.com</githubApiUri>
     <clientID>e11e7e0dee39d432dd71</clientID>
-    <clientSecret>{AQAAABAAAAAw1SbTy2/DMKxPArw5ITGiLDYviWKR1Js+n4o62ksibGoHIbRKgyq0ig1GsIpngExaYndOTbUTwcxJ9C0Ic7jkUg==}</clientSecret>
+    <clientSecret>{AQAAABAAAAAwBp8JTnyLKa+XlaiQaw/Sd0zkg2tAQcC7bWrg+F+eSTWEjSJuYVPufPVyAapJRvR6/8RIc2C/ZL0bw7deQrJ25Q==}</clientSecret>
     <oauthScopes>read:org,user:email</oauthScopes>
   </securityRealm>
   <disableRememberMe>false</disableRememberMe>
   <projectNamingStrategy class="jenkins.model.ProjectNamingStrategy$DefaultProjectNamingStrategy"/>
   <workspaceDir>${JENKINS_HOME}/workspace/${ITEM_FULL_NAME}</workspaceDir>
   <buildsDir>${ITEM_ROOTDIR}/builds</buildsDir>
-  <markupFormatter class="hudson.markup.EscapedMarkupFormatter"/>
+  <markupFormatter class="hudson.markup.RawHtmlMarkupFormatter" plugin="antisamy-markup-formatter@2.4">
+    <disableSyntaxHighlighting>false</disableSyntaxHighlighting>
+  </markupFormatter>
   <jdks/>
   <viewsTabBar class="hudson.views.DefaultViewsTabBar"/>
   <myViewsTabBar class="hudson.views.DefaultMyViewsTabBar"/>
@@ -379,7 +382,7 @@ git config --global user.name &quot;Kata Containers Bot&quot;
       </configurations>
       <noDelayProvisioning>false</noDelayProvisioning>
     </com.google.jenkins.plugins.computeengine.ComputeEngineCloud>
-    <com.microsoft.azure.vmagent.AzureVMCloud plugin="azure-vm-agents@783.v58077630847d">
+    <com.microsoft.azure.vmagent.AzureVMCloud plugin="azure-vm-agents@797.v31f530348574">
       <name>AzureVMAgents</name>
       <cloudName>AzureVMAgents</cloudName>
       <credentialsId>6fd57ac9-f917-468f-8231-5f820311655c</credentialsId>
@@ -387,7 +390,7 @@ git config --global user.name &quot;Kata Containers Bot&quot;
       <resourceGroupReferenceType>existing</resourceGroupReferenceType>
       <newResourceGroupName></newResourceGroupName>
       <existingResourceGroupName>kataCI</existingResourceGroupName>
-      <vmTemplates>
+      <vmTemplates class="java.util.concurrent.CopyOnWriteArrayList">
         <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
           <templateName>debian10-azure</templateName>
           <templateDesc>Debian 10 on Azure</templateDesc>
@@ -460,8 +463,10 @@ echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers</initScri
           <subnetName></subnetName>
           <usePrivateIP>false</usePrivateIP>
           <spotInstance>false</spotInstance>
+          <acceleratedNetworking>false</acceleratedNetworking>
           <nsgName></nsgName>
           <jvmOptions></jvmOptions>
+          <remotingOptions></remotingOptions>
           <templateDisabled>false</templateDisabled>
           <templateStatusDetails></templateStatusDetails>
           <templateVerified>false</templateVerified>
@@ -469,6 +474,7 @@ echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers</initScri
           <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
           <enableMSI>false</enableMSI>
           <enableUAMI>false</enableUAMI>
+          <uamiID></uamiID>
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
           <maximumDeploymentSize>0</maximumDeploymentSize>
@@ -555,8 +561,10 @@ sudo dd if=/dev/zero of=$device bs=128M count=1</initScript>
           <subnetName></subnetName>
           <usePrivateIP>false</usePrivateIP>
           <spotInstance>false</spotInstance>
+          <acceleratedNetworking>false</acceleratedNetworking>
           <nsgName></nsgName>
           <jvmOptions></jvmOptions>
+          <remotingOptions></remotingOptions>
           <templateDisabled>false</templateDisabled>
           <templateStatusDetails></templateStatusDetails>
           <templateVerified>false</templateVerified>
@@ -564,6 +572,7 @@ sudo dd if=/dev/zero of=$device bs=128M count=1</initScript>
           <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
           <enableMSI>false</enableMSI>
           <enableUAMI>false</enableUAMI>
+          <uamiID></uamiID>
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
           <maximumDeploymentSize>0</maximumDeploymentSize>
@@ -630,8 +639,10 @@ echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers</initScri
           <subnetName></subnetName>
           <usePrivateIP>false</usePrivateIP>
           <spotInstance>false</spotInstance>
+          <acceleratedNetworking>false</acceleratedNetworking>
           <nsgName></nsgName>
           <jvmOptions></jvmOptions>
+          <remotingOptions></remotingOptions>
           <templateDisabled>false</templateDisabled>
           <templateStatusDetails></templateStatusDetails>
           <templateVerified>false</templateVerified>
@@ -639,6 +650,7 @@ echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers</initScri
           <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
           <enableMSI>false</enableMSI>
           <enableUAMI>false</enableUAMI>
+          <uamiID></uamiID>
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
           <maximumDeploymentSize>0</maximumDeploymentSize>
@@ -701,8 +713,10 @@ sudo dnf install -y java-1.8.0-openjdk </initScript>
           <subnetName></subnetName>
           <usePrivateIP>false</usePrivateIP>
           <spotInstance>false</spotInstance>
+          <acceleratedNetworking>false</acceleratedNetworking>
           <nsgName></nsgName>
           <jvmOptions></jvmOptions>
+          <remotingOptions></remotingOptions>
           <templateDisabled>false</templateDisabled>
           <templateStatusDetails></templateStatusDetails>
           <templateVerified>false</templateVerified>
@@ -710,6 +724,7 @@ sudo dnf install -y java-1.8.0-openjdk </initScript>
           <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
           <enableMSI>false</enableMSI>
           <enableUAMI>false</enableUAMI>
+          <uamiID></uamiID>
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
           <maximumDeploymentSize>0</maximumDeploymentSize>
@@ -799,8 +814,10 @@ sudo dd if=/dev/zero of=$device bs=128M count=1</initScript>
           <subnetName></subnetName>
           <usePrivateIP>false</usePrivateIP>
           <spotInstance>false</spotInstance>
+          <acceleratedNetworking>false</acceleratedNetworking>
           <nsgName></nsgName>
           <jvmOptions></jvmOptions>
+          <remotingOptions></remotingOptions>
           <templateDisabled>false</templateDisabled>
           <templateStatusDetails></templateStatusDetails>
           <templateVerified>false</templateVerified>
@@ -808,6 +825,7 @@ sudo dd if=/dev/zero of=$device bs=128M count=1</initScript>
           <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
           <enableMSI>false</enableMSI>
           <enableUAMI>false</enableUAMI>
+          <uamiID></uamiID>
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
           <maximumDeploymentSize>0</maximumDeploymentSize>
@@ -886,8 +904,10 @@ sudo zypper removelock docker
           <subnetName></subnetName>
           <usePrivateIP>false</usePrivateIP>
           <spotInstance>false</spotInstance>
+          <acceleratedNetworking>false</acceleratedNetworking>
           <nsgName></nsgName>
           <jvmOptions></jvmOptions>
+          <remotingOptions></remotingOptions>
           <templateDisabled>false</templateDisabled>
           <templateStatusDetails></templateStatusDetails>
           <templateVerified>false</templateVerified>
@@ -895,6 +915,7 @@ sudo zypper removelock docker
           <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
           <enableMSI>false</enableMSI>
           <enableUAMI>false</enableUAMI>
+          <uamiID></uamiID>
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
           <maximumDeploymentSize>0</maximumDeploymentSize>
@@ -964,8 +985,10 @@ sudo zypper removelock docker
           <subnetName></subnetName>
           <usePrivateIP>false</usePrivateIP>
           <spotInstance>false</spotInstance>
+          <acceleratedNetworking>false</acceleratedNetworking>
           <nsgName></nsgName>
           <jvmOptions></jvmOptions>
+          <remotingOptions></remotingOptions>
           <templateDisabled>false</templateDisabled>
           <templateStatusDetails></templateStatusDetails>
           <templateVerified>false</templateVerified>
@@ -973,6 +996,7 @@ sudo zypper removelock docker
           <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
           <enableMSI>false</enableMSI>
           <enableUAMI>false</enableUAMI>
+          <uamiID></uamiID>
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
           <maximumDeploymentSize>0</maximumDeploymentSize>
@@ -1041,8 +1065,10 @@ echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers</initScri
           <subnetName></subnetName>
           <usePrivateIP>false</usePrivateIP>
           <spotInstance>false</spotInstance>
+          <acceleratedNetworking>false</acceleratedNetworking>
           <nsgName></nsgName>
           <jvmOptions></jvmOptions>
+          <remotingOptions></remotingOptions>
           <templateDisabled>false</templateDisabled>
           <templateStatusDetails></templateStatusDetails>
           <templateVerified>false</templateVerified>
@@ -1050,6 +1076,7 @@ echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers</initScri
           <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
           <enableMSI>false</enableMSI>
           <enableUAMI>false</enableUAMI>
+          <uamiID></uamiID>
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
           <maximumDeploymentSize>0</maximumDeploymentSize>
@@ -1113,8 +1140,10 @@ sudo dnf install -y java-1.8.0-openjdk </initScript>
           <subnetName></subnetName>
           <usePrivateIP>false</usePrivateIP>
           <spotInstance>false</spotInstance>
+          <acceleratedNetworking>false</acceleratedNetworking>
           <nsgName></nsgName>
           <jvmOptions></jvmOptions>
+          <remotingOptions></remotingOptions>
           <templateDisabled>false</templateDisabled>
           <templateStatusDetails></templateStatusDetails>
           <templateVerified>false</templateVerified>
@@ -1122,6 +1151,7 @@ sudo dnf install -y java-1.8.0-openjdk </initScript>
           <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
           <enableMSI>false</enableMSI>
           <enableUAMI>false</enableUAMI>
+          <uamiID></uamiID>
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
           <maximumDeploymentSize>0</maximumDeploymentSize>
@@ -1188,8 +1218,10 @@ echo &quot;*  -   memlock   16384&quot; | sudo tee /etc/security/limits.d/95-mem
           <subnetName></subnetName>
           <usePrivateIP>false</usePrivateIP>
           <spotInstance>false</spotInstance>
+          <acceleratedNetworking>false</acceleratedNetworking>
           <nsgName></nsgName>
           <jvmOptions></jvmOptions>
+          <remotingOptions></remotingOptions>
           <templateDisabled>false</templateDisabled>
           <templateStatusDetails></templateStatusDetails>
           <templateVerified>false</templateVerified>
@@ -1197,6 +1229,7 @@ echo &quot;*  -   memlock   16384&quot; | sudo tee /etc/security/limits.d/95-mem
           <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
           <enableMSI>false</enableMSI>
           <enableUAMI>false</enableUAMI>
+          <uamiID></uamiID>
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
           <maximumDeploymentSize>0</maximumDeploymentSize>
@@ -1275,8 +1308,10 @@ echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers</initScri
           <subnetName></subnetName>
           <usePrivateIP>false</usePrivateIP>
           <spotInstance>false</spotInstance>
+          <acceleratedNetworking>false</acceleratedNetworking>
           <nsgName></nsgName>
           <jvmOptions></jvmOptions>
+          <remotingOptions></remotingOptions>
           <templateDisabled>false</templateDisabled>
           <templateStatusDetails></templateStatusDetails>
           <templateVerified>false</templateVerified>
@@ -1284,6 +1319,7 @@ echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers</initScri
           <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
           <enableMSI>false</enableMSI>
           <enableUAMI>false</enableUAMI>
+          <uamiID></uamiID>
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
           <maximumDeploymentSize>0</maximumDeploymentSize>
@@ -1348,8 +1384,10 @@ sudo chmod g+rw /dev/&quot;${TRUSTED_GROUP}&quot;
           <subnetName></subnetName>
           <usePrivateIP>false</usePrivateIP>
           <spotInstance>false</spotInstance>
+          <acceleratedNetworking>false</acceleratedNetworking>
           <nsgName></nsgName>
           <jvmOptions></jvmOptions>
+          <remotingOptions></remotingOptions>
           <templateDisabled>false</templateDisabled>
           <templateStatusDetails></templateStatusDetails>
           <templateVerified>false</templateVerified>
@@ -1357,6 +1395,7 @@ sudo chmod g+rw /dev/&quot;${TRUSTED_GROUP}&quot;
           <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
           <enableMSI>false</enableMSI>
           <enableUAMI>false</enableUAMI>
+          <uamiID></uamiID>
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
           <maximumDeploymentSize>0</maximumDeploymentSize>
@@ -1427,8 +1466,10 @@ echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers</initScri
           <subnetName></subnetName>
           <usePrivateIP>false</usePrivateIP>
           <spotInstance>false</spotInstance>
+          <acceleratedNetworking>false</acceleratedNetworking>
           <nsgName></nsgName>
           <jvmOptions></jvmOptions>
+          <remotingOptions></remotingOptions>
           <templateDisabled>false</templateDisabled>
           <templateStatusDetails></templateStatusDetails>
           <templateVerified>false</templateVerified>
@@ -1436,6 +1477,7 @@ echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers</initScri
           <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
           <enableMSI>false</enableMSI>
           <enableUAMI>false</enableUAMI>
+          <uamiID></uamiID>
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
           <maximumDeploymentSize>0</maximumDeploymentSize>
@@ -1519,8 +1561,10 @@ sudo dd if=/dev/zero of=$device bs=128M count=1</initScript>
           <subnetName></subnetName>
           <usePrivateIP>false</usePrivateIP>
           <spotInstance>false</spotInstance>
+          <acceleratedNetworking>false</acceleratedNetworking>
           <nsgName></nsgName>
           <jvmOptions></jvmOptions>
+          <remotingOptions></remotingOptions>
           <templateDisabled>false</templateDisabled>
           <templateStatusDetails></templateStatusDetails>
           <templateVerified>false</templateVerified>
@@ -1528,6 +1572,7 @@ sudo dd if=/dev/zero of=$device bs=128M count=1</initScript>
           <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
           <enableMSI>false</enableMSI>
           <enableUAMI>false</enableUAMI>
+          <uamiID></uamiID>
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
           <maximumDeploymentSize>0</maximumDeploymentSize>
@@ -1637,8 +1682,10 @@ echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers
           <subnetName></subnetName>
           <usePrivateIP>false</usePrivateIP>
           <spotInstance>false</spotInstance>
+          <acceleratedNetworking>false</acceleratedNetworking>
           <nsgName></nsgName>
           <jvmOptions></jvmOptions>
+          <remotingOptions></remotingOptions>
           <templateDisabled>false</templateDisabled>
           <templateStatusDetails></templateStatusDetails>
           <templateVerified>false</templateVerified>
@@ -1646,6 +1693,7 @@ echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers
           <doNotUseMachineIfInitFails>false</doNotUseMachineIfInitFails>
           <enableMSI>false</enableMSI>
           <enableUAMI>false</enableUAMI>
+          <uamiID></uamiID>
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
           <maximumDeploymentSize>0</maximumDeploymentSize>
@@ -1710,8 +1758,10 @@ sudo dnf install -y java-1.8.0-openjdk
           <subnetName></subnetName>
           <usePrivateIP>false</usePrivateIP>
           <spotInstance>false</spotInstance>
+          <acceleratedNetworking>false</acceleratedNetworking>
           <nsgName></nsgName>
           <jvmOptions></jvmOptions>
+          <remotingOptions></remotingOptions>
           <templateDisabled>false</templateDisabled>
           <templateStatusDetails></templateStatusDetails>
           <templateVerified>false</templateVerified>
@@ -1719,6 +1769,7 @@ sudo dnf install -y java-1.8.0-openjdk
           <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
           <enableMSI>false</enableMSI>
           <enableUAMI>false</enableUAMI>
+          <uamiID></uamiID>
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
           <maximumDeploymentSize>0</maximumDeploymentSize>
@@ -1805,8 +1856,10 @@ sudo dd if=/dev/zero of=$device bs=128M count=1</initScript>
           <subnetName></subnetName>
           <usePrivateIP>false</usePrivateIP>
           <spotInstance>false</spotInstance>
+          <acceleratedNetworking>false</acceleratedNetworking>
           <nsgName></nsgName>
           <jvmOptions></jvmOptions>
+          <remotingOptions></remotingOptions>
           <templateDisabled>false</templateDisabled>
           <templateStatusDetails></templateStatusDetails>
           <templateVerified>false</templateVerified>
@@ -1814,15 +1867,91 @@ sudo dd if=/dev/zero of=$device bs=128M count=1</initScript>
           <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
           <enableMSI>false</enableMSI>
           <enableUAMI>false</enableUAMI>
+          <uamiID></uamiID>
+          <javaPath>java</javaPath>
+          <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
+          <maximumDeploymentSize>0</maximumDeploymentSize>
+        </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
+        <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
+          <templateName>fedora35cloud</templateName>
+          <templateDesc>fedora35</templateDesc>
+          <labels>fedora35_azure</labels>
+          <location>East US 2</location>
+          <availabilityType/>
+          <virtualMachineSize>Standard_D4s_v3</virtualMachineSize>
+          <storageAccountNameReferenceType>new</storageAccountNameReferenceType>
+          <diskType>managed</diskType>
+          <ephemeralOSDisk>true</ephemeralOSDisk>
+          <osDiskSize>0</osDiskSize>
+          <newStorageAccountName>katastg</newStorageAccountName>
+          <existingStorageAccountName>katacidiag</existingStorageAccountName>
+          <storageAccountType>Standard_LRS</storageAccountType>
+          <osDiskStorageAccountType>Standard_LRS</osDiskStorageAccountType>
+          <noOfParallelJobs>1</noOfParallelJobs>
+          <usageMode>EXCLUSIVE</usageMode>
+          <shutdownOnIdle>false</shutdownOnIdle>
+          <imageTopLevelType>advanced</imageTopLevelType>
+          <imageReference>
+            <uri>https://katastg.blob.core.windows.net/kata/Fedora-Cloud-Base-35-1.2.x86_64.vhd</uri>
+            <type>CUSTOM</type>
+          </imageReference>
+          <builtInImage>Ubuntu 20.04 LTS</builtInImage>
+          <installGit>false</installGit>
+          <installMaven>false</installMaven>
+          <installDocker>false</installDocker>
+          <osType>Linux</osType>
+          <agentLaunchMethod>SSH</agentLaunchMethod>
+          <preInstallSsh>false</preInstallSsh>
+          <initScript>#!/bin/bash
+
+# Install git, gcc and python
+sudo dnf install -y git gcc python make haveged runc #docker
+
+sudo mount /tmp -o remount,rw,dev
+
+sudo systemctl start haveged
+#sudo systemctl start docker
+#sudo gpasswd -a jenkins docker
+#sudo chmod g+rw /var/run/docker.sock
+
+# the following was done already within the vm image
+#sudo grubby --update-kernel=ALL --args=&quot;systemd.unified_cgroup_hierarchy=0&quot;
+#sudo dnf remove qemu-guest-agent zram-generator-defaults
+#sudo dnf install -y git vim make wget openssl driverctl pciutils
+# installed waagent: https://github.com/Azure/WALinuxAgent
+
+# Install Java JRE and JDK for Jenkins agent
+sudo dnf install -y java-1.8.0-openjdk </initScript>
+          <terminateScript></terminateScript>
+          <credentialsId>a6317428-9508-4ce9-b123-82742f45ec74</credentialsId>
+          <agentWorkspace>/tmp/jenkins</agentWorkspace>
+          <retentionTimeInMin>0</retentionTimeInMin>
+          <virtualNetworkName></virtualNetworkName>
+          <virtualNetworkResourceGroupName></virtualNetworkResourceGroupName>
+          <subnetName></subnetName>
+          <usePrivateIP>false</usePrivateIP>
+          <spotInstance>false</spotInstance>
+          <acceleratedNetworking>false</acceleratedNetworking>
+          <nsgName></nsgName>
+          <jvmOptions></jvmOptions>
+          <remotingOptions></remotingOptions>
+          <templateDisabled>false</templateDisabled>
+          <templateStatusDetails></templateStatusDetails>
+          <templateVerified>false</templateVerified>
+          <executeInitScriptAsRoot>false</executeInitScriptAsRoot>
+          <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
+          <enableMSI>false</enableMSI>
+          <enableUAMI>false</enableUAMI>
+          <uamiID></uamiID>
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
           <maximumDeploymentSize>0</maximumDeploymentSize>
         </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
       </vmTemplates>
       <deploymentTimeout>1200</deploymentTimeout>
-      <approximateVirtualMachineCount>17</approximateVirtualMachineCount>
+      <approximateVirtualMachineCount>0</approximateVirtualMachineCount>
     </com.microsoft.azure.vmagent.AzureVMCloud>
-    <hudson.plugins.ec2.EC2Cloud plugin="ec2@1.63">
+    <hudson.plugins.ec2.EC2Cloud plugin="ec2@1.66">
       <name>ec2-aws-jenkins</name>
       <useInstanceProfileForCredentials>false</useInstanceProfileForCredentials>
       <roleArn></roleArn>
@@ -2079,6 +2208,7 @@ git config --global user.name &quot;Kata Containers Bot&quot;</initScript>
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../hudson.plugins.sectioned__view.SectionedView/sections/hudson.plugins.sectioned__view.TextSection/jobNames/comparator"/>
+        <string>crio-kata-containers-2.0-fedora-32-main-baseline</string>
         <string>kata-containers-2-crio-PR</string>
         <string>kata-containers-2.0-centos-PR</string>
         <string>kata-containers-2.0-crio-rhel-initrd-s390x-PR</string>
@@ -2087,10 +2217,13 @@ git config --global user.name &quot;Kata Containers Bot&quot;</initScript>
         <string>kata-containers-2.0-fedora-PR-crio-k8s-e2e-minimal</string>
         <string>kata-containers-2.0-firecracker-jailer-ubuntu-PR</string>
         <string>kata-containers-2.0-firecracker-ubuntu-PR</string>
+        <string>kata-containers-2.0-kernel-qat-x86_64-nightly</string>
         <string>kata-containers-2.0-metrics-ubuntu-20-04-PR</string>
         <string>kata-containers-2.0-pmem-ubuntu-20.04-PR</string>
         <string>kata-containers-2.0-Power9-containerd-k8s-ubuntu-20-04-PR</string>
         <string>kata-containers-2.0-Power9-crio-k8s-ubuntu-20-04-PR</string>
+        <string>kata-containers-2.0-qat-ubuntu-20.04-PR</string>
+        <string>kata-containers-2.0-qemu-s390x</string>
         <string>kata-containers-2.0-tests-centos-PR</string>
         <string>kata-containers-2.0-tests-debian-PR</string>
         <string>kata-containers-2.0-tests-fedora-PR</string>
@@ -2100,10 +2233,10 @@ git config --global user.name &quot;Kata Containers Bot&quot;</initScript>
         <string>kata-containers-2.0-tests-firecracker-ubuntu-PR</string>
         <string>kata-containers-2.0-tests-metrics-ubuntu-20-04-PR</string>
         <string>kata-containers-2.0-tests-pmem-ubuntu-20.04-PR</string>
+        <string>kata-containers-2.0-tests-qat-ubuntu-20.04-PR</string>
         <string>kata-containers-2.0-tests-ubuntu-PR-containerd-k8s-minimal</string>
         <string>kata-containers-2.0-tests-ubuntu-s390x-PR</string>
         <string>kata-containers-2.0-tests-ubuntu20.04-PR</string>
-        <string>kata-containers-2.0-tests-ubuntu20.04-rootless-PR</string>
         <string>kata-containers-2.0-tests-vfio-PR</string>
         <string>kata-containers-2.0-ubuntu-20.04-PR</string>
         <string>kata-containers-2.0-ubuntu-20.04-PR-sev-amd</string>
@@ -2115,6 +2248,7 @@ git config --global user.name &quot;Kata Containers Bot&quot;</initScript>
         <string>kata-containers-2.0-ubuntu-PR-x86_64-clh-containerd-k8s-minimal-tests-repo</string>
         <string>kata-containers-2.0-ubuntu-PR-x86_64-clh-crio-kata-repo</string>
         <string>kata-containers-2.0-ubuntu-PR-x86_64-clh-crio-tests-repo</string>
+        <string>kata-containers-2.0-ubuntu-PR-x86_64-cloud-hypervisor-k8s-containerd-kata-repo</string>
         <string>kata-containers-2.0-ubuntu-PR-x86_64-cloud-hypervisor-k8s-containerd-tests-repo</string>
         <string>kata-containers-2.0-ubuntu-PR-x86_64-metrics-clh-test-repo</string>
         <string>kata-containers-2.0-ubuntu-s390x-PR</string>
@@ -2128,6 +2262,9 @@ git config --global user.name &quot;Kata Containers Bot&quot;</initScript>
         <string>kata-containers-experimental-virtiofs-PR-metrics</string>
         <string>kata-containers-main-experimental-virtiofs</string>
         <string>kata-main-tarball</string>
+        <string>test-fedora</string>
+        <string>test-fedora-35</string>
+        <string>test-fedora-35-full</string>
       </jobNames>
       <jobFilters/>
       <columns>
@@ -2175,21 +2312,407 @@ git config --global user.name &quot;Kata Containers Bot&quot;</initScript>
     </listView>
     <hudson.plugins.sectioned__view.SectionedView plugin="sectioned-view@1.25">
       <owner class="hudson" reference="../../.."/>
-      <name>Cloud-Hypervisor-Jobs</name>
-      <description>Maintainer @jcvenegas @likebreath</description>
+      <name>JobsByType</name>
+      <description>View groups jobs by type&#xd;
+&#xd;
+&#xd;
+ kata-containers-2.0-ubuntu-PR-x86_64-clh-containerd-k8s-minimal-kata-repo&#xd;
+  ▲                             ▲          ▲ ▲         ▲                                           ▲&#xd;
+  │                 ┌────┘           │   │         │                                            │&#xd;
+  │                 │                        │   └─┐    └──┐                                    │&#xd;
+  │                 │                        │         │            │                                    │&#xd;
+  │                 │             ┌───┘         │            │             ┌────────┘&#xd;
+  │                 │             │                    │            │             │&#xd;
+  &lt;project&gt;-&lt;distro&gt;-&lt;PR|branch&gt;-&lt;arch&gt;-&lt;job-id&gt;-&lt;repo&gt;-repo&#xd;
+</description>
       <filterExecutors>false</filterExecutors>
       <filterQueue>false</filterQueue>
       <properties class="hudson.model.View$PropertyList"/>
       <sections>
+        <hudson.plugins.sectioned__view.TextSection>
+          <jobNames>
+            <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../../../hudson.plugins.sectioned__view.SectionedView/sections/hudson.plugins.sectioned__view.TextSection/jobNames/comparator"/>
+          </jobNames>
+          <jobFilters/>
+          <name>Cloud Hypervisor Jobs</name>
+          <width>FULL</width>
+          <alignment>CENTER</alignment>
+          <text>job maintainers @jcvenega @likebreath
+
+</text>
+          <style>NONE</style>
+        </hudson.plugins.sectioned__view.TextSection>
         <hudson.plugins.sectioned__view.ListViewSection>
           <jobNames>
             <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../../../hudson.plugins.sectioned__view.SectionedView/sections/hudson.plugins.sectioned__view.TextSection/jobNames/comparator"/>
           </jobNames>
           <jobFilters/>
-          <name>Cloud Hypervisor List jobs</name>
-          <includeRegex>(.*clh.*)|(.*cloud-hypervisor.*)</includeRegex>
+          <name>Cloud Hypervisor Jobs</name>
+          <includeRegex>(.*clh.*)|(.*cloud-hypervisor.*)|(.*CLOUD-HYPERVISOR.*)</includeRegex>
           <width>FULL</width>
           <alignment>LEFT</alignment>
+          <columns>
+            <hudson.views.StatusColumn/>
+            <hudson.views.JobColumn/>
+            <hudson.views.LastSuccessColumn/>
+            <hudson.views.LastFailureColumn/>
+            <hudson.views.LastDurationColumn/>
+            <jenkins.branch.DescriptionColumn plugin="branch-api@2.7.0"/>
+          </columns>
+        </hudson.plugins.sectioned__view.ListViewSection>
+        <hudson.plugins.sectioned__view.TextSection>
+          <jobNames>
+            <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../../../hudson.plugins.sectioned__view.SectionedView/sections/hudson.plugins.sectioned__view.TextSection/jobNames/comparator"/>
+          </jobNames>
+          <jobFilters/>
+          <name>Experimental jobs</name>
+          <width>FULL</width>
+          <alignment>CENTER</alignment>
+          <text></text>
+          <style>NONE</style>
+        </hudson.plugins.sectioned__view.TextSection>
+        <hudson.plugins.sectioned__view.ListViewSection>
+          <jobNames>
+            <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../../../hudson.plugins.sectioned__view.SectionedView/sections/hudson.plugins.sectioned__view.TextSection/jobNames/comparator"/>
+          </jobNames>
+          <jobFilters/>
+          <name></name>
+          <includeRegex>.*experimental.*</includeRegex>
+          <width>FULL</width>
+          <alignment>LEFT</alignment>
+          <columns>
+            <hudson.views.StatusColumn/>
+            <hudson.views.JobColumn/>
+            <hudson.views.LastSuccessColumn/>
+            <hudson.views.LastFailureColumn/>
+            <hudson.views.LastDurationColumn/>
+            <jenkins.branch.DescriptionColumn plugin="branch-api@2.7.0"/>
+          </columns>
+        </hudson.plugins.sectioned__view.ListViewSection>
+      </sections>
+    </hudson.plugins.sectioned__view.SectionedView>
+    <listView>
+      <owner class="hudson" reference="../../.."/>
+      <name>Daily baseline</name>
+      <description>&lt;h2&gt;Jobs for the Daily Baseline&lt;/h2&gt;&#xd;
+&#xd;
+&#xd;
+&lt;table style=&quot;border:1px solid black;border-collapse: collapse;&quot;&gt;&#xd;
+  &lt;caption&gt;Mapping baseline jobs to owners&lt;/caption&gt;&#xd;
+  &lt;tr style=&quot;text-align:center;&quot;&gt;&#xd;
+   &lt;th style=&quot;border:1px solid black;border-collapse: collapse;background-color:#C0C0C0;&quot;&gt;Baseline job&lt;/th&gt;&#xd;
+   &lt;th style=&quot;border:1px solid black;border-collapse: collapse;background-color:#C0C0C0;&quot;&gt;Owners&lt;/th&gt;&#xd;
+   &lt;th style=&quot;border:1px solid black;border-collapse: collapse;background-color:#C0C0C0;&quot;&gt;Equivalent github checker&lt;/th&gt;&#xd;
+   &lt;th style=&quot;border:1px solid black;border-collapse: collapse;background-color:#C0C0C0;&quot;&gt;Required (Y/N)&lt;/th&gt;&#xd;
+ &lt;/tr&gt;&#xd;
+  &lt;tr&gt;&#xd;
+    &lt;td&gt;kata-containers-2.0-ubuntu-20.04-ARM-main-baseline&lt;/td&gt;&#xd;
+    &lt;td&gt;@jongwu, @justin-he&lt;/td&gt;&#xd;
+    &lt;td&gt;jenkins-ci-ARM-ubuntu-18-04&lt;/td&gt;&#xd;
+    &lt;td style=&quot;text-align:center;&quot;&gt;Y&lt;/td&gt;&#xd;
+  &lt;/tr&gt;&#xd;
+  &lt;tr&gt;&#xd;
+    &lt;td&gt;kata-containers-2.0-ubuntu-20.04-CONTAINERD-main-baseline&lt;/td&gt;&#xd;
+    &lt;td&gt;@GabyCT, @jcvenegas&lt;/td&gt;&#xd;
+    &lt;td&gt;jenkins-ci-ubuntu-20-04&lt;/td&gt;&#xd;
+    &lt;td style=&quot;text-align:center;&quot;&gt;Y&lt;/td&gt;&#xd;
+  &lt;/tr&gt;&#xd;
+  &lt;tr&gt;&#xd;
+    &lt;td&gt;kata-containers-2.0-ubuntu-20.04-CLOUD-HYPERVISOR-K8S-CONTAINERD-main-baseline&lt;/td&gt;&#xd;
+    &lt;td&gt;@jcvenegas&lt;/td&gt;&#xd;
+    &lt;td&gt;jenkins-ci-ubuntu-1804-cloud-hypervisor-k8s-containerd-2.0&lt;/td&gt;&#xd;
+    &lt;td style=&quot;text-align:center;&quot;&gt;Y&lt;/td&gt;&#xd;
+  &lt;/tr&gt;&#xd;
+  &lt;tr&gt;&#xd;
+    &lt;td&gt;kata-containers-2.0-ubuntu-20.04-CLOUD-HYPERVISOR-K8S-CRIO-main-baseline&lt;/td&gt;&#xd;
+    &lt;td&gt;@jcvenegas&lt;/td&gt;&#xd;
+    &lt;td&gt;jenkins-ci-ubuntu-clh-crio-18-04&lt;/td&gt;&#xd;
+    &lt;td style=&quot;text-align:center;&quot;&gt;Y&lt;/td&gt;&#xd;
+  &lt;/tr&gt;&#xd;
+  &lt;tr&gt;&#xd;
+    &lt;td&gt;kata-containers-2.0-ubuntu-18.04-FIRECRACKER-main-baseline&lt;/td&gt;&#xd;
+    &lt;td&gt;@ananos&lt;/td&gt;&#xd;
+    &lt;td&gt;jenkins-ci-firecracker-ubuntu-18-04&lt;/td&gt;&#xd;
+    &lt;td style=&quot;text-align:center;&quot;&gt;Y&lt;/td&gt;&#xd;
+  &lt;/tr&gt;&#xd;
+  &lt;tr&gt;&#xd;
+    &lt;td&gt;kata-containers-2.0-ubuntu-20.04-METRICS-main-baseline&lt;/td&gt;&#xd;
+    &lt;td&gt;@GabyCT, @dborquez&lt;/td&gt;&#xd;
+    &lt;td&gt;jenkins-metrics-ubuntu-20-04&lt;/td&gt;&#xd;
+    &lt;td style=&quot;text-align:center;&quot;&gt;Y&lt;/td&gt;&#xd;
+  &lt;/tr&gt;&#xd;
+  &lt;tr&gt;&#xd;
+    &lt;td&gt;kata-containers-2.0-ubuntu-20.04-PMEM-main-baseline&lt;/td&gt;&#xd;
+    &lt;td&gt;@devimc, @GabyCT&lt;/td&gt;&#xd;
+    &lt;td&gt;jenkins-ci-pmem-ubuntu-20-04&lt;/td&gt;&#xd;
+    &lt;td style=&quot;text-align:center;&quot;&gt;Y&lt;/td&gt;&#xd;
+  &lt;/tr&gt;&#xd;
+  &lt;tr&gt;&#xd;
+    &lt;td&gt;kata-containers-2.0-ubuntu-20.04-QAT-main-baseline&lt;/td&gt;&#xd;
+    &lt;td&gt;@devimc, @GabyCT&lt;/td&gt;&#xd;
+    &lt;td&gt;jenkins-ci-qat-ubuntu-20-04&lt;/td&gt;&#xd;
+    &lt;td style=&quot;text-align:center;&quot;&gt;Y&lt;/td&gt;&#xd;
+  &lt;/tr&gt;&#xd;
+  &lt;tr&gt;&#xd;
+    &lt;td&gt;kata-containers-2.0-ubuntu-20.04-s390x-main-baseline&lt;/td&gt;&#xd;
+    &lt;td&gt;@Jakob-Naucke, @stevenhorsman, @davidhay1969&lt;/td&gt;&#xd;
+    &lt;td&gt;jenkins-ci-s390x-ubuntu-20-04&lt;/td&gt;&#xd;
+    &lt;td style=&quot;text-align:center;&quot;&gt;Y&lt;/td&gt;&#xd;
+  &lt;/tr&gt;&#xd;
+  &lt;tr&gt;&#xd;
+    &lt;td&gt;kata-containers-2.0-ubuntu-20.04-VFIO-main-baseline&lt;/td&gt;&#xd;
+    &lt;td&gt;@devimc, @GabyCT, @dgibson&lt;/td&gt;&#xd;
+    &lt;td&gt;jenkins-vfio-host:ubuntu18-04-vm:fedora32&lt;/td&gt;&#xd;
+    &lt;td style=&quot;text-align:center;&quot;&gt;Y&lt;/td&gt;&#xd;
+  &lt;/tr&gt;&#xd;
+  &lt;tr&gt;&#xd;
+    &lt;td&gt;kata-containers-2.0-ubuntu-20.04-ppc64le-main-baseline&lt;/td&gt;&#xd;
+    &lt;td&gt;@Amulyam24&lt;/td&gt;&#xd;
+    &lt;td&gt;jenkins-ci-Power9-ubuntu-20-04&lt;/td&gt;&#xd;
+    &lt;td style=&quot;text-align:center;&quot;&gt;N&lt;/td&gt;&#xd;
+  &lt;/tr&gt;&#xd;
+  &lt;tr&gt;&#xd;
+    &lt;td&gt;kata-containers-2.0-centos-8-CRIO_K8S-main-baseline&lt;/td&gt;&#xd;
+    &lt;td&gt;@snir911, @c3d&lt;/td&gt;&#xd;
+    &lt;td&gt;jenkins-ci-centos-8&lt;/td&gt;&#xd;
+    &lt;td style=&quot;text-align:center;&quot;&gt;Y&lt;/td&gt;&#xd;
+  &lt;/tr&gt;&#xd;
+  &lt;tr&gt;&#xd;
+    &lt;td&gt;kata-containers-2.0-fedora-32-CRIO_K8S-main-baseline&lt;/td&gt;&#xd;
+    &lt;td&gt;@snir911, @c3d&lt;/td&gt;&#xd;
+    &lt;td&gt;jenkins-ci-fedora-32-crio&lt;/td&gt;&#xd;
+    &lt;td style=&quot;text-align:center;&quot;&gt;Y&lt;/td&gt;&#xd;
+  &lt;/tr&gt;&#xd;
+  &lt;tr&gt;&#xd;
+    &lt;td&gt;kata-containers-2.0-fedora-32-CRIO_K8S_MINIMAL-main-baseline&lt;/td&gt;&#xd;
+    &lt;td&gt;@snir911, @c3d&lt;/td&gt;&#xd;
+    &lt;td&gt;jenkins-ci-fedora-32-crio-k8s-e2e-minimal&lt;/td&gt;&#xd;
+    &lt;td style=&quot;text-align:center;&quot;&gt;Y&lt;/td&gt;&#xd;
+  &lt;/tr&gt;&#xd;
+  &lt;tr&gt;&#xd;
+    &lt;td&gt;crio-kata-containers-2.0-fedora-32-main-baseline&lt;/td&gt;&#xd;
+    &lt;td&gt;@fgiudici, @littlejawa, @fidencio&lt;/td&gt;&#xd;
+    &lt;td&gt;jenkins-kata-containers-crio&lt;/td&gt;&#xd;
+    &lt;td style=&quot;text-align:center;&quot;&gt;N&lt;/td&gt;&#xd;
+  &lt;/tr&gt;&#xd;
+&lt;/table&gt;</description>
+      <filterExecutors>false</filterExecutors>
+      <filterQueue>false</filterQueue>
+      <properties class="hudson.model.View$PropertyList"/>
+      <jobNames>
+        <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../hudson.plugins.sectioned__view.SectionedView/sections/hudson.plugins.sectioned__view.TextSection/jobNames/comparator"/>
+        <string>kata-containers-2.0-ubuntu-20.04-CONTAINERD-main-baseline</string>
+        <string>kata-containers-2.0-ubuntu-20.04-ppc64le-main-baseline</string>
+        <string>kata-containers-2.0-ubuntu-20.04-QAT-main-baseline</string>
+      </jobNames>
+      <jobFilters/>
+      <columns>
+        <hudson.views.StatusColumn/>
+        <hudson.views.WeatherColumn/>
+        <hudson.views.JobColumn/>
+        <hudson.views.LastSuccessColumn/>
+        <hudson.views.LastFailureColumn/>
+        <hudson.views.LastDurationColumn/>
+        <hudson.views.BuildButtonColumn/>
+        <org.jenkins.plugins.builton.BuiltOnColumn plugin="built-on-column@1.1"/>
+        <hudson.plugins.favorite.column.FavoriteColumn plugin="favorite@2.3.3"/>
+      </columns>
+      <includeRegex>.*-baseline</includeRegex>
+      <recurse>false</recurse>
+    </listView>
+    <listView>
+      <owner class="hudson" reference="../../.."/>
+      <name>JJB managed</name>
+      <description>List of jobs currently managed by the Jenkins Job Builder (JJB) tool</description>
+      <filterExecutors>false</filterExecutors>
+      <filterQueue>false</filterQueue>
+      <properties class="hudson.model.View$PropertyList"/>
+      <jobNames>
+        <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../hudson.plugins.sectioned__view.SectionedView/sections/hudson.plugins.sectioned__view.TextSection/jobNames/comparator"/>
+        <string>kata-containers-main-kernel-experimental-x86_64</string>
+        <string>kata-containers-main-kernel-vanilla-x86_64</string>
+        <string>kata-containers-main-qemu-x86_64</string>
+        <string>kata-containers-stable-2.2-qemu-x86_64</string>
+      </jobNames>
+      <jobFilters/>
+      <columns>
+        <hudson.views.StatusColumn/>
+        <hudson.views.WeatherColumn/>
+        <hudson.views.JobColumn/>
+        <hudson.views.LastSuccessColumn/>
+        <hudson.views.LastFailureColumn/>
+        <hudson.views.LastDurationColumn/>
+        <hudson.views.BuildButtonColumn/>
+        <org.jenkins.plugins.builton.BuiltOnColumn plugin="built-on-column@1.1"/>
+        <hudson.plugins.favorite.column.FavoriteColumn plugin="favorite@2.3.3"/>
+      </columns>
+      <recurse>false</recurse>
+    </listView>
+    <hudson.plugins.sectioned__view.SectionedView plugin="sectioned-view@1.25">
+      <owner class="hudson" reference="../../.."/>
+      <name>PR Triggered</name>
+      <description>&lt;h2&gt;List of jobs triggered on pull request&lt;/h2&gt;&#xd;
+&#xd;
+&lt;table style=&quot;border:1px solid black;border-collapse: collapse;&quot;&gt;&#xd;
+  &lt;caption&gt;Mapping baseline to PR jobs&lt;/caption&gt;&#xd;
+  &lt;tr style=&quot;text-align:center;&quot;&gt;&#xd;
+   &lt;th style=&quot;border:1px solid black;border-collapse: collapse;background-color:#C0C0C0;&quot;&gt;Baseline job&lt;/th&gt;&#xd;
+   &lt;th style=&quot;border:1px solid black;border-collapse: collapse;background-color:#C0C0C0;&quot;&gt;kata-containers repo job&lt;/th&gt;&#xd;
+   &lt;th style=&quot;border:1px solid black;border-collapse: collapse;background-color:#C0C0C0;&quot;&gt;tests repo job&lt;/th&gt;&#xd;
+   &lt;th style=&quot;border:1px solid black;border-collapse: collapse;background-color:#C0C0C0;&quot;&gt;Equivalent github checker&lt;/th&gt;&#xd;
+   &lt;th style=&quot;border:1px solid black;border-collapse: collapse;background-color:#C0C0C0;&quot;&gt;Required (Y/N)&lt;/th&gt;&#xd;
+ &lt;/tr&gt;&#xd;
+  &lt;tr&gt;&#xd;
+    &lt;td&gt;&lt;a href=&quot;http://jenkins.katacontainers.io/job/kata-containers-2.0-ubuntu-20.04-ARM-main-baseline&quot;&gt;kata-containers-2.0-ubuntu-20.04-ARM-main-baseline&lt;/a&gt;&lt;/td&gt;&#xd;
+    &lt;td&gt;kata-containers-2.0-ubuntu-ARM-PR&lt;/td&gt;&#xd;
+    &lt;td&gt;kata-containers-2.0-tests-ubuntu-ARM-PR&lt;/td&gt;&#xd;
+    &lt;td&gt;jenkins-ci-ARM-ubuntu-18-04&lt;/td&gt;&#xd;
+    &lt;td style=&quot;text-align:center;&quot;&gt;Y&lt;/td&gt;&#xd;
+  &lt;/tr&gt;&#xd;
+  &lt;tr&gt;&#xd;
+    &lt;td&gt;&lt;a href=&quot;http://jenkins.katacontainers.io/job/kata-containers-2.0-ubuntu-20.04-CONTAINERD-main-baseline&quot;&gt;kata-containers-2.0-ubuntu-20.04-CONTAINERD-main-baseline&lt;/a&gt;&lt;/td&gt;&#xd;
+    &lt;td&gt;kata-containers-2.0-ubuntu-20.04-PR&lt;/td&gt;&#xd;
+    &lt;td&gt;kata-containers-2.0-tests-ubuntu20.04-PR&lt;/td&gt;&#xd;
+    &lt;td&gt;jenkins-ci-ubuntu-20-04&lt;/td&gt;&#xd;
+    &lt;td style=&quot;text-align:center;&quot;&gt;Y&lt;/td&gt;&#xd;
+    &lt;td&gt;&lt;a href=&quot;&quot;&gt;&lt;/a&gt;&lt;/td&gt;&#xd;
+  &lt;/tr&gt;&#xd;
+  &lt;tr&gt;&#xd;
+    &lt;td&gt;&lt;a href=&quot;http://jenkins.katacontainers.io/job/kata-containers-2.0-ubuntu-20.04-CLOUD-HYPERVISOR-K8S-CONTAINERD-main-baseline&quot;&gt;kata-containers-2.0-ubuntu-20.04-CLOUD-HYPERVISOR-K8S-CONTAINERD-main-baseline&lt;/a&gt;&lt;/td&gt;&#xd;
+    &lt;td&gt;kata-containers-2.0-ubuntu-1804-PR-cloud-hypervisor-k8s-containerd&lt;/td&gt;&#xd;
+    &lt;td&gt;NO JOB&lt;/td&gt;&#xd;
+    &lt;td&gt;jenkins-ci-ubuntu-1804-cloud-hypervisor-k8s-containerd-2.0&lt;/td&gt;&#xd;
+    &lt;td style=&quot;text-align:center;&quot;&gt;Y&lt;/td&gt;&#xd;
+    &lt;td&gt;&lt;a href=&quot;&quot;&gt;&lt;/a&gt;&lt;/td&gt;&#xd;
+  &lt;/tr&gt;&#xd;
+  &lt;tr&gt;&#xd;
+    &lt;td&gt;&lt;a href=&quot;http://jenkins.katacontainers.io/job/kata-containers-2.0-ubuntu-20.04-CLOUD-HYPERVISOR-K8S-CRIO-main-baseline&quot;&gt;kata-containers-2.0-ubuntu-20.04-CLOUD-HYPERVISOR-K8S-CRIO-main-baseline&lt;/a&gt;&lt;/td&gt;&#xd;
+    &lt;td&gt;kata-containers-2.0-ubuntu-PR-x86_64-clh-crio-kata-repo&lt;/td&gt;&#xd;
+    &lt;td&gt;kata-containers-2.0-ubuntu-PR-x86_64-clh-crio-tests-repo&lt;/td&gt;&#xd;
+    &lt;td&gt;jenkins-ci-ubuntu-clh-crio-18-04&lt;/td&gt;&#xd;
+    &lt;td style=&quot;text-align:center;&quot;&gt;Y&lt;/td&gt;&#xd;
+  &lt;/tr&gt;&#xd;
+  &lt;tr&gt;&#xd;
+    &lt;td&gt;&lt;a href=&quot;http://jenkins.katacontainers.io/job/kata-containers-2.0-ubuntu-18.04-FIRECRACKER-main-baseline&quot;&gt;kata-containers-2.0-ubuntu-18.04-FIRECRACKER-main-baseline&lt;/a&gt;&lt;/td&gt;&#xd;
+    &lt;td&gt;kata-containers-2.0-firecracker-ubuntu-PR&lt;/td&gt;&#xd;
+    &lt;td&gt;kata-containers-2.0-tests-firecracker-ubuntu-PR&lt;/td&gt;&#xd;
+    &lt;td&gt;jenkins-ci-firecracker-ubuntu-18-04&lt;/td&gt;&#xd;
+    &lt;td style=&quot;text-align:center;&quot;&gt;Y&lt;/td&gt;&#xd;
+  &lt;/tr&gt;&#xd;
+  &lt;tr&gt;&#xd;
+    &lt;td&gt;&lt;a href=&quot;http://jenkins.katacontainers.io/job/kata-containers-2.0-ubuntu-20.04-METRICS-main-baseline&quot;&gt;kata-containers-2.0-ubuntu-20.04-METRICS-main-baseline&lt;/a&gt;&lt;/td&gt;&#xd;
+    &lt;td&gt;kata-containers-2.0-metrics-ubuntu-20-04-PR&lt;/td&gt;&#xd;
+    &lt;td&gt;kata-containers-2.0-tests-metrics-ubuntu-20-04-PR&lt;/td&gt;&#xd;
+    &lt;td&gt;jenkins-metrics-ubuntu-20-04&lt;/td&gt;&#xd;
+    &lt;td style=&quot;text-align:center;&quot;&gt;Y&lt;/td&gt;&#xd;
+  &lt;/tr&gt;&#xd;
+  &lt;tr&gt;&#xd;
+    &lt;td&gt;&lt;a href=&quot;http://jenkins.katacontainers.io/job/kata-containers-2.0-ubuntu-20.04-PMEM-main-baseline&quot;&gt;kata-containers-2.0-ubuntu-20.04-PMEM-main-baseline&lt;/a&gt;&lt;/td&gt;&#xd;
+    &lt;td&gt;kata-containers-2.0-pmem-ubuntu-20.04-PR&lt;/td&gt;&#xd;
+    &lt;td&gt;kata-containers-2.0-tests-pmem-ubuntu-20.04-PR&lt;/td&gt;&#xd;
+    &lt;td&gt;jenkins-ci-pmem-ubuntu-20-04&lt;/td&gt;&#xd;
+    &lt;td style=&quot;text-align:center;&quot;&gt;Y&lt;/td&gt;&#xd;
+  &lt;/tr&gt;&#xd;
+  &lt;tr&gt;&#xd;
+    &lt;td&gt;&lt;a href=&quot;http://jenkins.katacontainers.io/job/kata-containers-2.0-ubuntu-20.04-QAT-main-baseline&quot;&gt;kata-containers-2.0-ubuntu-20.04-QAT-main-baseline&lt;/a&gt;&lt;/td&gt;&#xd;
+    &lt;td&gt;kata-containers-2.0-qat-ubuntu-20.04-PR&lt;/td&gt;&#xd;
+    &lt;td&gt;kata-containers-2.0-tests-qat-ubuntu-20.04-PR&lt;/td&gt;&#xd;
+    &lt;td&gt;jenkins-ci-qat-ubuntu-20-04&lt;/td&gt;&#xd;
+    &lt;td style=&quot;text-align:center;&quot;&gt;Y&lt;/td&gt;&#xd;
+  &lt;/tr&gt;&#xd;
+  &lt;tr&gt;&#xd;
+    &lt;td&gt;&lt;a href=&quot;http://jenkins.katacontainers.io/job/kata-containers-2.0-ubuntu-20.04-s390x-main-baseline&quot;&gt;kata-containers-2.0-ubuntu-20.04-s390x-main-baseline&lt;/a&gt;&lt;/td&gt;&#xd;
+    &lt;td&gt;kata-containers-2.0-ubuntu-s390x-PR&lt;/td&gt;&#xd;
+    &lt;td&gt;kata-containers-2.0-tests-ubuntu-s390x-PR&lt;/td&gt;&#xd;
+    &lt;td&gt;jenkins-ci-s390x-ubuntu-20-04&lt;/td&gt;&#xd;
+    &lt;td style=&quot;text-align:center;&quot;&gt;Y&lt;/td&gt;&#xd;
+  &lt;/tr&gt;&#xd;
+  &lt;tr&gt;&#xd;
+    &lt;td&gt;&lt;a href=&quot;http://jenkins.katacontainers.io/job/kata-containers-2.0-ubuntu-20.04-VFIO-main-baseline&quot;&gt;kata-containers-2.0-ubuntu-20.04-VFIO-main-baseline&lt;/a&gt;&lt;/td&gt;&#xd;
+    &lt;td&gt;kata-containers-2.0-vfio-PR&lt;/td&gt;&#xd;
+    &lt;td&gt;kata-containers-2.0-tests-vfio-PR&lt;/td&gt;&#xd;
+    &lt;td&gt;jenkins-vfio-host:ubuntu18-04-vm:fedora32&lt;/td&gt;&#xd;
+    &lt;td style=&quot;text-align:center;&quot;&gt;Y&lt;/td&gt;&#xd;
+  &lt;/tr&gt;&#xd;
+  &lt;tr&gt;&#xd;
+    &lt;td&gt;&lt;a href=&quot;http://jenkins.katacontainers.io/job/kata-containers-2.0-ubuntu-20.04-ppc64le-main-baseline&quot;&gt;kata-containers-2.0-ubuntu-20.04-ppc64le-main-baseline&lt;/a&gt;&lt;/td&gt;&#xd;
+    &lt;td&gt;TBD&lt;/td&gt;&#xd;
+    &lt;td&gt;NO JOB&lt;/td&gt;&#xd;
+    &lt;td&gt;jenkins-ci-Power9-ubuntu-20-04&lt;/td&gt;&#xd;
+    &lt;td style=&quot;text-align:center;&quot;&gt;N&lt;/td&gt;&#xd;
+  &lt;/tr&gt;&#xd;
+  &lt;tr&gt;&#xd;
+    &lt;td&gt;&lt;a href=&quot;http://jenkins.katacontainers.io/job/kata-containers-2.0-centos-8-CRIO_K8S-main-baseline&quot;&gt;kata-containers-2.0-centos-8-CRIO_K8S-main-baseline&lt;/a&gt;&lt;/td&gt;&#xd;
+    &lt;td&gt;kata-containers-2.0-centos-PR&lt;/td&gt;&#xd;
+    &lt;td&gt;kata-containers-2.0-tests-centos-PR&lt;/td&gt;&#xd;
+    &lt;td&gt;jenkins-ci-centos-8&lt;/td&gt;&#xd;
+    &lt;td style=&quot;text-align:center;&quot;&gt;Y&lt;/td&gt;&#xd;
+  &lt;/tr&gt;&#xd;
+  &lt;tr&gt;&#xd;
+    &lt;td&gt;&lt;a href=&quot;http://jenkins.katacontainers.io/job/kata-containers-2.0-fedora-32-CRIO_K8S-main-baseline&quot;&gt;kata-containers-2.0-fedora-32-CRIO_K8S-main-baseline&lt;/a&gt;&lt;/td&gt;&#xd;
+    &lt;td&gt;kata-containers-2.0-fedora-PR&lt;/td&gt;&#xd;
+    &lt;td&gt;kata-containers-2.0-tests-fedora-PR&lt;/td&gt;&#xd;
+    &lt;td&gt;jenkins-ci-fedora-32-crio&lt;/td&gt;&#xd;
+    &lt;td style=&quot;text-align:center;&quot;&gt;Y&lt;/td&gt;&#xd;
+  &lt;/tr&gt;&#xd;
+  &lt;tr&gt;&#xd;
+    &lt;td&gt;&lt;a href=&quot;http://jenkins.katacontainers.io/job/kata-containers-2.0-fedora-32-CRIO_K8S_MINIMAL-main-baseline&quot;&gt;kata-containers-2.0-fedora-32-CRIO_K8S_MINIMAL-main-baseline&lt;/a&gt;&lt;/td&gt;&#xd;
+    &lt;td&gt;kata-containers-2.0-fedora-PR-crio-k8s-e2e-minimal&lt;/td&gt;&#xd;
+    &lt;td&gt;kata-containers-2.0-tests-fedora-PR-crio-k8s-e2e-minimal&lt;/td&gt;&#xd;
+    &lt;td&gt;jenkins-ci-fedora-32-crio-k8s-e2e-minimal&lt;/td&gt;&#xd;
+    &lt;td style=&quot;text-align:center;&quot;&gt;Y&lt;/td&gt;&#xd;
+  &lt;/tr&gt;&#xd;
+&lt;/table&gt;</description>
+      <filterExecutors>false</filterExecutors>
+      <filterQueue>false</filterQueue>
+      <properties class="hudson.model.View$PropertyList"/>
+      <sections>
+        <hudson.plugins.sectioned__view.ViewListingSection>
+          <jobNames>
+            <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../../../hudson.plugins.sectioned__view.SectionedView/sections/hudson.plugins.sectioned__view.TextSection/jobNames/comparator"/>
+          </jobNames>
+          <jobFilters/>
+          <name>Baseline Jobs</name>
+          <width>FULL</width>
+          <alignment>CENTER</alignment>
+          <views>
+            <string>Daily baseline</string>
+          </views>
+          <columns>1</columns>
+        </hudson.plugins.sectioned__view.ViewListingSection>
+        <hudson.plugins.sectioned__view.ListViewSection>
+          <jobNames>
+            <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../../../hudson.plugins.sectioned__view.SectionedView/sections/hudson.plugins.sectioned__view.TextSection/jobNames/comparator"/>
+            <string>jobs-2.0/kata-containers-2.0-ubuntu-1804-PR-cloud-hypervisor-k8s-containerd</string>
+            <string>kata-containers-2.0-centos-PR</string>
+            <string>kata-containers-2.0-fedora-PR</string>
+            <string>kata-containers-2.0-fedora-PR-crio-k8s-e2e-minimal</string>
+            <string>kata-containers-2.0-firecracker-ubuntu-PR</string>
+            <string>kata-containers-2.0-metrics-ubuntu-20-04-PR</string>
+            <string>kata-containers-2.0-pmem-ubuntu-20.04-PR</string>
+            <string>kata-containers-2.0-qat-ubuntu-20.04-PR</string>
+            <string>kata-containers-2.0-tests-centos-PR</string>
+            <string>kata-containers-2.0-tests-fedora-PR</string>
+            <string>kata-containers-2.0-tests-fedora-PR-crio-k8s-e2e-minimal</string>
+            <string>kata-containers-2.0-tests-firecracker-ubuntu-PR</string>
+            <string>kata-containers-2.0-tests-metrics-ubuntu-20-04-PR</string>
+            <string>kata-containers-2.0-tests-pmem-ubuntu-20.04-PR</string>
+            <string>kata-containers-2.0-tests-qat-ubuntu-20.04-PR</string>
+            <string>kata-containers-2.0-tests-ubuntu-ARM-PR</string>
+            <string>kata-containers-2.0-tests-ubuntu-s390x-PR</string>
+            <string>kata-containers-2.0-tests-ubuntu20.04-PR</string>
+            <string>kata-containers-2.0-tests-vfio-PR</string>
+            <string>kata-containers-2.0-ubuntu-20.04-PR</string>
+            <string>kata-containers-2.0-ubuntu-ARM-PR</string>
+            <string>kata-containers-2.0-ubuntu-PR-x86_64-clh-crio-kata-repo</string>
+            <string>kata-containers-2.0-ubuntu-PR-x86_64-clh-crio-tests-repo</string>
+            <string>kata-containers-2.0-ubuntu-s390x-PR</string>
+            <string>kata-containers-2.0-vfio-PR</string>
+          </jobNames>
+          <jobFilters/>
+          <name>Triggered on pull request jobs</name>
+          <width>FULL</width>
+          <alignment>CENTER</alignment>
           <columns>
             <hudson.views.StatusColumn/>
             <hudson.views.WeatherColumn/>
@@ -2200,27 +2723,6 @@ git config --global user.name &quot;Kata Containers Bot&quot;</initScript>
             <hudson.views.BuildButtonColumn/>
           </columns>
         </hudson.plugins.sectioned__view.ListViewSection>
-        <hudson.plugins.sectioned__view.TextSection>
-          <jobNames>
-            <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../../../hudson.plugins.sectioned__view.SectionedView/sections/hudson.plugins.sectioned__view.TextSection/jobNames/comparator"/>
-          </jobNames>
-          <jobFilters/>
-          <name>Notes</name>
-          <width>FULL</width>
-          <alignment>CENTER</alignment>
-          <text>job maintainers @jcvenega @likebreath
-
- kata-containers-2.0-ubuntu-PR-x86_64-clh-containerd-k8s-minimal-kata-repo
-  ▲                             ▲          ▲ ▲         ▲                                           ▲
-  │                 ┌────┘           │   │         │                                            │
-  │                 │                        │   └─┐    └──┐                                    │
-  │                 │                        │         │            │                                    │
-  │                 │             ┌───┘         │            │             ┌────────┘
-  │                 │             │                    │            │             │
-  &lt;project&gt;-&lt;distro&gt;-&lt;PR|branch&gt;-&lt;arch&gt;-&lt;job-id&gt;-&lt;repo&gt;-repo
-</text>
-          <style>NONE</style>
-        </hudson.plugins.sectioned__view.TextSection>
       </sections>
     </hudson.plugins.sectioned__view.SectionedView>
   </views>
