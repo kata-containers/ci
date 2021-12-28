@@ -138,7 +138,7 @@
     name: "Create QEMU cache jobs"
     branch:
       - main
-      - stable-2.2
+      - stable-2.3
     arch:
       - x86_64
     os: ubuntu1804
