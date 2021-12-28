@@ -60,18 +60,23 @@
       - shell:
           !j2: |
             #!/bin/bash
-            set -e
-            set -x
+            set -o errexit
+            set -o nounset
+            set -o pipefail
+            [ -n "$BASH_VERSION" ] && set -o errtrace
+            {% raw %}
+            [ -n "${DEBUG:-}" ] && set -o xtrace
+            {% endraw %}
 
             export GOPATH="${WORKSPACE}/go"
             export GOROOT="/usr/local/go"
+            export PATH="$PATH:$GOPATH/bin:$GOROOT/bin"
 
-            sudo apt install -y golang
             source ci/lib.sh
             export branch="{{branch}}"
             export target_branch="$branch"
             {% if flavor == "experimental" -%}
-            export experimental_kernel=true
+            export build_type="experimental"
             {% endif %}
             clone_tests_repo
             ci/install_go.sh
@@ -99,14 +104,16 @@
     builders:
       - shell: |
           #!/bin/bash
-          set -e
-          set -x
+          set -o errexit
+          set -o nounset
+          set -o pipefail
+          [ -n "$BASH_VERSION" ] && set -o errtrace
+          [ -n "${{DEBUG:-}}" ] && set -o xtrace
 
           export GOPATH="$WORKSPACE/go"
           export GOROOT="/usr/local/go"
-          export PATH="$PATH:$GOPATH/bin"
+          export PATH="$PATH:$GOPATH/bin:$GOROOT/bin"
 
-          sudo apt install -y golang
           source ci/lib.sh
           export branch="{branch}"
           export target_branch="$branch"
