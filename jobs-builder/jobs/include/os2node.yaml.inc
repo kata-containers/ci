@@ -6,16 +6,12 @@
 #}
 {% if os == "centos8" -%}
 centos8_azure
-{% elif os == "debian10" -%}
-debian10_azure
 {% elif os == "fedora32" -%}
 fedora32_azure
-{% elif os == "opensuse15" -%}
-opensuse15-azure
-{% elif os == "rhel8" -%}
-rhel8_azure
 {% elif os == "ubuntu1804" -%}
-ubuntu1804_azure
-{% elif os == "ubuntu1804_ARM" -%}
-arm_node && arm-ubuntu-1804
+ubuntu1804_azure || ubuntu1804-azure
+{% elif os == "ubuntu-20.04" -%}
+ubuntu_20.04
+{% elif os == "ubuntu-20.04-ARM" -%}
+arm_node || arm-ubuntu-2004
 {% endif %}
