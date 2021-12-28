@@ -6,7 +6,13 @@
 #
 # Use this script to publish the jobs on Jenkins.
 #
-set -e
+set -o errexit
+set -o nounset
+set -o pipefail
+
+[ -n "$BASH_VERSION" ] && set -o errtrace
+
+[ -n "${DEBUG:-}" ] && set -o xtrace
 
 script_dir="$(realpath $(dirname $0))"
 jobs_dir="$script_dir/jobs"
