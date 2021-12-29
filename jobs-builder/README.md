@@ -52,8 +52,8 @@ the configurations it works out.
 
  1. Start the Jenkins container
 
-The following command creates the jenkins container, and the instance service
-will be accessible through the port 8080 on localhost.
+The following command creates the Jenkins container, and the instance service
+will be accessible through the port 8080 on the local host.
 
 ```bash
 $ docker run --rm -p 8080:8080 --name=jenkins-container -d jenkins/jenkins
@@ -61,7 +61,7 @@ $ docker run --rm -p 8080:8080 --name=jenkins-container -d jenkins/jenkins
 
  2. Give an initial configuration
 
-Using your web browser, access Jenkins from http://localhost:8080.
+Using your web browser, access Jenkins from [http://localhost:8080](http://localhost:8080).
 
 The first displayed page asks for the initial administrator password, which can
 be obtained with the following command:
@@ -81,6 +81,6 @@ Click "Add new Token" then on the "Generate" button. Save the generated token.
 
  4. Create the JJB configuration file
 
-Now you need to create the jjb.conf as explained on [Getting started](#getting-started). Use
-the username and API token created on the previous steps, and don't forget to set
-the *url* property to `http://localhost:8080`.
+Now you need to create the `jjb.conf` as explained on [Getting started](#getting-started). Use
+the user name and API token created on the previous steps, and don't forget to set
+the `url` property to `http://localhost:8080`.
