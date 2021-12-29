@@ -44,16 +44,18 @@
     name: kata-containers-{branch}-kernel-{flavor}-{arch}
     <<: *common_job_properties
     maintainers:
-      - Wainer dos Santos Moschetta <wainersm@redhat.com>
+      - Wainer dos Santos Moschetta &ltwainersm@redhat.com&gt
     description:
       !j2: |
-        Build Kernel for usage in Kata Containers CI jobs.
-        You should not use these artifacts on production.
+        <p>Build Kernel for usage in Kata Containers CI jobs.</p>
+        <p>You should not use these artifacts on production.</p>
 
         Maintainers:
+        <ul>
         {% for i in maintainers -%}
-        - {{ i }}
+        <li>{{ i }}</li>
         {% endfor %}
+        </ul>
     triggers:
       - timed: 'H 0-23/6 * * 1-5'
     builders:
@@ -88,17 +90,19 @@
     name: kata-containers-{branch}-qemu-{arch}
     <<: *common_job_properties
     maintainers:
-      - Wainer dos Santos Moschetta <wainersm@redhat.com>
+      - Wainer dos Santos Moschetta &ltwainersm@redhat.com&gt
     description:
       # Passing a Jinja2 template.
       !j2: |
-        Build QEMU for usage in Kata Containers CI jobs.
-        You should not use these artifacts on production.
+        <p>Build QEMU for usage in Kata Containers CI jobs.</p>
+        <p>You should not use these artifacts on production.</p>
 
         Maintainers:
+        <ul>
         {% for i in maintainers -%}
-        - {{ i }}
+        <li>{{ i }}</li>
         {% endfor %}
+        </ul>
     triggers:
       - github
     builders:
