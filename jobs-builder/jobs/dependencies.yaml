@@ -44,7 +44,7 @@
     name: kata-containers-{branch}-kernel-{flavor}-{arch}
     <<: *common_job_properties
     maintainers:
-      - Wainer dos Santos Moschetta &ltwainersm@redhat.com&gt
+      - Kata Containers CI team (#kata-ci at Slack)
     description:
       !j2: |
         <p>Build Kernel for usage in Kata Containers CI jobs.</p>
@@ -90,7 +90,7 @@
     name: kata-containers-{branch}-qemu-{arch}
     <<: *common_job_properties
     maintainers:
-      - Wainer dos Santos Moschetta &ltwainersm@redhat.com&gt
+      - Kata Containers CI team (#kata-ci at Slack)
     description:
       # Passing a Jinja2 template.
       !j2: |
