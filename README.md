@@ -52,6 +52,10 @@ against them.
 
 You can check for any known CI system issues [via this link](http://jenkins.katacontainers.io/view/CI%20Status/).
 
+# Always green CI
+
+See the [Always Green CI](Always_green_CI.md) document for details.
+
 # Controlling the CI
 
 The Jenkins CI jobs can be controlled (such as re-triggered or skipped) in a number of ways. Details of the
