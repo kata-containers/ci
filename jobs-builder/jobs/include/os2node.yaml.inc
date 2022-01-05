@@ -6,8 +6,8 @@
 #}
 {%- if os == "centos8" -%}
 centos8_azure
-{%- elif os == "fedora32" -%}
-fedora32_azure
+{%- elif os == "fedora35" -%}
+fedora35_azure
 {%- elif os == "ubuntu1804" -%}
 ubuntu1804_azure || ubuntu1804-azure
 {%- elif os == "ubuntu-20.04" -%}
