@@ -57,3 +57,7 @@ You can check for any known CI system issues [via this link](http://jenkins.kata
 The Jenkins CI jobs can be controlled (such as re-triggered or skipped) in a number of ways. Details of the
 control trigger phrases are listed on
 [a community repo wiki page](https://github.com/kata-containers/community/wiki/Controlling-the-CI).
+
+# Jobs builder
+
+See [README](jobs-builder/README.md) for information about the use of Jenkins Job Builder (JJB) to make the CI jobs.
