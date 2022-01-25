@@ -46,3 +46,6 @@ jenkins/credentials.xml
 # Include the Jenkins Job Builder files
 !jobs-builder
 !jobs-builder/**
+
+# Include the github workflow files
+!.github/workflows/*
