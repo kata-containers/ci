@@ -49,3 +49,19 @@ jobs:
         ci_repo=$(go env GOPATH)/src/github.com/kata-containers/ci
         pushd ${ci_repo}
         GOPATH=$(go env GOPATH) .ci/static-checks.sh
+  # Check that all jobs can be generated.
+  jobs-builder-check:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Install the Jenkins Job Builder
+        run: |
+          pip install --user jenkins-job-builder
+      - name: Check it can generate all jobs
+        run: |
+          cd jobs-builder
+          cp jjb.conf.template jjb.conf
+          ./publish_jobs.sh -c jjb.conf -t
