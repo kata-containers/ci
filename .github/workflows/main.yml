@@ -2,22 +2,18 @@ on: ["pull_request"]
 name: Static checks
 jobs:
   test:
-    strategy:
-      matrix:
-        go-version: [1.13.x, 1.14.x, 1.15.x]
-        os: [ubuntu-18.04]
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-20.04
     env:
       GO111MODULE: off
       TRAVIS: "true"
       TRAVIS_BRANCH: ${{ github.base_ref }}
       TRAVIS_PULL_REQUEST_BRANCH: ${{ github.head_ref }}
-      TRAVIS_PULL_REQUEST_SHA : ${{ github.event.pull_request.head.sha }}
+      TRAVIS_PULL_REQUEST_SHA: ${{ github.event.pull_request.head.sha }}
     steps:
     - name: Install Go
       uses: actions/setup-go@v2
       with:
-        go-version: ${{ matrix.go-version }}
+        go-version: "1.16"
     - name: Setup GOPATH
       run: |
         gopath_org=$(go env GOPATH)/src/github.com/kata-containers/
@@ -39,11 +35,6 @@ jobs:
         ci_repo=$(go env GOPATH)/src/github.com/kata-containers/ci
         pushd ${ci_repo}
         GOPATH=$(go env GOPATH) .ci/setup.sh
-    - name: Running tests
-      run: |
-        ci_repo=$(go env GOPATH)/src/github.com/kata-containers/ci
-        pushd ${ci_repo}
-        GOPATH=$(go env GOPATH) .ci/run.sh 
     - name: Running static checks
       run: |
         ci_repo=$(go env GOPATH)/src/github.com/kata-containers/ci
