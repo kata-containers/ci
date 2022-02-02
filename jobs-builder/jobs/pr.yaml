@@ -150,6 +150,14 @@
           black-list-target-branches:
             - master
             - stable-1.*
+          cancel-builds-on-update: true
+          # Commit Status Context
+          status-context:
+            !j2: 'jenkins-ci-{{ os }}-{{ arch }}-{{ ci_job.lower() }}'
+          # Commit Status Build Triggered
+          triggered-status: Build triggered
+          # Commit Status Build Started
+          started-status: Build running
     builders:
       - shell:
           !include-raw: include/ci_entrypoint.sh.inc
