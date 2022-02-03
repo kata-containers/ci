@@ -16,5 +16,5 @@ update=all
 [jenkins]
 user=XXX
 password=XXX
-url=https://jenkins.katacontainers.io
+url=http://jenkins.katacontainers.io
 query_plugins_info=False
