@@ -119,7 +119,7 @@ cd $HOME
 git clone https://github.com/kata-containers/tests.git
 cd tests
 
-.ci/jenkins_job_build.sh "github.com/kata-containers/runtime"
+.ci/jenkins_job_build.sh "github.com/kata-containers/kata-containers"
 ```
 > **Note:**
 >
@@ -179,7 +179,7 @@ You need to pre-install the following items in your bare metal Jenkins Slave CI 
 
 - `git`
 - `golang`
-  the default minimum version used by this project is referred [here](https://github.com/kata-containers/runtime/blob/master/versions.yaml#L263).
+  the default minimum version used by this project is referred [here](https://github.com/kata-containers/kata-containers/blob/main/versions.yaml#L263).
 - a Java Runtime Environment (`JRE`) for the Jenkins agent.
 
 ## Environment variables
