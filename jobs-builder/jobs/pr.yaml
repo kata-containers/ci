@@ -175,6 +175,7 @@
       - main
     os:
       - fedora-35
+      - centos-8-stream
     arch:
       - x86_64
     ci_job:
