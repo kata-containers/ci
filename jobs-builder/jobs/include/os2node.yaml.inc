@@ -4,8 +4,8 @@
 #
 # Convert OS name to node label string.
 #}
-{%- if os == "centos8" -%}
-centos8_azure
+{%- if os == "centos-8-stream" -%}
+centos_8_stream
 {%- elif os in ["fedora35", "fedora-35"] -%}
 fedora35_azure
 {%- elif os == "ubuntu1804" -%}
