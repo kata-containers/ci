@@ -1,20 +1,20 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Baseline job for main branch for vfio</description>
+  <description>This job builds and cache QEMU-TDX x86_64. The cached artifact is used by the kata-containers/tests/.ci/install_qemu.sh script to install QEMU on other CI jobs.</description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.6"/>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
         <daysToKeep>30</daysToKeep>
-        <numToKeep>30</numToKeep>
+        <numToKeep>5</numToKeep>
         <artifactDaysToKeep>-1</artifactDaysToKeep>
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
     <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.34.1">
-      <projectUrl>https://github.com/kata-containers/tests/</projectUrl>
+      <projectUrl>https://github.com/kata-containers/kata-containers/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
     <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.33">
@@ -26,44 +26,49 @@
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
-        <url>https://github.com/kata-containers/kata-containers.git</url>
+        <url>https://github.com/kata-containers/kata-containers</url>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
       <hudson.plugins.git.BranchSpec>
-        <name>refs/heads/main</name>
+        <name>*/main</name>
       </hudson.plugins.git.BranchSpec>
     </branches>
     <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
     <submoduleCfg class="empty-list"/>
     <extensions/>
   </scm>
-  <assignedNode>x86-bm-ubuntu-2004 &amp;&amp; x86_metrics_worker</assignedNode>
+  <assignedNode>ubuntu1804-azure</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
-    <hudson.triggers.TimerTrigger>
-      <spec>H 0 * * * </spec>
-    </hudson.triggers.TimerTrigger>
+    <com.cloudbees.jenkins.GitHubPushTrigger plugin="github@1.34.1">
+      <spec></spec>
+    </com.cloudbees.jenkins.GitHubPushTrigger>
   </triggers>
   <concurrentBuild>true</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
       <command>#!/bin/bash
-
 set -e
 set -x
 
 export GOPATH=&quot;${WORKSPACE}/go&quot;
-export CI_JOB=&quot;VFIO&quot;
-export DEBUG=true
-export ghprbTargetBranch=main
-sudo rm -rf $WORKSPACE/*
+export GOROOT=&quot;/usr/local/go&quot;
+export PATH=&quot;$PATH:${GOPATH}/bin&quot;
 
-curl -OL https://raw.githubusercontent.com/kata-containers/tests/main/.ci/ci_entry_point.sh 
-bash -x ci_entry_point.sh &quot;${GIT_URL}&quot;
+sudo apt install -y golang
+source ci/lib.sh
+clone_tests_repo
+ci/install_go.sh
+
+cd &quot;$tests_repo_dir&quot;
+./.ci/setup_env_ubuntu.sh &quot;default&quot;
+./cmd/container-manager/manage_ctr_mgr.sh docker install -f
+./.ci/install_qemu.sh -d -t tdx
+./.ci/ci_cache_components.sh -q
 </command>
       <configuredLocalRules/>
     </hudson.tasks.Shell>
@@ -71,18 +76,18 @@ bash -x ci_entry_point.sh &quot;${GIT_URL}&quot;
   <publishers>
     <hudson.tasks.ArtifactArchiver>
       <artifacts>artifacts/*</artifacts>
-      <allowEmptyArchive>true</allowEmptyArchive>
+      <allowEmptyArchive>false</allowEmptyArchive>
       <onlyIfSuccessful>false</onlyIfSuccessful>
       <fingerprint>false</fingerprint>
       <defaultExcludes>true</defaultExcludes>
       <caseSensitive>true</caseSensitive>
-      <followSymlinks>true</followSymlinks>
+      <followSymlinks>false</followSymlinks>
     </hudson.tasks.ArtifactArchiver>
   </publishers>
   <buildWrappers>
     <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.20">
       <strategy class="hudson.plugins.build_timeout.impl.NoActivityTimeOutStrategy">
-        <timeoutSecondsString>1500</timeoutSecondsString>
+        <timeoutSecondsString>1200</timeoutSecondsString>
       </strategy>
       <operationList/>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
@@ -90,5 +95,6 @@ bash -x ci_entry_point.sh &quot;${GIT_URL}&quot;
     <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@1.0.1">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
+    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.61"/>
   </buildWrappers>
 </project>
