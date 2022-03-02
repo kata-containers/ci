@@ -1,0 +1,138 @@
+# Copyright (c) 2022 Red Hat, Inc.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+# This file contains the configurations to generate the pull request jobs
+# for Confidential Containers project.
+#
+---
+###
+# Define shareable YAML snippets.
+###
+- cc_jobs_common_properties: &cc_jobs_common_properties
+    name: 'common_job_properties'
+    project-type: freestyle
+    disabled: false
+    concurrent: {concurrent_toggle}
+    logrotate:
+      daysToKeep: 30
+      numToKeep: 30
+    # Convert the os variable to label name.
+    node: !include-jinja2: include/os2node.yaml.inc
+    wrappers:
+      - ansicolor:
+          colormap: "xterm"
+      - openstack:
+          single-use: True
+      - timestamps
+      - timeout:
+          timeout: 20
+          type: no-activity
+- cc_jobs_common_publishers: &cc_jobs_common_publishers
+    name: 'default_publishers'
+    publishers:
+      - post-tasks:
+          - matches:
+              - log-text: .*
+                operator: OR
+            script: |
+              #!/bin/bash
+
+              export GOPATH=$WORKSPACE/go
+              export GOROOT="/usr/local/go"
+              export PATH="${{GOPATH}}/bin:/usr/local/go/bin:/usr/sbin:/usr/local/bin:${{PATH}}"
+
+              cd $GOPATH/src/github.com/kata-containers/tests
+              .ci/teardown.sh "$WORKSPACE/artifacts"
+      - archive:
+          artifacts: "artifacts/*"
+###
+# Define jobs templates.
+###
+- job-template:
+    # Use to generate pull request (PR) jobs.
+    #
+    # Arguments:
+    #   repo        - the repository name.
+    #   os          - the node Operating System in <name>-<version> format.
+    #   arch        - the node architecture (e.g x86_64, s390x, ppc64le, and so on).
+    #   ci_job      - the CI job type as defined in https://github.com/kata-containers/tests/blob/main/.ci/ci_job_flags.sh
+    #
+    name: "{repo}-CCv0-{os}-{arch}-{ci_job}-PR"
+    <<: *cc_jobs_common_properties
+    # Allow concurrent jobs by default. Specify `false` on the project definition otherwise.
+    concurrent_toggle: true
+    description:
+      !j2: |
+         <pre>
+         Pull Request (PR) job.
+         OS="{{ os }}"
+         arch="{{ arch }}"
+         CI_JOB="{{ ci_job }}"
+         repo="{{ repo }}"
+         type="PR"
+         </pre>
+    scm:
+      - git:
+          url: https://github.com/kata-containers/{repo}
+          branches:
+            - '${{sha1}}'
+          refspec: '+refs/pull/${{ghprbPullId}}/*:refs/remotes/origin/pr/${{ghprbPullId}}/*'
+          wipe-workspace: false
+    properties:
+      - github:
+          url: https://github.com/kata-containers/{repo}
+    triggers:
+      - github-pull-request:
+          auth-id: 'katacontainers'
+          github-hooks: true
+          # Trigger only on commenting phrase in the pull request.
+          only-trigger-phrase: true
+          # The expected phrase will be like "/(re)test-<OS Name>"
+          trigger-phrase:
+            !j2: '.*(\n|^|\s)/(re)?test(-{{ os.split("-")[0] }})?(\n|$|\s)+.*'
+          # Skip on commenting phrase.
+          skip-build-phrase: '.*\[skip\W+ci\].*'
+          cron: 'H/5 * * * *'
+          # List of organizations whose members are allowed to build.
+          org-list:
+            - kata-containers
+          # Members of allowed organizations will have admin rights.
+          allow-whitelist-orgs-as-admins: true
+          # Branches allowed to be tested.
+          white-list-target-branches:
+            - CCv0
+          # Branches disallowed to be tested.
+          black-list-target-branches:
+            - main
+            - master
+            - stable-.*
+          cancel-builds-on-update: true
+          # Commit Status Context
+          status-context:
+            !j2: 'jenkins-ci-{{ os }}-{{ arch }}-{{ ci_job.lower() }}'
+          # Commit Status Build Triggered
+          triggered-status: Build triggered
+          # Commit Status Build Started
+          started-status: Build running
+    builders:
+      - shell:
+          !include-raw: include/cc-ci_entrypoint.sh.inc
+    <<: *cc_jobs_common_publishers
+
+###
+# Define the projects
+###
+- project:
+    name: "Generate jobs for Confidential Containers"
+    repo:
+      - kata-containers
+      - tests
+    os:
+      - ubuntu-20.04
+    arch:
+      - x86_64
+    ci_job:
+      - CC_CRI_CONTAINERD
+    jobs:
+      - '{repo}-CCv0-{os}-{arch}-{ci_job}-PR'
