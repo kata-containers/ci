@@ -134,5 +134,6 @@
       - x86_64
     ci_job:
       - CC_CRI_CONTAINERD
+      - CC_SKOPEO_CRI_CONTAINERD
     jobs:
       - '{repo}-CCv0-{os}-{arch}-{ci_job}-PR'
