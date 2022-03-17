@@ -1,7 +1,7 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description></description>
+  <description>Kata Containers 2.0 PR build for CRI_CONTAINERD_K8S job on IBM Power9 servers</description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.6"/>
@@ -9,12 +9,12 @@
       <strategy class="hudson.tasks.LogRotator">
         <daysToKeep>30</daysToKeep>
         <numToKeep>30</numToKeep>
-        <artifactDaysToKeep>-1</artifactDaysToKeep>
-        <artifactNumToKeep>-1</artifactNumToKeep>
+        <artifactDaysToKeep>3</artifactDaysToKeep>
+        <artifactNumToKeep>3</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
     <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.34.1">
-      <projectUrl>https://github.com/kata-containers/kata-containers/</projectUrl>
+      <projectUrl>https://github.com/kata-containers/tests/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
     <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.33">
@@ -28,7 +28,7 @@
       <hudson.plugins.git.UserRemoteConfig>
         <name>origin</name>
         <refspec>+refs/pull/${ghprbPullId}/*:refs/remotes/origin/pr/${ghprbPullId}/*</refspec>
-        <url>https://github.com/kata-containers/kata-containers.git</url>
+        <url>https://github.com/kata-containers/tests.git</url>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
@@ -40,7 +40,7 @@
     <submoduleCfg class="empty-list"/>
     <extensions/>
   </scm>
-  <assignedNode>arm-ubuntu-1804 || arm-ubuntu-2004</assignedNode>
+  <assignedNode>power9_node &amp;&amp; power9-ubuntu-2004</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
@@ -64,9 +64,6 @@
         <org.jenkinsci.plugins.ghprb.GhprbBranch>
           <branch>main</branch>
         </org.jenkinsci.plugins.ghprb.GhprbBranch>
-        <org.jenkinsci.plugins.ghprb.GhprbBranch>
-          <branch>stable-2.*</branch>
-        </org.jenkinsci.plugins.ghprb.GhprbBranch>
       </whiteListTargetBranches>
       <blackListTargetBranches>
         <org.jenkinsci.plugins.ghprb.GhprbBranch>
@@ -75,9 +72,12 @@
         <org.jenkinsci.plugins.ghprb.GhprbBranch>
           <branch>stable-1.*</branch>
         </org.jenkinsci.plugins.ghprb.GhprbBranch>
+        <org.jenkinsci.plugins.ghprb.GhprbBranch>
+          <branch>stable-2.*</branch>
+        </org.jenkinsci.plugins.ghprb.GhprbBranch>
       </blackListTargetBranches>
       <gitHubAuthId>c217b635-ee39-4531-a4ed-db4048679d71</gitHubAuthId>
-      <triggerPhrase>.*(\n|^|\s)/(re)?test(-arm)?(\n|$|\s)+.*</triggerPhrase>
+      <triggerPhrase>.*(\n|^|\s)/(re)?test(-power)?(\n|$|\s)+.*</triggerPhrase>
       <skipBuildPhrase>.*\[skip\W+ci\].*</skipBuildPhrase>
       <blackListCommitAuthor></blackListCommitAuthor>
       <blackListLabels></blackListLabels>
@@ -85,11 +85,8 @@
       <includedRegions></includedRegions>
       <excludedRegions></excludedRegions>
       <extensions>
-        <org.jenkinsci.plugins.ghprb.extensions.build.GhprbCancelBuildsOnUpdate>
-          <overrideGlobal>false</overrideGlobal>
-        </org.jenkinsci.plugins.ghprb.extensions.build.GhprbCancelBuildsOnUpdate>
         <org.jenkinsci.plugins.ghprb.extensions.status.GhprbSimpleStatus>
-          <commitStatusContext>jenkins-ci-ARM-ubuntu-18-04</commitStatusContext>
+          <commitStatusContext>jenkins-ci-ppc64le-ubuntu-20-04</commitStatusContext>
           <triggeredStatus>Build triggered</triggeredStatus>
           <startedStatus>Build running</startedStatus>
           <statusUrl></statusUrl>
@@ -109,20 +106,19 @@ export ghprbPullId
 export ghprbTargetBranch
 export DEBUG=true
 export CI=&quot;true&quot;
-export CI_JOB=&quot;CRI_CONTAINERD_K8S&quot;
 export SHIMV2_TEST=&quot;true&quot;
-export TEST_CRIO=&quot;false&quot;
-export BAREMETAL=true
-export TMPDIR
-export ARM64_ACPI_TEST=true
-export ENABLE_ARM64_UEFI=true
+export TEST_INITRD=&quot;yes&quot;
+export AGENT_INIT=&quot;yes&quot;
+export CI_JOB=&quot;CRI_CONTAINERD_K8S&quot;
+export LIBC=&quot;gnu&quot;
+
 
 export GOPATH=${WORKSPACE}/go
 export PATH=${GOPATH}/bin:/usr/local/go/bin:/usr/sbin:${PATH}
 export GOROOT=&quot;/usr/local/go&quot;
 
 # TEST
-kata_repo=&quot;github.com/kata-containers/kata-containers&quot;
+kata_repo=&quot;github.com/kata-containers/tests&quot;
 kata_repo_dir=&quot;${GOPATH}/src/${kata_repo}&quot;
 mkdir -p &quot;${kata_repo_dir}&quot;
 
@@ -132,15 +128,7 @@ cd &quot;${kata_repo_dir}&quot;
 git checkout &quot;$ghprbTargetBranch&quot;
 # END TEST
 
-tests_repo=&quot;github.com/kata-containers/tests&quot;
-tests_repo_dir=&quot;${GOPATH}/src/${tests_repo}&quot;
-mkdir -p &quot;${tests_repo_dir}&quot;
-
-git clone &quot;https://${tests_repo}.git&quot; &quot;${tests_repo_dir}&quot;
-cd &quot;${tests_repo_dir}&quot;
-# Checkout to Target Branch, which should be 2.0-dev
-git checkout &quot;$ghprbTargetBranch&quot;
-.ci/jenkins_job_build.sh &quot;github.com/kata-containers/kata-containers&quot;</command>
+.ci/jenkins_job_build.sh &quot;github.com/kata-containers/tests&quot;</command>
       <configuredLocalRules/>
     </hudson.tasks.Shell>
   </builders>
@@ -164,16 +152,7 @@ export PATH=${GOPATH}/bin:/usr/local/go/bin:/usr/sbin:/usr/local/bin:${PATH}&#xd
 &#xd;
 cd $GOPATH/src/github.com/kata-containers/tests&#xd;
 .ci/teardown.sh &quot;$WORKSPACE/artifacts&quot;&#xd;
-sudo chown -R ${USER} ${WORKSPACE}&#xd;
-sudo chgrp -R $(id -ng) ${WORKSPACE}&#xd;
-sudo rm -rf &quot;${WORKSPACE}_*&quot;&#xd;
-&#xd;
-dirs=$(mount | awk {&apos;print $3&apos;} | grep &quot;^/tmp/&quot;)&#xd;
-for d in $dirs; do&#xd;
-        sudo umount $d&#xd;
-        echo $d&#xd;
-done&#xd;
-sudo rm -rf /tmp/*</script>
+sudo rm -rf &quot;$WORKSPACE/*&quot;</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
@@ -196,14 +175,12 @@ sudo rm -rf /tmp/*</script>
     </hudson.plugins.ws__cleanup.PreBuildCleanup>
     <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.20">
       <strategy class="hudson.plugins.build_timeout.impl.NoActivityTimeOutStrategy">
-        <timeoutSecondsString>1500</timeoutSecondsString>
+        <timeoutSecondsString>600</timeoutSecondsString>
       </strategy>
       <operationList/>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
-    <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.17"/>
     <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@1.0.1">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
-    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.61"/>
   </buildWrappers>
 </project>
