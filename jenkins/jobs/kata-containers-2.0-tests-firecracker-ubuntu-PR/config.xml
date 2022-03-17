@@ -1,7 +1,7 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description></description>
+  <description>CI job for testing Kata Containers 2.0 pull requests</description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.6"/>
@@ -14,21 +14,21 @@
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
     <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.34.1">
-      <projectUrl>https://github.com/kata-containers/kata-containers/</projectUrl>
+      <projectUrl>https://github.com/kata-containers/tests/</projectUrl>
       <displayName></displayName>
     </com.coravy.hudson.plugins.github.GithubProjectProperty>
-    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.33">
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.32">
       <autoRebuild>false</autoRebuild>
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.10.3">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.10.0">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
         <name>origin</name>
         <refspec>+refs/pull/${ghprbPullId}/*:refs/remotes/origin/pr/${ghprbPullId}/*</refspec>
-        <url>https://github.com/kata-containers/kata-containers.git</url>
+        <url>https://github.com/kata-containers/tests.git</url>
       </hudson.plugins.git.UserRemoteConfig>
     </userRemoteConfigs>
     <branches>
@@ -40,7 +40,7 @@
     <submoduleCfg class="empty-list"/>
     <extensions/>
   </scm>
-  <assignedNode>arm-ubuntu-1804 || arm-ubuntu-2004</assignedNode>
+  <assignedNode>ubuntu1804_azure</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
@@ -77,7 +77,7 @@
         </org.jenkinsci.plugins.ghprb.GhprbBranch>
       </blackListTargetBranches>
       <gitHubAuthId>c217b635-ee39-4531-a4ed-db4048679d71</gitHubAuthId>
-      <triggerPhrase>.*(\n|^|\s)/(re)?test(-arm)?(\n|$|\s)+.*</triggerPhrase>
+      <triggerPhrase>.*(\n|^|\s)/(re)?test(-fc)?(\n|$|\s)+.*</triggerPhrase>
       <skipBuildPhrase>.*\[skip\W+ci\].*</skipBuildPhrase>
       <blackListCommitAuthor></blackListCommitAuthor>
       <blackListLabels></blackListLabels>
@@ -89,7 +89,7 @@
           <overrideGlobal>false</overrideGlobal>
         </org.jenkinsci.plugins.ghprb.extensions.build.GhprbCancelBuildsOnUpdate>
         <org.jenkinsci.plugins.ghprb.extensions.status.GhprbSimpleStatus>
-          <commitStatusContext>jenkins-ci-ARM-ubuntu-18-04</commitStatusContext>
+          <commitStatusContext>jenkins-ci-firecracker-ubuntu-18-04</commitStatusContext>
           <triggeredStatus>Build triggered</triggeredStatus>
           <startedStatus>Build running</startedStatus>
           <statusUrl></statusUrl>
@@ -105,42 +105,14 @@
 
 set -e
 
-export ghprbPullId
-export ghprbTargetBranch
 export DEBUG=true
+export KATA_HYPERVISOR=&quot;firecracker&quot;
 export CI=&quot;true&quot;
-export CI_JOB=&quot;CRI_CONTAINERD_K8S&quot;
+export CI_JOB=&quot;FIRECRACKER&quot;
 export SHIMV2_TEST=&quot;true&quot;
-export TEST_CRIO=&quot;false&quot;
-export BAREMETAL=true
-export TMPDIR
-export ARM64_ACPI_TEST=true
-export ENABLE_ARM64_UEFI=true
 
-export GOPATH=${WORKSPACE}/go
-export PATH=${GOPATH}/bin:/usr/local/go/bin:/usr/sbin:${PATH}
-export GOROOT=&quot;/usr/local/go&quot;
-
-# TEST
-kata_repo=&quot;github.com/kata-containers/kata-containers&quot;
-kata_repo_dir=&quot;${GOPATH}/src/${kata_repo}&quot;
-mkdir -p &quot;${kata_repo_dir}&quot;
-
-git clone &quot;https://${kata_repo}.git&quot; &quot;${kata_repo_dir}&quot;
-cd &quot;${kata_repo_dir}&quot;
-# Checkout to 2.0-dev
-git checkout &quot;$ghprbTargetBranch&quot;
-# END TEST
-
-tests_repo=&quot;github.com/kata-containers/tests&quot;
-tests_repo_dir=&quot;${GOPATH}/src/${tests_repo}&quot;
-mkdir -p &quot;${tests_repo_dir}&quot;
-
-git clone &quot;https://${tests_repo}.git&quot; &quot;${tests_repo_dir}&quot;
-cd &quot;${tests_repo_dir}&quot;
-# Checkout to Target Branch, which should be 2.0-dev
-git checkout &quot;$ghprbTargetBranch&quot;
-.ci/jenkins_job_build.sh &quot;github.com/kata-containers/kata-containers&quot;</command>
+curl -OL https://raw.githubusercontent.com/kata-containers/tests/main/.ci/ci_entry_point.sh
+bash -x ci_entry_point.sh &quot;${GIT_URL}&quot;</command>
       <configuredLocalRules/>
     </hudson.tasks.Shell>
   </builders>
@@ -151,7 +123,7 @@ git checkout &quot;$ghprbTargetBranch&quot;
           <logTexts>
             <hudson.plugins.postbuildtask.LogProperties>
               <logText>.*</logText>
-              <operator>OR</operator>
+              <operator>AND</operator>
             </hudson.plugins.postbuildtask.LogProperties>
           </logTexts>
           <EscalateStatus>false</EscalateStatus>
@@ -163,23 +135,13 @@ export GOROOT=&quot;/usr/local/go&quot;&#xd;
 export PATH=${GOPATH}/bin:/usr/local/go/bin:/usr/sbin:/usr/local/bin:${PATH}&#xd;
 &#xd;
 cd $GOPATH/src/github.com/kata-containers/tests&#xd;
-.ci/teardown.sh &quot;$WORKSPACE/artifacts&quot;&#xd;
-sudo chown -R ${USER} ${WORKSPACE}&#xd;
-sudo chgrp -R $(id -ng) ${WORKSPACE}&#xd;
-sudo rm -rf &quot;${WORKSPACE}_*&quot;&#xd;
-&#xd;
-dirs=$(mount | awk {&apos;print $3&apos;} | grep &quot;^/tmp/&quot;)&#xd;
-for d in $dirs; do&#xd;
-        sudo umount $d&#xd;
-        echo $d&#xd;
-done&#xd;
-sudo rm -rf /tmp/*</script>
+.ci/teardown.sh &quot;$WORKSPACE/artifacts&quot;</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
     <hudson.tasks.ArtifactArchiver>
       <artifacts>artifacts/*</artifacts>
-      <allowEmptyArchive>true</allowEmptyArchive>
+      <allowEmptyArchive>false</allowEmptyArchive>
       <onlyIfSuccessful>false</onlyIfSuccessful>
       <fingerprint>false</fingerprint>
       <defaultExcludes>true</defaultExcludes>
@@ -188,22 +150,19 @@ sudo rm -rf /tmp/*</script>
     </hudson.tasks.ArtifactArchiver>
   </publishers>
   <buildWrappers>
-    <hudson.plugins.ws__cleanup.PreBuildCleanup plugin="ws-cleanup@0.40">
-      <deleteDirs>false</deleteDirs>
-      <cleanupParameter></cleanupParameter>
-      <externalDelete></externalDelete>
-      <disableDeferredWipeout>false</disableDeferredWipeout>
-    </hudson.plugins.ws__cleanup.PreBuildCleanup>
+    <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.27">
+      <bindings class="empty-list"/>
+    </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
     <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.20">
       <strategy class="hudson.plugins.build_timeout.impl.NoActivityTimeOutStrategy">
         <timeoutSecondsString>1500</timeoutSecondsString>
       </strategy>
       <operationList/>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
-    <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.17"/>
+    <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.13"/>
     <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@1.0.1">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
-    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.61"/>
+    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.60"/>
   </buildWrappers>
 </project>

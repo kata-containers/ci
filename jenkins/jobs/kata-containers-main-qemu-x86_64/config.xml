@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?><project>
+  <actions/>
+  <description>&lt;p&gt;Build QEMU for usage in Kata Containers CI jobs.&lt;/p&gt;
+&lt;p&gt;You should not use these artifacts on production.&lt;/p&gt;
+
+Maintainers:
+&lt;ul&gt;
+&lt;li&gt;Kata Containers CI team (#kata-ci at Slack)&lt;/li&gt;
+
+&lt;/ul&gt;&lt;!-- Managed by Jenkins Job Builder --&gt;</description>
+  <keepDependencies>false</keepDependencies>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <concurrentBuild>true</concurrentBuild>
+  <assignedNode>ubuntu1804_azure || ubuntu1804-azure</assignedNode>
+  <canRoam>false</canRoam>
+  <logRotator>
+    <daysToKeep>30</daysToKeep>
+    <numToKeep>5</numToKeep>
+    <artifactDaysToKeep>-1</artifactDaysToKeep>
+    <artifactNumToKeep>-1</artifactNumToKeep>
+  </logRotator>
+  <properties/>
+  <scm class="hudson.plugins.git.GitSCM">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <name>origin</name>
+        <refspec>+refs/heads/*:refs/remotes/origin/*</refspec>
+        <url>https://github.com/kata-containers/kata-containers</url>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>*/main</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <disableSubmodules>false</disableSubmodules>
+    <recursiveSubmodules>false</recursiveSubmodules>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <remotePoll>false</remotePoll>
+    <gitTool>Default</gitTool>
+    <submoduleCfg class="list"/>
+    <reference/>
+    <gitConfigName/>
+    <gitConfigEmail/>
+    <extensions>
+      <hudson.plugins.git.extensions.impl.WipeWorkspace/>
+    </extensions>
+  </scm>
+  <triggers class="vector">
+    <com.cloudbees.jenkins.GitHubPushTrigger>
+      <spec/>
+    </com.cloudbees.jenkins.GitHubPushTrigger>
+  </triggers>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>#!/bin/bash
+set -o errexit
+set -o nounset
+set -o pipefail
+[ -n "$BASH_VERSION" ] &amp;&amp; set -o errtrace
+[ -n "${DEBUG:-}" ] &amp;&amp; set -o xtrace
+
+export GOPATH="$WORKSPACE/go"
+export GOROOT="/usr/local/go"
+export PATH="$PATH:$GOPATH/bin:$GOROOT/bin"
+
+source ci/lib.sh
+export branch="main"
+export target_branch="$branch"
+clone_tests_repo
+ci/install_go.sh
+
+cd "$tests_repo_dir"
+./.ci/setup_env_ubuntu.sh "default"
+./cmd/container-manager/manage_ctr_mgr.sh docker install -f
+./.ci/install_qemu.sh
+./.ci/ci_cache_components.sh -q
+</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers>
+    <hudson.tasks.ArtifactArchiver>
+      <artifacts>artifacts/*</artifacts>
+      <allowEmptyArchive>false</allowEmptyArchive>
+      <onlyIfSuccessful>false</onlyIfSuccessful>
+      <fingerprint>false</fingerprint>
+      <defaultExcludes>true</defaultExcludes>
+      <caseSensitive>true</caseSensitive>
+      <latestOnly>false</latestOnly>
+    </hudson.tasks.ArtifactArchiver>
+  </publishers>
+  <buildWrappers>
+    <hudson.plugins.ansicolor.AnsiColorBuildWrapper>
+      <colorMapName>xterm</colorMapName>
+    </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
+    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave/>
+    <hudson.plugins.timestamper.TimestamperBuildWrapper/>
+    <hudson.plugins.build__timeout.BuildTimeoutWrapper>
+      <strategy class="hudson.plugins.build_timeout.impl.NoActivityTimeOutStrategy">
+        <timeoutSecondsString>1200</timeoutSecondsString>
+      </strategy>
+      <operationList>
+        <hudson.plugins.build__timeout.operations.AbortOperation/>
+      </operationList>
+    </hudson.plugins.build__timeout.BuildTimeoutWrapper>
+  </buildWrappers>
+</project>
