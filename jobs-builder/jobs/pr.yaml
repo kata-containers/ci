@@ -12,7 +12,8 @@
 - main_jobs_common_properties: &main_jobs_common_properties
     name: 'common_job_properties'
     project-type: freestyle
-    disabled: false
+    disabled:
+      !j2: '{% if os == "centos-8-stream" -%}true{% else %}false{%- endif %}'
     concurrent: {concurrent_toggle}
     logrotate:
       daysToKeep: 30
