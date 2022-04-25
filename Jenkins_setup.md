@@ -77,7 +77,7 @@ For Kata Containers CI we configure Jenkins with a GitHub [Personal API token](h
 ## Job build script
 
 Kata Containers Jenkins builds, for both PR and Master builds, are invoked using the top
-level [`jenkins_job_build.sh`](https://github.com/kata-containers/tests/blob/master/.ci/jenkins_job_build.sh) script from the [`katacontainers/tests`](https://github.com/kata-containers/tests)
+level [`jenkins_job_build.sh`](https://github.com/kata-containers/tests/blob/main/.ci/jenkins_job_build.sh) script from the [`katacontainers/tests`](https://github.com/kata-containers/tests)
 repository.
 
 This script takes a single argument (i.e. the path to the repository to build), and utilizes
@@ -213,7 +213,7 @@ The following variables influence the actions of the script:
 
 For the more experienced Jenkins user, if you are comfortable reading Jenkins XML config files
 then you can find a backup of our Azure based Jenkins QA CI in this repository under the
-[Jenkins sub folder](https://github.com/kata-containers/ci/tree/master/jenkins).
+[Jenkins sub folder](https://github.com/kata-containers/ci/tree/main/jenkins).
 
 ## Other CIs
 
