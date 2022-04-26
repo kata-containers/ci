@@ -26,7 +26,7 @@
 
 This directory contains a set of configuration files and helper scripts
 to aid in setting up a [Jenkins](https://jenkins.io/) CI system to run
-the [Kata Containers metrics tests](https://github.com/kata-containers/tests/tree/master/metrics)
+the [Kata Containers metrics tests](https://github.com/kata-containers/tests/tree/main/metrics)
 inside Virtual Machines (VMs).
 
 ## Background
@@ -45,7 +45,7 @@ test results.
 
 The scripts in this directory help construct a Virtual Machine (QEMU qcow2) image
 suitable for running the metrics tests. The scripts are based around the use of
-[libvirt](https://libvirt.org/) and the [`virsh`](https://libvirt.org/virshcmdref.html) tool.
+[libvirt](https://libvirt.org/) and the [`virsh`](https://libvirt.org/sources/virshcmdref/html/) tool.
 
 Briefly, the scripts do the following:
 - Create an RSA keypair for SSH interaction between the host machine and the VMs.

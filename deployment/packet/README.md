@@ -16,8 +16,8 @@ deploy Kata metrics CI build slaves on the [packet.net](https://www.packet.com/)
 These scripts help:
 - Create a new bare metal machine instance in the packet.net cloud
 - Configure an instance with the components necessary to be able to run both:
-  - The [Kata metrics CI VMs](https://github.com/kata-containers/ci/tree/master/VMs/metrics)
-    as per the [Pre-requisites](https://github.com/kata-containers/ci/tree/master/VMs/metrics#pre-requisites) listed on that page.
+  - The [Kata metrics CI VMs](https://github.com/kata-containers/ci/tree/main/VMs/metrics)
+    as per the [Pre-requisites](https://github.com/kata-containers/ci/tree/main/VMs/metrics#pre-requisites) listed on that page.
   - The instances as bare metal Jenkins CI slaves.
 - Provide a helper to delete existing instances.
 
@@ -28,7 +28,7 @@ configured on your host system:
 
 - `Ansible` (version >= v2.3).
 - `packet-python` - see [the Ansible guide](https://docs.ansible.com/ansible/latest/scenario_guides/guide_packet.html) for details.
-- A Kata Containers packet.net project [token](https://www.packet.com/developers/api/).
+- A Kata Containers packet.net project [token](https://apitracker.io/a/packet).
 - The Kata Containers packet.net root user SSH private key pair.
 - The Kata Containers packet.net Jenkins user SSH private key pair.
 - A copy of the required golang version Linux [tarball](https://golang.org/dl/)
@@ -162,7 +162,7 @@ Execute the following to set the final necessary environment setting:
 $ export PATH=/usr/local/go/bin:$PATH
 ```
 
-and follow the instructions on the [metrics VMs](https://github.com/kata-containers/ci/tree/master/VMs/metrics#example)
+and follow the instructions on the [metrics VMs](https://github.com/kata-containers/ci/tree/main/VMs/metrics#example)
 page to complete the installation ready to deploy the instance into the CI Jenkins master.
 
 ## Configuring `checkmetrics`
@@ -186,7 +186,7 @@ $ ansible-playbook add_checkmetrics.yaml
 ## Integration into the Jenkins master
 
 The slave instance can now be integrated into the Jenkins master as a build machine. Details
-can be found [in this document](https://github.com/kata-containers/ci/blob/master/Jenkins_setup.md)
+can be found [in this document](https://github.com/kata-containers/ci/blob/main/Jenkins_setup.md)
 
 ## Deleting an instance
 
