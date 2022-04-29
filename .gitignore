@@ -12,6 +12,7 @@
 !CODE_OF_CONDUCT.md  
 !CONTRIBUTING.md
 !Jenkins_setup.md
+!Always_green_CI.md
 
 # Don't ignore pullapprove yaml file
 .pullapprove.yml
