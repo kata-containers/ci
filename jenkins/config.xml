@@ -2,13 +2,14 @@
 <hudson>
   <disabledAdministrativeMonitors>
     <string>hudson.node_monitors.MonitorMarkedNodeOffline</string>
+    <string>jenkins.monitor.JavaVersionRecommendationAdminMonitor</string>
     <string>hudson.diagnosis.TooManyJobsButNoView</string>
     <string>hudsonHomeIsFull</string>
     <string>hudson.plugins.ec2.ssh.verifiers.SshHostKeyVerificationAdministrativeMonitor</string>
     <string>OldData</string>
     <string>jenkins.security.QueueItemAuthenticatorMonitor</string>
   </disabledAdministrativeMonitors>
-  <version>2.303.3</version>
+  <version>2.332.3</version>
   <numExecutors>0</numExecutors>
   <mode>EXCLUSIVE</mode>
   <useSecurity>true</useSecurity>
@@ -78,12 +79,15 @@
     <permission>hudson.model.Item.Configure:chavafg</permission>
     <permission>hudson.model.Item.Configure:devimc</permission>
     <permission>hudson.model.Item.Configure:kata-containers*jenkins-admin</permission>
+    <permission>hudson.model.Item.Configure:katabuilder</permission>
     <permission>hudson.model.Item.Create:chavafg</permission>
     <permission>hudson.model.Item.Create:devimc</permission>
     <permission>hudson.model.Item.Create:kata-containers*jenkins-admin</permission>
+    <permission>hudson.model.Item.Create:katabuilder</permission>
     <permission>hudson.model.Item.Delete:chavafg</permission>
     <permission>hudson.model.Item.Delete:devimc</permission>
     <permission>hudson.model.Item.Delete:kata-containers*jenkins-admin</permission>
+    <permission>hudson.model.Item.Delete:katabuilder</permission>
     <permission>hudson.model.Item.Discover:anonymous</permission>
     <permission>hudson.model.Item.Discover:authenticated</permission>
     <permission>hudson.model.Item.Discover:chavafg</permission>
@@ -96,6 +100,7 @@
     <permission>hudson.model.Item.Move:chavafg</permission>
     <permission>hudson.model.Item.Move:devimc</permission>
     <permission>hudson.model.Item.Move:kata-containers*jenkins-admin</permission>
+    <permission>hudson.model.Item.Move:katabuilder</permission>
     <permission>hudson.model.Item.Read:anonymous</permission>
     <permission>hudson.model.Item.Read:authenticated</permission>
     <permission>hudson.model.Item.Read:chavafg</permission>
@@ -163,21 +168,21 @@
     <githubWebUri>https://github.com</githubWebUri>
     <githubApiUri>https://api.github.com</githubApiUri>
     <clientID>e11e7e0dee39d432dd71</clientID>
-    <clientSecret>{AQAAABAAAAAwBp8JTnyLKa+XlaiQaw/Sd0zkg2tAQcC7bWrg+F+eSTWEjSJuYVPufPVyAapJRvR6/8RIc2C/ZL0bw7deQrJ25Q==}</clientSecret>
+    <clientSecret>{AQAAABAAAAAw63BzQnIFRpYlOHXlZEOGFBAirFkR9h/MCwBE9dn8iqJCt3HPPXSPDFV2BTSUDe/LEmi+kmd3+sqHshd3G+bT2Q==}</clientSecret>
     <oauthScopes>read:org,user:email</oauthScopes>
   </securityRealm>
   <disableRememberMe>false</disableRememberMe>
   <projectNamingStrategy class="jenkins.model.ProjectNamingStrategy$DefaultProjectNamingStrategy"/>
   <workspaceDir>${JENKINS_HOME}/workspace/${ITEM_FULL_NAME}</workspaceDir>
   <buildsDir>${ITEM_ROOTDIR}/builds</buildsDir>
-  <markupFormatter class="hudson.markup.RawHtmlMarkupFormatter" plugin="antisamy-markup-formatter@2.4">
+  <markupFormatter class="hudson.markup.RawHtmlMarkupFormatter" plugin="antisamy-markup-formatter@2.7">
     <disableSyntaxHighlighting>false</disableSyntaxHighlighting>
   </markupFormatter>
   <jdks/>
   <viewsTabBar class="hudson.views.DefaultViewsTabBar"/>
   <myViewsTabBar class="hudson.views.DefaultMyViewsTabBar"/>
   <clouds>
-    <jenkins.plugins.openstack.compute.JCloudsCloud plugin="openstack-cloud@2.60">
+    <jenkins.plugins.openstack.compute.JCloudsCloud plugin="openstack-cloud@2.61">
       <name>vexxhost</name>
       <endPointUrl>https://auth.vexxhost.net/v3</endPointUrl>
       <ignoreSsl>false</ignoreSsl>
@@ -382,7 +387,7 @@ git config --global user.name &quot;Kata Containers Bot&quot;
       </configurations>
       <noDelayProvisioning>false</noDelayProvisioning>
     </com.google.jenkins.plugins.computeengine.ComputeEngineCloud>
-    <com.microsoft.azure.vmagent.AzureVMCloud plugin="azure-vm-agents@797.v31f530348574">
+    <com.microsoft.azure.vmagent.AzureVMCloud plugin="azure-vm-agents@810.v0a97a847315a">
       <name>AzureVMAgents</name>
       <cloudName>AzureVMAgents</cloudName>
       <credentialsId>6fd57ac9-f917-468f-8231-5f820311655c</credentialsId>
@@ -415,6 +420,7 @@ git config --global user.name &quot;Kata Containers Bot&quot;
             <offer>debian-10</offer>
             <sku>10</sku>
             <version>0.20200928.407</version>
+            <galleryImageSpecialized>false</galleryImageSpecialized>
             <type>REFERENCE</type>
           </imageReference>
           <builtInImage>Ubuntu 16.04 LTS</builtInImage>
@@ -478,6 +484,8 @@ echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers</initScri
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
           <maximumDeploymentSize>0</maximumDeploymentSize>
+          <tags/>
+          <maxVirtualMachinesLimit>0</maxVirtualMachinesLimit>
         </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
         <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
           <templateName>ubuntu1604-azure</templateName>
@@ -503,6 +511,7 @@ echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers</initScri
             <offer>UbuntuServer</offer>
             <sku>16.04-LTS</sku>
             <version>latest</version>
+            <galleryImageSpecialized>false</galleryImageSpecialized>
             <type>REFERENCE</type>
           </imageReference>
           <builtInImage>Windows Server 2016</builtInImage>
@@ -576,6 +585,8 @@ sudo dd if=/dev/zero of=$device bs=128M count=1</initScript>
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
           <maximumDeploymentSize>0</maximumDeploymentSize>
+          <tags/>
+          <maxVirtualMachinesLimit>0</maxVirtualMachinesLimit>
         </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
         <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
           <templateName>centos7-azure</templateName>
@@ -601,6 +612,7 @@ sudo dd if=/dev/zero of=$device bs=128M count=1</initScript>
             <offer>CentOS</offer>
             <sku>7.5</sku>
             <version>7.5.20180529</version>
+            <galleryImageSpecialized>false</galleryImageSpecialized>
             <type>REFERENCE</type>
           </imageReference>
           <builtInImage>Windows Server 2016</builtInImage>
@@ -654,6 +666,8 @@ echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers</initScri
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
           <maximumDeploymentSize>0</maximumDeploymentSize>
+          <tags/>
+          <maxVirtualMachinesLimit>0</maxVirtualMachinesLimit>
         </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
         <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
           <templateName>fedora28-azure</templateName>
@@ -676,6 +690,7 @@ echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers</initScri
           <imageTopLevelType>advanced</imageTopLevelType>
           <imageReference>
             <uri>https://katastg.blob.core.windows.net/kata/Fedora-Cloud-28-2019-05-24.vhd</uri>
+            <galleryImageSpecialized>false</galleryImageSpecialized>
             <type>CUSTOM</type>
           </imageReference>
           <builtInImage>Windows Server 2016</builtInImage>
@@ -728,6 +743,8 @@ sudo dnf install -y java-1.8.0-openjdk </initScript>
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
           <maximumDeploymentSize>0</maximumDeploymentSize>
+          <tags/>
+          <maxVirtualMachinesLimit>0</maxVirtualMachinesLimit>
         </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
         <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
           <templateName>ubuntu1804-azure</templateName>
@@ -753,6 +770,7 @@ sudo dnf install -y java-1.8.0-openjdk </initScript>
             <offer>UbuntuServer</offer>
             <sku>18.04-LTS</sku>
             <version>18.04.202001291</version>
+            <galleryImageSpecialized>false</galleryImageSpecialized>
             <type>REFERENCE</type>
           </imageReference>
           <builtInImage>Windows Server 2016</builtInImage>
@@ -829,6 +847,8 @@ sudo dd if=/dev/zero of=$device bs=128M count=1</initScript>
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
           <maximumDeploymentSize>0</maximumDeploymentSize>
+          <tags/>
+          <maxVirtualMachinesLimit>0</maxVirtualMachinesLimit>
         </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
         <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
           <templateName>opensuse15-azure</templateName>
@@ -854,6 +874,7 @@ sudo dd if=/dev/zero of=$device bs=128M count=1</initScript>
             <offer>openSUSE-Leap</offer>
             <sku>15-1</sku>
             <version>2019.06.18</version>
+            <galleryImageSpecialized>false</galleryImageSpecialized>
             <type>REFERENCE</type>
           </imageReference>
           <builtInImage>Windows Server 2016</builtInImage>
@@ -919,6 +940,8 @@ sudo zypper removelock docker
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
           <maximumDeploymentSize>0</maximumDeploymentSize>
+          <tags/>
+          <maxVirtualMachinesLimit>0</maxVirtualMachinesLimit>
         </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
         <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
           <templateName>sles15sp1-azure</templateName>
@@ -941,6 +964,7 @@ sudo zypper removelock docker
           <imageTopLevelType>advanced</imageTopLevelType>
           <imageReference>
             <id>/subscriptions/2efae366-54ff-4d92-b51e-7454e50408e3/resourceGroups/kataCI/providers/Microsoft.Compute/images/SLES15-SP2</id>
+            <galleryImageSpecialized>false</galleryImageSpecialized>
             <type>CUSTOM_IMAGE</type>
           </imageReference>
           <builtInImage>Windows Server 2016</builtInImage>
@@ -1000,6 +1024,8 @@ sudo zypper removelock docker
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
           <maximumDeploymentSize>0</maximumDeploymentSize>
+          <tags/>
+          <maxVirtualMachinesLimit>0</maxVirtualMachinesLimit>
         </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
         <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
           <templateName>rhel-7-azure</templateName>
@@ -1025,6 +1051,7 @@ sudo zypper removelock docker
             <offer>RHEL</offer>
             <sku>7-RAW</sku>
             <version>7.6.2018103108</version>
+            <galleryImageSpecialized>false</galleryImageSpecialized>
             <type>REFERENCE</type>
           </imageReference>
           <builtInImage>Windows Server 2016</builtInImage>
@@ -1080,6 +1107,8 @@ echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers</initScri
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
           <maximumDeploymentSize>0</maximumDeploymentSize>
+          <tags/>
+          <maxVirtualMachinesLimit>0</maxVirtualMachinesLimit>
         </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
         <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
           <templateName>fedora30</templateName>
@@ -1102,6 +1131,7 @@ echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers</initScri
           <imageTopLevelType>advanced</imageTopLevelType>
           <imageReference>
             <uri>https://katastg.blob.core.windows.net/kata/Fedora-Cloud-Base-30-1.2.x86_64.vhd</uri>
+            <galleryImageSpecialized>false</galleryImageSpecialized>
             <type>CUSTOM</type>
           </imageReference>
           <builtInImage>Windows Server 2016</builtInImage>
@@ -1155,6 +1185,8 @@ sudo dnf install -y java-1.8.0-openjdk </initScript>
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
           <maximumDeploymentSize>0</maximumDeploymentSize>
+          <tags/>
+          <maxVirtualMachinesLimit>0</maxVirtualMachinesLimit>
         </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
         <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
           <templateName>fedora31</templateName>
@@ -1177,6 +1209,7 @@ sudo dnf install -y java-1.8.0-openjdk </initScript>
           <imageTopLevelType>advanced</imageTopLevelType>
           <imageReference>
             <id>/subscriptions/2efae366-54ff-4d92-b51e-7454e50408e3/resourceGroups/kataCI/providers/Microsoft.Compute/images/Fedora-31-Docker</id>
+            <galleryImageSpecialized>false</galleryImageSpecialized>
             <type>CUSTOM_IMAGE</type>
           </imageReference>
           <builtInImage>Windows Server 2016</builtInImage>
@@ -1233,6 +1266,8 @@ echo &quot;*  -   memlock   16384&quot; | sudo tee /etc/security/limits.d/95-mem
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
           <maximumDeploymentSize>0</maximumDeploymentSize>
+          <tags/>
+          <maxVirtualMachinesLimit>0</maxVirtualMachinesLimit>
         </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
         <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
           <templateName>centos8</templateName>
@@ -1258,6 +1293,7 @@ echo &quot;*  -   memlock   16384&quot; | sudo tee /etc/security/limits.d/95-mem
             <offer>CentOS</offer>
             <sku>8_1-gen2</sku>
             <version>8.1.2020111901</version>
+            <galleryImageSpecialized>false</galleryImageSpecialized>
             <type>REFERENCE</type>
           </imageReference>
           <builtInImage>Windows Server 2016</builtInImage>
@@ -1323,6 +1359,8 @@ echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers</initScri
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
           <maximumDeploymentSize>0</maximumDeploymentSize>
+          <tags/>
+          <maxVirtualMachinesLimit>0</maxVirtualMachinesLimit>
         </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
         <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
           <templateName>fedora31podman</templateName>
@@ -1345,6 +1383,7 @@ echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers</initScri
           <imageTopLevelType>advanced</imageTopLevelType>
           <imageReference>
             <id>/subscriptions/2efae366-54ff-4d92-b51e-7454e50408e3/resourceGroups/kataCI/providers/Microsoft.Compute/images/Fedora31podmanimage</id>
+            <galleryImageSpecialized>false</galleryImageSpecialized>
             <type>CUSTOM_IMAGE</type>
           </imageReference>
           <builtInImage>Windows Server 2016</builtInImage>
@@ -1399,6 +1438,8 @@ sudo chmod g+rw /dev/&quot;${TRUSTED_GROUP}&quot;
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
           <maximumDeploymentSize>0</maximumDeploymentSize>
+          <tags/>
+          <maxVirtualMachinesLimit>0</maxVirtualMachinesLimit>
         </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
         <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
           <templateName>rhel77azure</templateName>
@@ -1424,6 +1465,7 @@ sudo chmod g+rw /dev/&quot;${TRUSTED_GROUP}&quot;
             <offer>RHEL</offer>
             <sku>7-RAW</sku>
             <version>7.7.2019090418</version>
+            <galleryImageSpecialized>false</galleryImageSpecialized>
             <type>REFERENCE</type>
           </imageReference>
           <builtInImage>Windows Server 2016</builtInImage>
@@ -1481,6 +1523,8 @@ echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers</initScri
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
           <maximumDeploymentSize>0</maximumDeploymentSize>
+          <tags/>
+          <maxVirtualMachinesLimit>0</maxVirtualMachinesLimit>
         </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
         <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
           <templateName>ubuntu20</templateName>
@@ -1503,6 +1547,7 @@ echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers</initScri
           <imageTopLevelType>advanced</imageTopLevelType>
           <imageReference>
             <id>/subscriptions/2efae366-54ff-4d92-b51e-7454e50408e3/resourceGroups/kataCI/providers/Microsoft.Compute/images/Ubuntu20.04</id>
+            <galleryImageSpecialized>false</galleryImageSpecialized>
             <type>CUSTOM_IMAGE</type>
           </imageReference>
           <builtInImage>Windows Server 2016</builtInImage>
@@ -1576,6 +1621,8 @@ sudo dd if=/dev/zero of=$device bs=128M count=1</initScript>
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
           <maximumDeploymentSize>0</maximumDeploymentSize>
+          <tags/>
+          <maxVirtualMachinesLimit>0</maxVirtualMachinesLimit>
         </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
         <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
           <templateName>rhel8azure</templateName>
@@ -1601,6 +1648,7 @@ sudo dd if=/dev/zero of=$device bs=128M count=1</initScript>
             <offer>RHEL</offer>
             <sku>8</sku>
             <version>8.0.2019101800</version>
+            <galleryImageSpecialized>false</galleryImageSpecialized>
             <type>REFERENCE</type>
           </imageReference>
           <builtInImage>Windows Server 2016</builtInImage>
@@ -1697,6 +1745,8 @@ echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
           <maximumDeploymentSize>0</maximumDeploymentSize>
+          <tags/>
+          <maxVirtualMachinesLimit>0</maxVirtualMachinesLimit>
         </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
         <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
           <templateName>fedoradocker32</templateName>
@@ -1719,6 +1769,7 @@ echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers
           <imageTopLevelType>advanced</imageTopLevelType>
           <imageReference>
             <id>/subscriptions/2efae366-54ff-4d92-b51e-7454e50408e3/resourceGroups/kataCI/providers/Microsoft.Compute/images/Fedora32Docker</id>
+            <galleryImageSpecialized>false</galleryImageSpecialized>
             <type>CUSTOM_IMAGE</type>
           </imageReference>
           <builtInImage>Windows Server 2016</builtInImage>
@@ -1773,6 +1824,8 @@ sudo dnf install -y java-1.8.0-openjdk
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
           <maximumDeploymentSize>0</maximumDeploymentSize>
+          <tags/>
+          <maxVirtualMachinesLimit>0</maxVirtualMachinesLimit>
         </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
         <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
           <templateName>ubuntu20</templateName>
@@ -1798,6 +1851,7 @@ sudo dnf install -y java-1.8.0-openjdk
             <offer>0001-com-ubuntu-server-focal</offer>
             <sku>20_04-lts-gen2</sku>
             <version>latest</version>
+            <galleryImageSpecialized>false</galleryImageSpecialized>
             <type>REFERENCE</type>
           </imageReference>
           <builtInImage>Windows Server 2016</builtInImage>
@@ -1861,7 +1915,7 @@ sudo dd if=/dev/zero of=$device bs=128M count=1</initScript>
           <jvmOptions></jvmOptions>
           <remotingOptions></remotingOptions>
           <templateDisabled>false</templateDisabled>
-          <templateStatusDetails></templateStatusDetails>
+          <templateStatusDetails>java.io.IOException: Agent failed to connect, even though the launcher didn&apos;t report it. See the log output for details.</templateStatusDetails>
           <templateVerified>false</templateVerified>
           <executeInitScriptAsRoot>false</executeInitScriptAsRoot>
           <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
@@ -1871,6 +1925,8 @@ sudo dd if=/dev/zero of=$device bs=128M count=1</initScript>
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
           <maximumDeploymentSize>0</maximumDeploymentSize>
+          <tags/>
+          <maxVirtualMachinesLimit>0</maxVirtualMachinesLimit>
         </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
         <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
           <templateName>fedora35cloud</templateName>
@@ -1893,6 +1949,7 @@ sudo dd if=/dev/zero of=$device bs=128M count=1</initScript>
           <imageTopLevelType>advanced</imageTopLevelType>
           <imageReference>
             <uri>https://katastg.blob.core.windows.net/kata/Fedora-Cloud-Base-35-1.2.x86_64.vhd</uri>
+            <galleryImageSpecialized>false</galleryImageSpecialized>
             <type>CUSTOM</type>
           </imageReference>
           <builtInImage>Ubuntu 20.04 LTS</builtInImage>
@@ -1905,14 +1962,11 @@ sudo dd if=/dev/zero of=$device bs=128M count=1</initScript>
           <initScript>#!/bin/bash
 
 # Install git, gcc and python
-sudo dnf install -y git gcc python make haveged runc #docker
+sudo dnf install -y git gcc python make haveged
 
 sudo mount /tmp -o remount,rw,dev
 
 sudo systemctl start haveged
-#sudo systemctl start docker
-#sudo gpasswd -a jenkins docker
-#sudo chmod g+rw /var/run/docker.sock
 
 # the following was done already within the vm image
 #sudo grubby --update-kernel=ALL --args=&quot;systemd.unified_cgroup_hierarchy=0&quot;
@@ -1946,12 +2000,93 @@ sudo dnf install -y java-1.8.0-openjdk </initScript>
           <javaPath>java</javaPath>
           <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
           <maximumDeploymentSize>0</maximumDeploymentSize>
+          <tags/>
+          <maxVirtualMachinesLimit>0</maxVirtualMachinesLimit>
+        </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
+        <com.microsoft.azure.vmagent.AzureVMAgentTemplate>
+          <templateName>centos8stream</templateName>
+          <templateDesc>centos8stream</templateDesc>
+          <labels>centos_8_stream</labels>
+          <location>East US 2</location>
+          <availabilityType/>
+          <virtualMachineSize>Standard_D4s_v3</virtualMachineSize>
+          <storageAccountNameReferenceType>new</storageAccountNameReferenceType>
+          <diskType>managed</diskType>
+          <ephemeralOSDisk>true</ephemeralOSDisk>
+          <osDiskSize>0</osDiskSize>
+          <newStorageAccountName>katastg</newStorageAccountName>
+          <existingStorageAccountName>katastg</existingStorageAccountName>
+          <storageAccountType>Standard_LRS</storageAccountType>
+          <osDiskStorageAccountType>Standard_LRS</osDiskStorageAccountType>
+          <noOfParallelJobs>1</noOfParallelJobs>
+          <usageMode>EXCLUSIVE</usageMode>
+          <shutdownOnIdle>false</shutdownOnIdle>
+          <imageTopLevelType>advanced</imageTopLevelType>
+          <imageReference>
+            <uri>https://katastg.blob.core.windows.net/kata/CentOS-Stream-ec2-8-20220125.1.x86_64.vhd</uri>
+            <galleryImageSpecialized>false</galleryImageSpecialized>
+            <type>CUSTOM</type>
+          </imageReference>
+          <builtInImage>Ubuntu 20.04 LTS</builtInImage>
+          <installGit>false</installGit>
+          <installMaven>false</installMaven>
+          <installDocker>false</installDocker>
+          <osType>Linux</osType>
+          <agentLaunchMethod>SSH</agentLaunchMethod>
+          <preInstallSsh>false</preInstallSsh>
+          <initScript>#!/bin/bash
+
+set -x
+
+# Install git, gcc and python
+yum install -y git gcc java
+
+# Install docker
+#yum install -y yum-utils
+#yum-config-manager --add-repo &quot;https://download.docker.com/linux/centos/docker-ce.repo&quot;
+#yum -y install docker-ce
+
+#systemctl start docker
+#gpasswd -a jenkins docker
+#chmod g+rw /var/run/docker.sock
+
+# Install Java JRE and JDK for Jenkins agent
+#yum install -y java-1.8.0-openjdk
+
+echo &quot;jenkins ALL=(ALL) NOPASSWD: ALL&quot; &gt;&gt; /etc/sudoers</initScript>
+          <terminateScript></terminateScript>
+          <credentialsId>kata-openstack-credentials</credentialsId>
+          <agentWorkspace>/tmp/jenkins</agentWorkspace>
+          <retentionTimeInMin>0</retentionTimeInMin>
+          <virtualNetworkName></virtualNetworkName>
+          <virtualNetworkResourceGroupName></virtualNetworkResourceGroupName>
+          <subnetName></subnetName>
+          <usePrivateIP>false</usePrivateIP>
+          <spotInstance>false</spotInstance>
+          <acceleratedNetworking>false</acceleratedNetworking>
+          <nsgName></nsgName>
+          <jvmOptions></jvmOptions>
+          <remotingOptions></remotingOptions>
+          <templateDisabled>false</templateDisabled>
+          <templateStatusDetails></templateStatusDetails>
+          <templateVerified>false</templateVerified>
+          <executeInitScriptAsRoot>true</executeInitScriptAsRoot>
+          <doNotUseMachineIfInitFails>true</doNotUseMachineIfInitFails>
+          <enableMSI>false</enableMSI>
+          <enableUAMI>false</enableUAMI>
+          <uamiID></uamiID>
+          <javaPath>java</javaPath>
+          <retentionStrategy class="com.microsoft.azure.vmagent.AzureVMCloudOnceRetentionStrategy"/>
+          <maximumDeploymentSize>0</maximumDeploymentSize>
+          <tags/>
+          <maxVirtualMachinesLimit>0</maxVirtualMachinesLimit>
         </com.microsoft.azure.vmagent.AzureVMAgentTemplate>
       </vmTemplates>
       <deploymentTimeout>1200</deploymentTimeout>
       <approximateVirtualMachineCount>0</approximateVirtualMachineCount>
+      <cloudTags/>
     </com.microsoft.azure.vmagent.AzureVMCloud>
-    <hudson.plugins.ec2.EC2Cloud plugin="ec2@1.66">
+    <hudson.plugins.ec2.EC2Cloud plugin="ec2@1.68">
       <name>ec2-aws-jenkins</name>
       <useInstanceProfileForCredentials>false</useInstanceProfileForCredentials>
       <roleArn></roleArn>
@@ -2208,49 +2343,34 @@ git config --global user.name &quot;Kata Containers Bot&quot;</initScript>
       <properties class="hudson.model.View$PropertyList"/>
       <jobNames>
         <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../hudson.plugins.sectioned__view.SectionedView/sections/hudson.plugins.sectioned__view.TextSection/jobNames/comparator"/>
-        <string>crio-kata-containers-2.0-fedora-32-main-baseline</string>
+        <string>kata-containers-2-clh-PR</string>
         <string>kata-containers-2-crio-PR</string>
-        <string>kata-containers-2.0-centos-PR</string>
+        <string>kata-containers-2.0-clh-tdx-x86_64</string>
         <string>kata-containers-2.0-crio-rhel-initrd-s390x-PR</string>
-        <string>kata-containers-2.0-debian-PR</string>
-        <string>kata-containers-2.0-fedora-PR</string>
-        <string>kata-containers-2.0-fedora-PR-crio-k8s-e2e-minimal</string>
-        <string>kata-containers-2.0-firecracker-jailer-ubuntu-PR</string>
         <string>kata-containers-2.0-firecracker-ubuntu-PR</string>
-        <string>kata-containers-2.0-kernel-qat-x86_64-nightly</string>
+        <string>kata-containers-2.0-kernel-tdx-x86_64-nightly</string>
         <string>kata-containers-2.0-metrics-ubuntu-20-04-PR</string>
         <string>kata-containers-2.0-pmem-ubuntu-20.04-PR</string>
-        <string>kata-containers-2.0-Power9-containerd-k8s-ubuntu-20-04-PR</string>
         <string>kata-containers-2.0-Power9-crio-k8s-ubuntu-20-04-PR</string>
+        <string>kata-containers-2.0-ppc64le-containerd-k8s-ubuntu-20-04-PR</string>
         <string>kata-containers-2.0-qat-ubuntu-20.04-PR</string>
         <string>kata-containers-2.0-qemu-s390x</string>
-        <string>kata-containers-2.0-tests-centos-PR</string>
-        <string>kata-containers-2.0-tests-debian-PR</string>
-        <string>kata-containers-2.0-tests-fedora-PR</string>
-        <string>kata-containers-2.0-tests-fedora-PR-crio-k8s-e2e-complete</string>
-        <string>kata-containers-2.0-tests-fedora-PR-crio-k8s-e2e-minimal</string>
-        <string>kata-containers-2.0-tests-firecracker-jailer-ubuntu-PR</string>
+        <string>kata-containers-2.0-qemu-tdx-x86_64</string>
         <string>kata-containers-2.0-tests-firecracker-ubuntu-PR</string>
         <string>kata-containers-2.0-tests-metrics-ubuntu-20-04-PR</string>
         <string>kata-containers-2.0-tests-pmem-ubuntu-20.04-PR</string>
+        <string>kata-containers-2.0-tests-ppc64le-containerd-k8s-ubuntu-20-04-PR</string>
         <string>kata-containers-2.0-tests-qat-ubuntu-20.04-PR</string>
-        <string>kata-containers-2.0-tests-ubuntu-PR-containerd-k8s-minimal</string>
         <string>kata-containers-2.0-tests-ubuntu-s390x-PR</string>
         <string>kata-containers-2.0-tests-ubuntu20.04-PR</string>
         <string>kata-containers-2.0-tests-vfio-PR</string>
+        <string>kata-containers-2.0-ubuntu-1804-PR-cloud-hypervisor-k8s-containerd-devmapper</string>
+        <string>kata-containers-2.0-ubuntu-1804-tests-PR-cloud-hypervisor-k8s-containerd-devmapper</string>
         <string>kata-containers-2.0-ubuntu-20.04-PR</string>
-        <string>kata-containers-2.0-ubuntu-20.04-PR-sev-amd</string>
-        <string>kata-containers-2.0-ubuntu-main-branch-x86_64-cloud-hypervisor-k8s-containerd-full-tests-repo</string>
-        <string>kata-containers-2.0-ubuntu-PR</string>
-        <string>kata-containers-2.0-ubuntu-PR-Arm-clh-containerd-k8s-minimal</string>
-        <string>kata-containers-2.0-ubuntu-PR-containerd-k8s-minimal</string>
-        <string>kata-containers-2.0-ubuntu-PR-x86_64-clh-containerd-k8s-minimal-kata-repo</string>
-        <string>kata-containers-2.0-ubuntu-PR-x86_64-clh-containerd-k8s-minimal-tests-repo</string>
+        <string>kata-containers-2.0-ubuntu-20.04-PR-qemu-devmapper</string>
+        <string>kata-containers-2.0-ubuntu-20.04-tests-PR-qemu-devmapper</string>
         <string>kata-containers-2.0-ubuntu-PR-x86_64-clh-crio-kata-repo</string>
         <string>kata-containers-2.0-ubuntu-PR-x86_64-clh-crio-tests-repo</string>
-        <string>kata-containers-2.0-ubuntu-PR-x86_64-cloud-hypervisor-k8s-containerd-kata-repo</string>
-        <string>kata-containers-2.0-ubuntu-PR-x86_64-cloud-hypervisor-k8s-containerd-tests-repo</string>
-        <string>kata-containers-2.0-ubuntu-PR-x86_64-metrics-clh-test-repo</string>
         <string>kata-containers-2.0-ubuntu-s390x-PR</string>
         <string>kata-containers-2.0-vfio-PR</string>
         <string>kata-containers-CCv0-fedora-PR</string>
@@ -2259,12 +2379,18 @@ git config --global user.name &quot;Kata Containers Bot&quot;</initScript>
         <string>kata-containers-CCv0-tests-firecracker-ubuntu-PR</string>
         <string>kata-containers-CCv0-tests-ubuntu-20.04-PR</string>
         <string>kata-containers-CCv0-ubuntu-20.04-PR</string>
-        <string>kata-containers-experimental-virtiofs-PR-metrics</string>
+        <string>kata-containers-centos-AlibabaCloud-PR</string>
+        <string>kata-containers-fedora-35-x86_64-CRIO_K8S-PR</string>
+        <string>kata-containers-fedora-35-x86_64-CRIO_K8S_MINIMAL-PR</string>
         <string>kata-containers-main-experimental-virtiofs</string>
-        <string>kata-main-tarball</string>
-        <string>test-fedora</string>
-        <string>test-fedora-35</string>
-        <string>test-fedora-35-full</string>
+        <string>kata-containers-main-fedora-35-x86_64-CRIO_K8S-baseline</string>
+        <string>kata-containers-tests-centos-AlibabaCloud-PR</string>
+        <string>kata-deploy-ubuntu-nightly</string>
+        <string>kata-manager-ubuntu-nightly</string>
+        <string>tests-fedora-35-x86_64-CRIO_K8S-PR</string>
+        <string>tests-fedora-35-x86_64-CRIO_K8S_MINIMAL-PR</string>
+        <string>wainer-kata-containers-2.0-ubuntu-20.10-AMD</string>
+        <string>wainer-tests-CCv0-fedora-35-x86_64-CC_CRI_CONTAINERD_CLOUD_HYPERVISOR</string>
       </jobNames>
       <jobFilters/>
       <columns>
@@ -2276,7 +2402,7 @@ git config --global user.name &quot;Kata Containers Bot&quot;</initScript>
         <hudson.views.LastDurationColumn/>
         <hudson.views.BuildButtonColumn/>
         <org.jenkins.plugins.builton.BuiltOnColumn plugin="built-on-column@1.1"/>
-        <hudson.plugins.favorite.column.FavoriteColumn plugin="favorite@2.3.3"/>
+        <hudson.plugins.favorite.column.FavoriteColumn plugin="favorite@2.4.1"/>
       </columns>
       <includeRegex>kata-containers-2.*</includeRegex>
       <recurse>false</recurse>
@@ -2295,6 +2421,18 @@ git config --global user.name &quot;Kata Containers Bot&quot;</initScript>
         <string>kata-containers-CCv0-tests-firecracker-ubuntu-PR</string>
         <string>kata-containers-CCv0-tests-ubuntu-20.04-PR</string>
         <string>kata-containers-CCv0-ubuntu-20.04-PR</string>
+        <string>kata-containers-CCv0-ubuntu-20.04-x86_64-CC_CRI_CONTAINERD-PR</string>
+        <string>kata-containers-CCv0-ubuntu-20.04-x86_64-CC_CRI_CONTAINERD_CLOUD_HYPERVISOR-PR</string>
+        <string>kata-containers-CCv0-ubuntu-20.04-x86_64-CC_CRI_CONTAINERD_K8S-PR</string>
+        <string>kata-containers-CCv0-ubuntu-20.04-x86_64-CC_SKOPEO_CRI_CONTAINERD-PR</string>
+        <string>kata-containers-CCv0-ubuntu-20.04-x86_64-CC_SKOPEO_CRI_CONTAINERD_CLOUD_HYPERVISOR-PR</string>
+        <string>kata-containers-CCv0-ubuntu-20.04-x86_64-CC_SKOPEO_CRI_CONTAINERD_K8S-PR</string>
+        <string>tests-CCv0-ubuntu-20.04-x86_64-CC_CRI_CONTAINERD-PR</string>
+        <string>tests-CCv0-ubuntu-20.04-x86_64-CC_CRI_CONTAINERD_CLOUD_HYPERVISOR-PR</string>
+        <string>tests-CCv0-ubuntu-20.04-x86_64-CC_CRI_CONTAINERD_K8S-PR</string>
+        <string>tests-CCv0-ubuntu-20.04-x86_64-CC_SKOPEO_CRI_CONTAINERD-PR</string>
+        <string>tests-CCv0-ubuntu-20.04-x86_64-CC_SKOPEO_CRI_CONTAINERD_CLOUD_HYPERVISOR-PR</string>
+        <string>tests-CCv0-ubuntu-20.04-x86_64-CC_SKOPEO_CRI_CONTAINERD_K8S-PR</string>
       </jobNames>
       <jobFilters/>
       <columns>
@@ -2306,7 +2444,7 @@ git config --global user.name &quot;Kata Containers Bot&quot;</initScript>
         <hudson.views.LastDurationColumn/>
         <hudson.views.BuildButtonColumn/>
         <org.jenkins.plugins.builton.BuiltOnColumn plugin="built-on-column@1.1"/>
-        <hudson.plugins.favorite.column.FavoriteColumn plugin="favorite@2.3.3"/>
+        <hudson.plugins.favorite.column.FavoriteColumn plugin="favorite@2.4.1"/>
       </columns>
       <recurse>false</recurse>
     </listView>
@@ -2357,7 +2495,7 @@ git config --global user.name &quot;Kata Containers Bot&quot;</initScript>
             <hudson.views.LastSuccessColumn/>
             <hudson.views.LastFailureColumn/>
             <hudson.views.LastDurationColumn/>
-            <jenkins.branch.DescriptionColumn plugin="branch-api@2.7.0"/>
+            <jenkins.branch.DescriptionColumn plugin="branch-api@2.1044.v2c007e51b_87f"/>
           </columns>
         </hudson.plugins.sectioned__view.ListViewSection>
         <hudson.plugins.sectioned__view.TextSection>
@@ -2386,7 +2524,7 @@ git config --global user.name &quot;Kata Containers Bot&quot;</initScript>
             <hudson.views.LastSuccessColumn/>
             <hudson.views.LastFailureColumn/>
             <hudson.views.LastDurationColumn/>
-            <jenkins.branch.DescriptionColumn plugin="branch-api@2.7.0"/>
+            <jenkins.branch.DescriptionColumn plugin="branch-api@2.1044.v2c007e51b_87f"/>
           </columns>
         </hudson.plugins.sectioned__view.ListViewSection>
       </sections>
@@ -2413,19 +2551,19 @@ git config --global user.name &quot;Kata Containers Bot&quot;</initScript>
   &lt;/tr&gt;&#xd;
   &lt;tr&gt;&#xd;
     &lt;td&gt;kata-containers-2.0-ubuntu-20.04-CONTAINERD-main-baseline&lt;/td&gt;&#xd;
-    &lt;td&gt;@GabyCT, @jcvenegas&lt;/td&gt;&#xd;
+    &lt;td&gt;@GabyCT&lt;/td&gt;&#xd;
     &lt;td&gt;jenkins-ci-ubuntu-20-04&lt;/td&gt;&#xd;
     &lt;td style=&quot;text-align:center;&quot;&gt;Y&lt;/td&gt;&#xd;
   &lt;/tr&gt;&#xd;
   &lt;tr&gt;&#xd;
     &lt;td&gt;kata-containers-2.0-ubuntu-20.04-CLOUD-HYPERVISOR-K8S-CONTAINERD-main-baseline&lt;/td&gt;&#xd;
-    &lt;td&gt;@jcvenegas&lt;/td&gt;&#xd;
+    &lt;td&gt;@amshinde&lt;/td&gt;&#xd;
     &lt;td&gt;jenkins-ci-ubuntu-1804-cloud-hypervisor-k8s-containerd-2.0&lt;/td&gt;&#xd;
     &lt;td style=&quot;text-align:center;&quot;&gt;Y&lt;/td&gt;&#xd;
   &lt;/tr&gt;&#xd;
   &lt;tr&gt;&#xd;
     &lt;td&gt;kata-containers-2.0-ubuntu-20.04-CLOUD-HYPERVISOR-K8S-CRIO-main-baseline&lt;/td&gt;&#xd;
-    &lt;td&gt;@jcvenegas&lt;/td&gt;&#xd;
+    &lt;td&gt;@fidencio&lt;/td&gt;&#xd;
     &lt;td&gt;jenkins-ci-ubuntu-clh-crio-18-04&lt;/td&gt;&#xd;
     &lt;td style=&quot;text-align:center;&quot;&gt;Y&lt;/td&gt;&#xd;
   &lt;/tr&gt;&#xd;
@@ -2443,59 +2581,67 @@ git config --global user.name &quot;Kata Containers Bot&quot;</initScript>
   &lt;/tr&gt;&#xd;
   &lt;tr&gt;&#xd;
     &lt;td&gt;kata-containers-2.0-ubuntu-20.04-PMEM-main-baseline&lt;/td&gt;&#xd;
-    &lt;td&gt;@devimc, @GabyCT&lt;/td&gt;&#xd;
+    &lt;td&gt;@amshinde, @GabyCT&lt;/td&gt;&#xd;
     &lt;td&gt;jenkins-ci-pmem-ubuntu-20-04&lt;/td&gt;&#xd;
     &lt;td style=&quot;text-align:center;&quot;&gt;Y&lt;/td&gt;&#xd;
   &lt;/tr&gt;&#xd;
   &lt;tr&gt;&#xd;
     &lt;td&gt;kata-containers-2.0-ubuntu-20.04-QAT-main-baseline&lt;/td&gt;&#xd;
-    &lt;td&gt;@devimc, @GabyCT&lt;/td&gt;&#xd;
+    &lt;td&gt;@amshinde, @GabyCT&lt;/td&gt;&#xd;
     &lt;td&gt;jenkins-ci-qat-ubuntu-20-04&lt;/td&gt;&#xd;
     &lt;td style=&quot;text-align:center;&quot;&gt;Y&lt;/td&gt;&#xd;
   &lt;/tr&gt;&#xd;
   &lt;tr&gt;&#xd;
     &lt;td&gt;kata-containers-2.0-ubuntu-20.04-s390x-main-baseline&lt;/td&gt;&#xd;
-    &lt;td&gt;@Jakob-Naucke, @stevenhorsman, @davidhay1969&lt;/td&gt;&#xd;
+    &lt;td&gt;@BbolroC, @stevenhorsman, @davidhay1969&lt;/td&gt;&#xd;
     &lt;td&gt;jenkins-ci-s390x-ubuntu-20-04&lt;/td&gt;&#xd;
     &lt;td style=&quot;text-align:center;&quot;&gt;Y&lt;/td&gt;&#xd;
   &lt;/tr&gt;&#xd;
   &lt;tr&gt;&#xd;
     &lt;td&gt;kata-containers-2.0-ubuntu-20.04-VFIO-main-baseline&lt;/td&gt;&#xd;
-    &lt;td&gt;@devimc, @GabyCT, @dgibson&lt;/td&gt;&#xd;
+    &lt;td&gt;@amshinde, @dgibson&lt;/td&gt;&#xd;
     &lt;td&gt;jenkins-vfio-host:ubuntu18-04-vm:fedora32&lt;/td&gt;&#xd;
     &lt;td style=&quot;text-align:center;&quot;&gt;Y&lt;/td&gt;&#xd;
   &lt;/tr&gt;&#xd;
   &lt;tr&gt;&#xd;
     &lt;td&gt;kata-containers-2.0-ubuntu-20.04-ppc64le-main-baseline&lt;/td&gt;&#xd;
     &lt;td&gt;@Amulyam24&lt;/td&gt;&#xd;
-    &lt;td&gt;jenkins-ci-Power9-ubuntu-20-04&lt;/td&gt;&#xd;
-    &lt;td style=&quot;text-align:center;&quot;&gt;N&lt;/td&gt;&#xd;
-  &lt;/tr&gt;&#xd;
-  &lt;tr&gt;&#xd;
-    &lt;td&gt;kata-containers-2.0-centos-8-CRIO_K8S-main-baseline&lt;/td&gt;&#xd;
-    &lt;td&gt;@snir911, @c3d&lt;/td&gt;&#xd;
-    &lt;td&gt;jenkins-ci-centos-8&lt;/td&gt;&#xd;
+    &lt;td&gt;jenkins-ci-ppc64le-ubuntu-20-04&lt;/td&gt;&#xd;
     &lt;td style=&quot;text-align:center;&quot;&gt;Y&lt;/td&gt;&#xd;
   &lt;/tr&gt;&#xd;
   &lt;tr&gt;&#xd;
-    &lt;td&gt;kata-containers-2.0-fedora-32-CRIO_K8S-main-baseline&lt;/td&gt;&#xd;
+    &lt;td&gt;kata-containers-main-centos-8-stream-x86_64-CRIO_K8S-baseline&lt;/td&gt;&#xd;
     &lt;td&gt;@snir911, @c3d&lt;/td&gt;&#xd;
-    &lt;td&gt;jenkins-ci-fedora-32-crio&lt;/td&gt;&#xd;
+    &lt;td&gt;jenkins-ci-centos-8-stream-x86_64-crio_k8s&lt;/td&gt;&#xd;
+    &lt;td style=&quot;text-align:center;&quot;&gt;N (**)&lt;/td&gt;&#xd;
+  &lt;/tr&gt;&#xd;
+  &lt;tr&gt;&#xd;
+    &lt;td&gt;kata-containers-main-centos-8-stream-x86_64-CRIO_K8S_MINIMAL-baseline&lt;/td&gt;&#xd;
+    &lt;td&gt;@snir911, @c3d&lt;/td&gt;&#xd;
+    &lt;td&gt;jenkins-ci-centos-8-stream-x86_64-crio_k8s_minimal&lt;/td&gt;&#xd;
+    &lt;td style=&quot;text-align:center;&quot;&gt;N (**)&lt;/td&gt;&#xd;
+  &lt;/tr&gt;&#xd;
+  &lt;tr&gt;&#xd;
+    &lt;td&gt; kata-containers-main-fedora-35-x86_64-CRIO_K8S-baseline&lt;/td&gt;&#xd;
+    &lt;td&gt;@snir911, @c3d&lt;/td&gt;&#xd;
+    &lt;td&gt;(TBD)jenkins-ci-fedora-35-crio&lt;/td&gt;&#xd;
     &lt;td style=&quot;text-align:center;&quot;&gt;Y&lt;/td&gt;&#xd;
   &lt;/tr&gt;&#xd;
   &lt;tr&gt;&#xd;
-    &lt;td&gt;kata-containers-2.0-fedora-32-CRIO_K8S_MINIMAL-main-baseline&lt;/td&gt;&#xd;
+    &lt;td&gt;kata-containers-main-fedora-35-x86_64-CRIO_K8S_MINIMAL-baseline&lt;/td&gt;&#xd;
     &lt;td&gt;@snir911, @c3d&lt;/td&gt;&#xd;
-    &lt;td&gt;jenkins-ci-fedora-32-crio-k8s-e2e-minimal&lt;/td&gt;&#xd;
+    &lt;td&gt;(TBD)jenkins-ci-fedora-35-crio-k8s-e2e-minimal&lt;/td&gt;&#xd;
     &lt;td style=&quot;text-align:center;&quot;&gt;Y&lt;/td&gt;&#xd;
   &lt;/tr&gt;&#xd;
   &lt;tr&gt;&#xd;
-    &lt;td&gt;crio-kata-containers-2.0-fedora-32-main-baseline&lt;/td&gt;&#xd;
+    &lt;td&gt;crio-kata-containers-2.0-fedora-35-main-baseline&lt;/td&gt;&#xd;
     &lt;td&gt;@fgiudici, @littlejawa, @fidencio&lt;/td&gt;&#xd;
     &lt;td&gt;jenkins-kata-containers-crio&lt;/td&gt;&#xd;
     &lt;td style=&quot;text-align:center;&quot;&gt;N&lt;/td&gt;&#xd;
   &lt;/tr&gt;&#xd;
-&lt;/table&gt;</description>
+&lt;/table&gt;&#xd;
+&#xd;
+&lt;p&gt;** CentOS 8 Stream was set as CentOS 8 reached EOL, preferably will be replaced with RHEL based OS.&lt;/p&gt;</description>
       <filterExecutors>false</filterExecutors>
       <filterQueue>false</filterQueue>
       <properties class="hudson.model.View$PropertyList"/>
@@ -2504,6 +2650,7 @@ git config --global user.name &quot;Kata Containers Bot&quot;</initScript>
         <string>kata-containers-2.0-ubuntu-20.04-CONTAINERD-main-baseline</string>
         <string>kata-containers-2.0-ubuntu-20.04-ppc64le-main-baseline</string>
         <string>kata-containers-2.0-ubuntu-20.04-QAT-main-baseline</string>
+        <string>kata-containers-main-fedora-35-x86_64-CRIO_K8S_MINIMAL-baseline</string>
       </jobNames>
       <jobFilters/>
       <columns>
@@ -2515,7 +2662,7 @@ git config --global user.name &quot;Kata Containers Bot&quot;</initScript>
         <hudson.views.LastDurationColumn/>
         <hudson.views.BuildButtonColumn/>
         <org.jenkins.plugins.builton.BuiltOnColumn plugin="built-on-column@1.1"/>
-        <hudson.plugins.favorite.column.FavoriteColumn plugin="favorite@2.3.3"/>
+        <hudson.plugins.favorite.column.FavoriteColumn plugin="favorite@2.4.1"/>
       </columns>
       <includeRegex>.*-baseline</includeRegex>
       <recurse>false</recurse>
@@ -2532,7 +2679,7 @@ git config --global user.name &quot;Kata Containers Bot&quot;</initScript>
         <string>kata-containers-main-kernel-experimental-x86_64</string>
         <string>kata-containers-main-kernel-vanilla-x86_64</string>
         <string>kata-containers-main-qemu-x86_64</string>
-        <string>kata-containers-stable-2.2-qemu-x86_64</string>
+        <string>kata-containers-stable-2.3-qemu-x86_64</string>
       </jobNames>
       <jobFilters/>
       <columns>
@@ -2544,7 +2691,7 @@ git config --global user.name &quot;Kata Containers Bot&quot;</initScript>
         <hudson.views.LastDurationColumn/>
         <hudson.views.BuildButtonColumn/>
         <org.jenkins.plugins.builton.BuiltOnColumn plugin="built-on-column@1.1"/>
-        <hudson.plugins.favorite.column.FavoriteColumn plugin="favorite@2.3.3"/>
+        <hudson.plugins.favorite.column.FavoriteColumn plugin="favorite@2.4.1"/>
       </columns>
       <recurse>false</recurse>
     </listView>
@@ -2646,22 +2793,23 @@ git config --global user.name &quot;Kata Containers Bot&quot;</initScript>
     &lt;td&gt;kata-containers-2.0-centos-PR&lt;/td&gt;&#xd;
     &lt;td&gt;kata-containers-2.0-tests-centos-PR&lt;/td&gt;&#xd;
     &lt;td&gt;jenkins-ci-centos-8&lt;/td&gt;&#xd;
+    &lt;td style=&quot;text-align:center;&quot;&gt;N&lt;/td&gt;&#xd;
+  &lt;/tr&gt;&#xd;
+  &lt;tr&gt;&#xd;
+    &lt;td&gt;&lt;a href=&quot;http://jenkins.katacontainers.io/job/kata-containers-main-fedora-35-x86_64-CRIO_K8S-baseline&quot;&gt;kata-containers-main-fedora-35-x86_64-CRIO_K8S-baseline&lt;/a&gt;&lt;/td&gt;&#xd;
+    &lt;td&gt;kata-containers-fedora-35-x86_64-CRIO_K8S-PR&lt;/td&gt;&#xd;
+    &lt;td&gt;tests-fedora-35-x86_64-CRIO_K8S-PR&lt;/td&gt;&#xd;
+    &lt;td&gt;jenkins-ci-fedora-35-x86_64-crio_k8s&lt;/td&gt;&#xd;
     &lt;td style=&quot;text-align:center;&quot;&gt;Y&lt;/td&gt;&#xd;
   &lt;/tr&gt;&#xd;
   &lt;tr&gt;&#xd;
-    &lt;td&gt;&lt;a href=&quot;http://jenkins.katacontainers.io/job/kata-containers-2.0-fedora-32-CRIO_K8S-main-baseline&quot;&gt;kata-containers-2.0-fedora-32-CRIO_K8S-main-baseline&lt;/a&gt;&lt;/td&gt;&#xd;
-    &lt;td&gt;kata-containers-2.0-fedora-PR&lt;/td&gt;&#xd;
-    &lt;td&gt;kata-containers-2.0-tests-fedora-PR&lt;/td&gt;&#xd;
-    &lt;td&gt;jenkins-ci-fedora-32-crio&lt;/td&gt;&#xd;
+    &lt;td&gt;&lt;a href=&quot;http://jenkins.katacontainers.io/job/kata-containers-main-fedora-35-x86_64-CRIO_K8S_MINIMAL-baseline&quot;&gt;kata-containers-main-fedora-35-x86_64-CRIO_K8S_MINIMAL-baseline&lt;/a&gt;&lt;/td&gt;&#xd;
+    &lt;td&gt;kata-containers-fedora-35-x86_64-CRIO_K8S_MINIMAL-PR&lt;/td&gt;&#xd;
+    &lt;td&gt;tests-fedora-35-x86_64-CRIO_K8S_MINIMAL-PR&lt;/td&gt;&#xd;
+    &lt;td&gt;jenkins-ci-fedora-35-x86_64-crio_minimal_k8s&lt;/td&gt;&#xd;
     &lt;td style=&quot;text-align:center;&quot;&gt;Y&lt;/td&gt;&#xd;
   &lt;/tr&gt;&#xd;
-  &lt;tr&gt;&#xd;
-    &lt;td&gt;&lt;a href=&quot;http://jenkins.katacontainers.io/job/kata-containers-2.0-fedora-32-CRIO_K8S_MINIMAL-main-baseline&quot;&gt;kata-containers-2.0-fedora-32-CRIO_K8S_MINIMAL-main-baseline&lt;/a&gt;&lt;/td&gt;&#xd;
-    &lt;td&gt;kata-containers-2.0-fedora-PR-crio-k8s-e2e-minimal&lt;/td&gt;&#xd;
-    &lt;td&gt;kata-containers-2.0-tests-fedora-PR-crio-k8s-e2e-minimal&lt;/td&gt;&#xd;
-    &lt;td&gt;jenkins-ci-fedora-32-crio-k8s-e2e-minimal&lt;/td&gt;&#xd;
-    &lt;td style=&quot;text-align:center;&quot;&gt;Y&lt;/td&gt;&#xd;
-  &lt;/tr&gt;&#xd;
+&#xd;
 &lt;/table&gt;</description>
       <filterExecutors>false</filterExecutors>
       <filterQueue>false</filterQueue>
@@ -2684,16 +2832,10 @@ git config --global user.name &quot;Kata Containers Bot&quot;</initScript>
           <jobNames>
             <comparator class="hudson.util.CaseInsensitiveComparator" reference="../../../../../hudson.plugins.sectioned__view.SectionedView/sections/hudson.plugins.sectioned__view.TextSection/jobNames/comparator"/>
             <string>jobs-2.0/kata-containers-2.0-ubuntu-1804-PR-cloud-hypervisor-k8s-containerd</string>
-            <string>kata-containers-2.0-centos-PR</string>
-            <string>kata-containers-2.0-fedora-PR</string>
-            <string>kata-containers-2.0-fedora-PR-crio-k8s-e2e-minimal</string>
             <string>kata-containers-2.0-firecracker-ubuntu-PR</string>
             <string>kata-containers-2.0-metrics-ubuntu-20-04-PR</string>
             <string>kata-containers-2.0-pmem-ubuntu-20.04-PR</string>
             <string>kata-containers-2.0-qat-ubuntu-20.04-PR</string>
-            <string>kata-containers-2.0-tests-centos-PR</string>
-            <string>kata-containers-2.0-tests-fedora-PR</string>
-            <string>kata-containers-2.0-tests-fedora-PR-crio-k8s-e2e-minimal</string>
             <string>kata-containers-2.0-tests-firecracker-ubuntu-PR</string>
             <string>kata-containers-2.0-tests-metrics-ubuntu-20-04-PR</string>
             <string>kata-containers-2.0-tests-pmem-ubuntu-20.04-PR</string>
@@ -2708,6 +2850,10 @@ git config --global user.name &quot;Kata Containers Bot&quot;</initScript>
             <string>kata-containers-2.0-ubuntu-PR-x86_64-clh-crio-tests-repo</string>
             <string>kata-containers-2.0-ubuntu-s390x-PR</string>
             <string>kata-containers-2.0-vfio-PR</string>
+            <string>kata-containers-fedora-35-x86_64-CRIO_K8S-PR</string>
+            <string>kata-containers-fedora-35-x86_64-CRIO_K8S_MINIMAL-PR</string>
+            <string>tests-fedora-35-x86_64-CRIO_K8S-PR</string>
+            <string>tests-fedora-35-x86_64-CRIO_K8S_MINIMAL-PR</string>
           </jobNames>
           <jobFilters/>
           <name>Triggered on pull request jobs</name>
@@ -2734,4 +2880,5 @@ git config --global user.name &quot;Kata Containers Bot&quot;</initScript>
   </crumbIssuer>
   <nodeProperties/>
   <globalNodeProperties/>
+  <nodeRenameMigrationNeeded>false</nodeRenameMigrationNeeded>
 </hudson>
