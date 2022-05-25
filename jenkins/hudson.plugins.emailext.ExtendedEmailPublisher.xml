@@ -1,9 +1,10 @@
 <?xml version='1.1' encoding='UTF-8'?>
-<hudson.plugins.emailext.ExtendedEmailPublisherDescriptor plugin="email-ext@2.82">
+<hudson.plugins.emailext.ExtendedEmailPublisherDescriptor plugin="email-ext@2.87">
   <mailAccount>
-    <smtpPort>25</smtpPort>
-    <smtpPassword>{AQAAABAAAAAQLshR4aUJHQDLcAmZS471Wd1C6plSlkX+S4zd9iiuwEo=}</smtpPassword>
+    <smtpHost>smtp.gmail.com</smtpHost>
+    <smtpPort>587</smtpPort>
     <useSsl>false</useSsl>
+    <useTls>false</useTls>
     <advProperties></advProperties>
     <defaultAccount>true</defaultAccount>
   </mailAccount>

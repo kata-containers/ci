@@ -1,5 +1,5 @@
 <?xml version='1.1' encoding='UTF-8'?>
-<hudson.plugins.git.GitSCM_-DescriptorImpl plugin="git@4.7.1">
+<hudson.plugins.git.GitSCM_-DescriptorImpl plugin="git@4.11.0">
   <globalConfigName>katacontainersbot</globalConfigName>
   <globalConfigEmail>katacontainersbot@gmail.com</globalConfigEmail>
   <createAccountBasedOnEmail>false</createAccountBasedOnEmail>
