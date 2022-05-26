@@ -1,5 +1,5 @@
 <?xml version='1.1' encoding='UTF-8'?>
-<com.cloudbees.hudson.plugins.folder.config.AbstractFolderConfiguration plugin="cloudbees-folder@6.15">
+<com.cloudbees.hudson.plugins.folder.config.AbstractFolderConfiguration plugin="cloudbees-folder@6.714.v79e858ef76a_2">
   <healthMetrics>
     <com.cloudbees.hudson.plugins.folder.health.WorstChildHealthMetric>
       <nonRecursive>false</nonRecursive>
