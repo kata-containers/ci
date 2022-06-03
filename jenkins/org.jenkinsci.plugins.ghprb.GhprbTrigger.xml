@@ -30,6 +30,13 @@
       <description>firecracker-job connection</description>
       <secret>{AQAAABAAAAAQU2uL2QeNANPVuXBX6g9h02w3evomdB77rYHwjpBCgRU=}</secret>
     </org.jenkinsci.plugins.ghprb.GhprbGitHubAuth>
+    <org.jenkinsci.plugins.ghprb.GhprbGitHubAuth>
+      <serverAPIUrl>https://api.github.com</serverAPIUrl>
+      <credentialsId>7515f144-2a26-4537-9685-c110b0a41e80</credentialsId>
+      <id>f8b1ab3d-446a-43bd-835d-732efdf4776c</id>
+      <description>Cloud Hypervisor External job</description>
+      <secret>{AQAAABAAAAAQjR02EdTsY1iPn8Ky49O51pvB23HTtQ+iRjcWdveeLPc=}</secret>
+    </org.jenkinsci.plugins.ghprb.GhprbGitHubAuth>
   </githubAuth>
   <adminlist>katacontainersbot</adminlist>
   <requestForTestingPhrase></requestForTestingPhrase>

@@ -1,4 +1,4 @@
 <?xml version='1.1' encoding='UTF-8'?>
-<org.jenkinsci.plugins.github__branch__source.GitHubConfiguration plugin="github-branch-source@2.10.2">
+<org.jenkinsci.plugins.github__branch__source.GitHubConfiguration plugin="github-branch-source@1598.v91207e9f9b_4a_">
   <apiRateLimitChecker>ThrottleForNormalize</apiRateLimitChecker>
 </org.jenkinsci.plugins.github__branch__source.GitHubConfiguration>

@@ -1,5 +1,5 @@
 <?xml version='1.1' encoding='UTF-8'?>
-<org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer plugin="resource-disposer@0.16">
+<org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer plugin="resource-disposer@0.18">
   <id>AsyncResourceDisposer</id>
   <backlog class="java.util.Collections$SetFromMap" serialization="custom">
     <unserializable-parents/>
@@ -9,24 +9,144 @@
           <entry>
             <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
               <disposer reference="../../../../../../.."/>
-              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.39">
-                <node>arm03_slave</node>
-                <path>/home/jenkins/workspace/kata-containers-2.0-ubuntu-ARM-PR_ws-cleanup_1637613834935</path>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>Power9_agent01</node>
+                <path>/home/jenkins/workspace/kata-containers-2.0-tests-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1653986387717</path>
               </disposable>
-              <registered>2021-11-22 20:43:55.26 UTC</registered>
-              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace arm03_slave:/home/jenkins/workspace/kata-containers-2.0-ubuntu-ARM-PR_ws-cleanup_1637613834935</disposableInfo>
+              <registered>2022-05-31 08:39:47.766 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace Power9_agent01:/home/jenkins/workspace/kata-containers-2.0-tests-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1653986387717</disposableInfo>
             </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
             <boolean>true</boolean>
           </entry>
           <entry>
             <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
               <disposer reference="../../../../../../.."/>
-              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.39">
-                <node>arm01_slave</node>
-                <path>/home/jenkins/workspace/kata-containers-2.0-tests-ubuntu-ARM-PR_ws-cleanup_1639016085572</path>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>Power9_agent01</node>
+                <path>/home/jenkins/workspace/kata-containers-2.0-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1654006224396</path>
               </disposable>
-              <registered>2021-12-09 02:14:45.662 UTC</registered>
-              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace arm01_slave:/home/jenkins/workspace/kata-containers-2.0-tests-ubuntu-ARM-PR_ws-cleanup_1639016085572</disposableInfo>
+              <registered>2022-05-31 14:10:24.446 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace Power9_agent01:/home/jenkins/workspace/kata-containers-2.0-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1654006224396</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>Power9_agent01</node>
+                <path>/home/jenkins/workspace/kata-containers-2.0-tests-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1653994684636</path>
+              </disposable>
+              <registered>2022-05-31 10:58:04.685 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace Power9_agent01:/home/jenkins/workspace/kata-containers-2.0-tests-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1653994684636</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>Power9_agent01</node>
+                <path>/home/jenkins/workspace/kata-containers-2.0-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1654003029248</path>
+              </disposable>
+              <registered>2022-05-31 13:17:09.295 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace Power9_agent01:/home/jenkins/workspace/kata-containers-2.0-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1654003029248</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>Power9_agent01</node>
+                <path>/home/jenkins/workspace/kata-containers-2.0-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1653990171693</path>
+              </disposable>
+              <registered>2022-05-31 09:42:51.741 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace Power9_agent01:/home/jenkins/workspace/kata-containers-2.0-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1653990171693</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>Power9_agent01</node>
+                <path>/home/jenkins/workspace/kata-containers-2.0-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1653988882131</path>
+              </disposable>
+              <registered>2022-05-31 09:21:22.178 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace Power9_agent01:/home/jenkins/workspace/kata-containers-2.0-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1653988882131</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>Power9_agent01</node>
+                <path>/home/jenkins/workspace/kata-containers-2.0-tests-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1653987648784</path>
+              </disposable>
+              <registered>2022-05-31 09:00:48.830 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace Power9_agent01:/home/jenkins/workspace/kata-containers-2.0-tests-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1653987648784</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>Power9_agent01</node>
+                <path>/home/jenkins/workspace/kata-containers-2.0-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1653991697696</path>
+              </disposable>
+              <registered>2022-05-31 10:08:17.743 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace Power9_agent01:/home/jenkins/workspace/kata-containers-2.0-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1653991697696</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>Power9_agent01</node>
+                <path>/home/jenkins/workspace/kata-containers-2.0-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1653994597609</path>
+              </disposable>
+              <registered>2022-05-31 10:56:37.660 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace Power9_agent01:/home/jenkins/workspace/kata-containers-2.0-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1653994597609</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>Power9_agent01</node>
+                <path>/home/jenkins/workspace/kata-containers-2.0-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1654001510912</path>
+              </disposable>
+              <registered>2022-05-31 12:51:50.959 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace Power9_agent01:/home/jenkins/workspace/kata-containers-2.0-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1654001510912</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>Power9_agent01</node>
+                <path>/home/jenkins/workspace/kata-containers-2.0-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1653993048165</path>
+              </disposable>
+              <registered>2022-05-31 10:30:48.212 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace Power9_agent01:/home/jenkins/workspace/kata-containers-2.0-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1653993048165</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>Power9_agent01</node>
+                <path>/home/jenkins/workspace/kata-containers-2.0-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1653984904596</path>
+              </disposable>
+              <registered>2022-05-31 08:15:04.646 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace Power9_agent01:/home/jenkins/workspace/kata-containers-2.0-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1653984904596</disposableInfo>
             </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
             <boolean>true</boolean>
           </entry>
