@@ -12,7 +12,7 @@ set -e
 set -x
 
 curl -OL https://raw.githubusercontent.com/kata-containers/tests/CCv0/.ci/ci_entry_point.sh
-{% if baremetal -%}
+{% if baremetal == "true" -%}
 export BAREMETAL=true
 {% endif %}
 export DEBUG=true
