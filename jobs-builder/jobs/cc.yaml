@@ -117,7 +117,7 @@
           started-status: Build running
     builders:
       - shell:
-          !include-raw: include/cc-ci_entrypoint.sh.inc
+          !include-jinja2: include/cc-ci_entrypoint.sh.inc
     <<: *cc_jobs_common_publishers
 
 - job-template:
