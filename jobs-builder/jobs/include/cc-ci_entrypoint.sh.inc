@@ -12,6 +12,9 @@ set -e
 set -x
 
 curl -OL https://raw.githubusercontent.com/kata-containers/tests/CCv0/.ci/ci_entry_point.sh
+{% if baremetal -%}
+export BAREMETAL=true
+{% endif %}
 export DEBUG=true
 export CI_JOB="{{ ci_job }}"
 bash -x ci_entry_point.sh "$GIT_URL"

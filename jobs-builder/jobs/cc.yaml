@@ -207,6 +207,7 @@
       - ubuntu-20.04
     arch:
       - x86_64
+    baremetal: false
     ci_job:
       - CC_CRI_CONTAINERD
       - CC_CRI_CONTAINERD_CLOUD_HYPERVISOR
