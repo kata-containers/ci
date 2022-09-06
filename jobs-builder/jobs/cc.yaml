@@ -120,6 +120,81 @@
           !include-raw: include/cc-ci_entrypoint.sh.inc
     <<: *cc_jobs_common_publishers
 
+- job-template:
+    # Use to generate pull request (PR) jobs for
+    # confidential-containers/operator.
+    #
+    # Arguments:
+    #   os                - the node Operating System in <name>-<version>
+    #                       format.
+    #   arch              - the node architecture (e.g x86_64, s390x, ppc64le,
+    #                       and so on).
+    #   container_runtime - the container runtime (e.g. containerd, crio)
+    #   runtimeclass      - the runtimeclass as configured by the operator
+    #                       (e.g. kata-qemu, kata-clh, kata-qemu-tdx).
+    name: "confidential-containers-operator-main-{os}-{arch}-{container_runtime}_{runtimeclass}-PR"
+    <<: *cc_jobs_common_properties
+    # Allow concurrent jobs by default. Specify `false` on the project definition otherwise.
+    concurrent_toggle: true
+    description:
+      !j2: |
+          <pre>
+          Pull Request (PR) job for the confidential-containers/operator repository.
+          OS="{{ os }}"
+          arch="{{ arch }}"
+          container runtime="{{ container_runtime }}"
+          runtimeclass="{{ runtimeclass }}"
+          type="PR"
+          </pre>
+    scm:
+      - git:
+          url: https://github.com/confidential-containers/operator
+          branches:
+            - '${{sha1}}'
+          refspec: '+refs/pull/${{ghprbPullId}}/*:refs/remotes/origin/pr/${{ghprbPullId}}/*'
+          wipe-workspace: false
+    properties:
+      - github:
+          url: https://github.com/confidential-containers/operator
+    triggers:
+      - github-pull-request:
+          auth-id: 'Confidential Containers external jobs'
+          github-hooks: true
+          # Trigger only on commenting phrase in the pull request.
+          only-trigger-phrase: true
+          # The expected phrase will be like "/(re)test-<OS Name>"
+          trigger-phrase:
+            !j2: '.*(\n|^|\s)/(re)?test(-{{ runtimeclass }})?(-{{ os.split("-")[0] }})?(\n|$|\s)+.*'
+          # Skip on commenting phrase.
+          skip-build-phrase: '.*\[skip\W+ci\].*'
+          cron: 'H/5 * * * *'
+          # List of organizations whose members are allowed to build.
+          org-list:
+            - confidential-containers
+          # Members of allowed organizations will have admin rights.
+          allow-whitelist-orgs-as-admins: true
+          # Branches allowed to be tested.
+          white-list-target-branches:
+            - main
+          # Branches disallowed to be tested.
+          black-list-target-branches:
+            - master
+            - stable-.*
+          cancel-builds-on-update: true
+          # Commit Status Context
+          status-context:
+            !j2: 'tests-e2e-{{ os }}-{{ arch }}-{{ container_runtime }}_{{ runtimeclass }}'
+          # Commit Status Build Triggered
+          triggered-status: Build triggered
+          # Commit Status Build Started
+          started-status: Build running
+    builders:
+      - shell: |
+          sudo apt-get update -y
+          sudo apt-get install -y ansible
+          cd tests/e2e
+          ./run-local.sh
+
 ###
 # Define the projects
 ###
@@ -141,3 +216,15 @@
       - CC_SKOPEO_CRI_CONTAINERD_K8S
     jobs:
       - '{repo}-CCv0-{os}-{arch}-{ci_job}-PR'
+- project:
+    name: "Generate jobs for the Confidential Container Operator"
+    os:
+      - ubuntu-20.04
+    arch:
+      - x86_64
+    container_runtime:
+      - containerd
+    runtimeclass:
+      - kata-qemu
+    jobs:
+      - 'confidential-containers-operator-main-{os}-{arch}-{container_runtime}_{runtimeclass}-PR'
