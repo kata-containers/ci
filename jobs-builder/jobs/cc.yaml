@@ -117,7 +117,7 @@
           started-status: Build running
     builders:
       - shell:
-          !include-raw: include/cc-ci_entrypoint.sh.inc
+          !include-jinja2: include/cc-ci_entrypoint.sh.inc
     <<: *cc_jobs_common_publishers
 
 - job-template:
@@ -207,6 +207,7 @@
       - ubuntu-20.04
     arch:
       - x86_64
+    baremetal: "false"
     ci_job:
       - CC_CRI_CONTAINERD
       - CC_CRI_CONTAINERD_CLOUD_HYPERVISOR
@@ -228,3 +229,17 @@
       - kata-qemu
     jobs:
       - 'confidential-containers-operator-main-{os}-{arch}-{container_runtime}_{runtimeclass}-PR'
+- project:
+    name: "Generate jobs for Confidential Containers on AMD SEV"
+    repo:
+      - kata-containers
+      - tests
+    os:
+      - ubuntu-20.04_sev
+    arch:
+      - x86_64
+    baremetal: "true"
+    ci_job:
+      - CC_SEV_CRI_CONTAINERD_K8S
+    jobs:
+      - '{repo}-CCv0-{os}-{arch}-{ci_job}-PR'
