@@ -28,6 +28,7 @@
       - timeout:
           timeout: 20
           type: no-activity
+      - workspace-cleanup
 - cc_jobs_common_publishers: &cc_jobs_common_publishers
     name: 'default_publishers'
     publishers:
