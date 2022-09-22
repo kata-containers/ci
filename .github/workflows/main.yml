@@ -52,6 +52,7 @@ jobs:
           fetch-depth: 0
       - name: Install the Jenkins Job Builder
         run: |
+          pip install --user --upgrade jinja2
           pip install --user jenkins-job-builder
       - name: Check it can generate all jobs
         run: |
