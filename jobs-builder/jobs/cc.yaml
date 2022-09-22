@@ -193,7 +193,7 @@
       - shell:
           !j2: |
             sudo apt-get update -y
-            sudo apt-get install -y ansible
+            sudo apt-get install -y ansible python-is-python3
             cd tests/e2e
             ./run-local.sh -r {{ runtimeclass }} {%+ if baremetal == "true" %}-u{% endif %}
 
