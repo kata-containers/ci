@@ -192,9 +192,12 @@
     builders:
       - shell:
           !j2: |
+            #!/bin/bash
+
             sudo apt-get update -y
             sudo apt-get install -y ansible python-is-python3
             cd tests/e2e
+            export PATH="$PATH:/usr/local/bin"
             ./run-local.sh -r {{ runtimeclass }} {%+ if baremetal == "true" %}-u{% endif %}
 
 ###
