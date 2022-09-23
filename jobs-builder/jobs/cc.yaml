@@ -233,6 +233,7 @@
       - containerd
     runtimeclass:
       - kata-qemu
+      - kata-clh
     jobs:
       - 'confidential-containers-operator-main-{os}-{arch}-{container_runtime}_{runtimeclass}-PR'
 - project:
