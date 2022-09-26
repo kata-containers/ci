@@ -190,11 +190,15 @@
           # Commit Status Build Started
           started-status: Build running
     builders:
-      - shell: |
-          sudo apt-get update -y
-          sudo apt-get install -y ansible
-          cd tests/e2e
-          ./run-local.sh
+      - shell:
+          !j2: |
+            #!/bin/bash
+
+            sudo apt-get update -y
+            sudo apt-get install -y ansible python-is-python3
+            cd tests/e2e
+            export PATH="$PATH:/usr/local/bin"
+            ./run-local.sh -r {{ runtimeclass }} {%+ if baremetal == "true" %}-u{% endif %}
 
 ###
 # Define the projects
@@ -224,10 +228,24 @@
       - ubuntu-20.04
     arch:
       - x86_64
+    baremetal: "false"
     container_runtime:
       - containerd
     runtimeclass:
       - kata-qemu
+    jobs:
+      - 'confidential-containers-operator-main-{os}-{arch}-{container_runtime}_{runtimeclass}-PR'
+- project:
+    name: "Generate jobs for the Confidential Container Operator on AMD SEV"
+    os:
+      - ubuntu-20.04_sev
+    arch:
+      - x86_64
+    baremetal: "true"
+    container_runtime:
+      - containerd
+    runtimeclass:
+      - kata-qemu-sev
     jobs:
       - 'confidential-containers-operator-main-{os}-{arch}-{container_runtime}_{runtimeclass}-PR'
 - project:
