@@ -223,7 +223,7 @@
     jobs:
       - '{repo}-CCv0-{os}-{arch}-{ci_job}-PR'
 - project:
-    name: "Generate jobs for the Confidential Container Operator"
+    name: "Generate jobs for the Confidential Containers Operator"
     os:
       - ubuntu-20.04
     arch:
@@ -237,7 +237,9 @@
     jobs:
       - 'confidential-containers-operator-main-{os}-{arch}-{container_runtime}_{runtimeclass}-PR'
 - project:
-    name: "Generate jobs for the Confidential Container Operator on AMD SEV"
+    # The node label is selected based on this project name. Be careful if you
+    # need to change the name.
+    name: "Generate jobs for the Confidential Containers Operator on AMD SEV"
     os:
       - ubuntu-20.04_sev
     arch:
