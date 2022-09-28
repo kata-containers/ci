@@ -147,6 +147,7 @@
           white-list-target-branches:
             - main
             - stable-2.*
+            - stable-3.*
           # Branches disallowed to be tested.
           black-list-target-branches:
             - master
