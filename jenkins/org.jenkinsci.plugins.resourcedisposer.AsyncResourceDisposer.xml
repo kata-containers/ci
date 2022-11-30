@@ -10,11 +10,11 @@
             <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
               <disposer reference="../../../../../../.."/>
               <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
-                <node>Power9_agent01</node>
-                <path>/home/jenkins/workspace/kata-containers-2.0-tests-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1653986387717</path>
+                <node>amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669380677356</path>
               </disposable>
-              <registered>2022-05-31 08:39:47.766 UTC</registered>
-              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace Power9_agent01:/home/jenkins/workspace/kata-containers-2.0-tests-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1653986387717</disposableInfo>
+              <registered>2022-11-25 12:51:17.511 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669380677356</disposableInfo>
             </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
             <boolean>true</boolean>
           </entry>
@@ -22,11 +22,11 @@
             <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
               <disposer reference="../../../../../../.."/>
               <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
-                <node>Power9_agent01</node>
-                <path>/home/jenkins/workspace/kata-containers-2.0-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1654006224396</path>
+                <node>amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669237249473</path>
               </disposable>
-              <registered>2022-05-31 14:10:24.446 UTC</registered>
-              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace Power9_agent01:/home/jenkins/workspace/kata-containers-2.0-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1654006224396</disposableInfo>
+              <registered>2022-11-23 21:00:49.636 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669237249473</disposableInfo>
             </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
             <boolean>true</boolean>
           </entry>
@@ -34,11 +34,11 @@
             <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
               <disposer reference="../../../../../../.."/>
               <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
-                <node>Power9_agent01</node>
-                <path>/home/jenkins/workspace/kata-containers-2.0-tests-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1653994684636</path>
+                <node>amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669298628765</path>
               </disposable>
-              <registered>2022-05-31 10:58:04.685 UTC</registered>
-              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace Power9_agent01:/home/jenkins/workspace/kata-containers-2.0-tests-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1653994684636</disposableInfo>
+              <registered>2022-11-24 14:03:48.920 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669298628765</disposableInfo>
             </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
             <boolean>true</boolean>
           </entry>
@@ -46,11 +46,11 @@
             <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
               <disposer reference="../../../../../../.."/>
               <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
-                <node>Power9_agent01</node>
-                <path>/home/jenkins/workspace/kata-containers-2.0-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1654003029248</path>
+                <node>amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669372386414</path>
               </disposable>
-              <registered>2022-05-31 13:17:09.295 UTC</registered>
-              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace Power9_agent01:/home/jenkins/workspace/kata-containers-2.0-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1654003029248</disposableInfo>
+              <registered>2022-11-25 10:33:06.568 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669372386414</disposableInfo>
             </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
             <boolean>true</boolean>
           </entry>
@@ -58,11 +58,11 @@
             <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
               <disposer reference="../../../../../../.."/>
               <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
-                <node>Power9_agent01</node>
-                <path>/home/jenkins/workspace/kata-containers-2.0-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1653990171693</path>
+                <node>amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669642511670</path>
               </disposable>
-              <registered>2022-05-31 09:42:51.741 UTC</registered>
-              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace Power9_agent01:/home/jenkins/workspace/kata-containers-2.0-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1653990171693</disposableInfo>
+              <registered>2022-11-28 13:35:11.826 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669642511670</disposableInfo>
             </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
             <boolean>true</boolean>
           </entry>
@@ -70,11 +70,11 @@
             <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
               <disposer reference="../../../../../../.."/>
               <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
-                <node>Power9_agent01</node>
-                <path>/home/jenkins/workspace/kata-containers-2.0-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1653988882131</path>
+                <node>amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669321489660</path>
               </disposable>
-              <registered>2022-05-31 09:21:22.178 UTC</registered>
-              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace Power9_agent01:/home/jenkins/workspace/kata-containers-2.0-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1653988882131</disposableInfo>
+              <registered>2022-11-24 20:24:49.815 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669321489660</disposableInfo>
             </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
             <boolean>true</boolean>
           </entry>
@@ -82,11 +82,11 @@
             <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
               <disposer reference="../../../../../../.."/>
               <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
-                <node>Power9_agent01</node>
-                <path>/home/jenkins/workspace/kata-containers-2.0-tests-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1653987648784</path>
+                <node>amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669370524701</path>
               </disposable>
-              <registered>2022-05-31 09:00:48.830 UTC</registered>
-              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace Power9_agent01:/home/jenkins/workspace/kata-containers-2.0-tests-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1653987648784</disposableInfo>
+              <registered>2022-11-25 10:02:04.855 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669370524701</disposableInfo>
             </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
             <boolean>true</boolean>
           </entry>
@@ -94,11 +94,11 @@
             <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
               <disposer reference="../../../../../../.."/>
               <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
-                <node>Power9_agent01</node>
-                <path>/home/jenkins/workspace/kata-containers-2.0-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1653991697696</path>
+                <node>equinix-amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669730162435</path>
               </disposable>
-              <registered>2022-05-31 10:08:17.743 UTC</registered>
-              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace Power9_agent01:/home/jenkins/workspace/kata-containers-2.0-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1653991697696</disposableInfo>
+              <registered>2022-11-29 13:56:02.534 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace equinix-amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669730162435</disposableInfo>
             </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
             <boolean>true</boolean>
           </entry>
@@ -106,11 +106,11 @@
             <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
               <disposer reference="../../../../../../.."/>
               <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
-                <node>Power9_agent01</node>
-                <path>/home/jenkins/workspace/kata-containers-2.0-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1653994597609</path>
+                <node>amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/tests-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669216979678</path>
               </disposable>
-              <registered>2022-05-31 10:56:37.660 UTC</registered>
-              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace Power9_agent01:/home/jenkins/workspace/kata-containers-2.0-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1653994597609</disposableInfo>
+              <registered>2022-11-23 15:22:59.836 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/tests-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669216979678</disposableInfo>
             </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
             <boolean>true</boolean>
           </entry>
@@ -118,11 +118,11 @@
             <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
               <disposer reference="../../../../../../.."/>
               <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
-                <node>Power9_agent01</node>
-                <path>/home/jenkins/workspace/kata-containers-2.0-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1654001510912</path>
+                <node>equinix-amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/confidential-containers-operator-main-ubuntu-20.04_sev-x86_64-containerd_kata-qemu-sev-PR_ws-cleanup_1669664522349</path>
               </disposable>
-              <registered>2022-05-31 12:51:50.959 UTC</registered>
-              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace Power9_agent01:/home/jenkins/workspace/kata-containers-2.0-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1654001510912</disposableInfo>
+              <registered>2022-11-28 19:42:02.445 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace equinix-amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/confidential-containers-operator-main-ubuntu-20.04_sev-x86_64-containerd_kata-qemu-sev-PR_ws-cleanup_1669664522349</disposableInfo>
             </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
             <boolean>true</boolean>
           </entry>
@@ -130,11 +130,11 @@
             <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
               <disposer reference="../../../../../../.."/>
               <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
-                <node>Power9_agent01</node>
-                <path>/home/jenkins/workspace/kata-containers-2.0-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1653993048165</path>
+                <node>amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/tests-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669374083137</path>
               </disposable>
-              <registered>2022-05-31 10:30:48.212 UTC</registered>
-              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace Power9_agent01:/home/jenkins/workspace/kata-containers-2.0-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1653993048165</disposableInfo>
+              <registered>2022-11-25 11:01:23.291 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/tests-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669374083137</disposableInfo>
             </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
             <boolean>true</boolean>
           </entry>
@@ -142,11 +142,443 @@
             <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
               <disposer reference="../../../../../../.."/>
               <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
-                <node>Power9_agent01</node>
-                <path>/home/jenkins/workspace/kata-containers-2.0-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1653984904596</path>
+                <node>equinix-amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669736327884</path>
               </disposable>
-              <registered>2022-05-31 08:15:04.646 UTC</registered>
-              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace Power9_agent01:/home/jenkins/workspace/kata-containers-2.0-ppc64le-containerd-k8s-ubuntu-20-04-PR_ws-cleanup_1653984904596</disposableInfo>
+              <registered>2022-11-29 15:38:47.980 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace equinix-amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669736327884</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/tests-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669205141579</path>
+              </disposable>
+              <registered>2022-11-23 12:05:41.815 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/tests-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669205141579</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669629182595</path>
+              </disposable>
+              <registered>2022-11-28 09:53:02.785 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669629182595</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>equinix-amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669814353131</path>
+              </disposable>
+              <registered>2022-11-30 13:19:13.249 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace equinix-amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669814353131</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>equinix-amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/tests-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669802921144</path>
+              </disposable>
+              <registered>2022-11-30 10:08:41.240 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace equinix-amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/tests-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669802921144</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>equinix-amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669674649628</path>
+              </disposable>
+              <registered>2022-11-28 22:30:49.723 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace equinix-amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669674649628</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669283930563</path>
+              </disposable>
+              <registered>2022-11-24 09:58:50.717 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669283930563</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669325134345</path>
+              </disposable>
+              <registered>2022-11-24 21:25:34.509 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669325134345</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669282390222</path>
+              </disposable>
+              <registered>2022-11-24 09:33:10.378 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669282390222</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>equinix-amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669818205594</path>
+              </disposable>
+              <registered>2022-11-30 14:23:25.689 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace equinix-amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669818205594</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>equinix-amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669667476073</path>
+              </disposable>
+              <registered>2022-11-28 20:31:16.168 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace equinix-amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669667476073</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669368422929</path>
+              </disposable>
+              <registered>2022-11-25 09:27:03.85 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669368422929</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>equinix-amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669719235794</path>
+              </disposable>
+              <registered>2022-11-29 10:53:55.889 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace equinix-amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669719235794</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669304095060</path>
+              </disposable>
+              <registered>2022-11-24 15:34:55.215 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669304095060</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/tests-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669208347092</path>
+              </disposable>
+              <registered>2022-11-23 12:59:07.248 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/tests-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669208347092</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>equinix-amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669676876608</path>
+              </disposable>
+              <registered>2022-11-28 23:07:56.729 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace equinix-amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669676876608</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>equinix-amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669823039606</path>
+              </disposable>
+              <registered>2022-11-30 15:43:59.702 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace equinix-amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669823039606</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669660047328</path>
+              </disposable>
+              <registered>2022-11-28 18:27:27.491 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669660047328</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>equinix-amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/tests-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669816678723</path>
+              </disposable>
+              <registered>2022-11-30 13:57:58.820 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace equinix-amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/tests-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669816678723</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>equinix-amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669739733981</path>
+              </disposable>
+              <registered>2022-11-29 16:35:34.84 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace equinix-amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669739733981</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/tests-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669213748843</path>
+              </disposable>
+              <registered>2022-11-23 14:29:08.998 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/tests-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669213748843</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669305325300</path>
+              </disposable>
+              <registered>2022-11-24 15:55:25.453 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669305325300</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669305841299</path>
+              </disposable>
+              <registered>2022-11-24 16:04:01.453 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669305841299</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>equinix-amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669669621648</path>
+              </disposable>
+              <registered>2022-11-28 21:07:01.743 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace equinix-amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669669621648</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/tests-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669630417768</path>
+              </disposable>
+              <registered>2022-11-28 10:13:37.923 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/tests-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669630417768</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/confidential-containers-operator-main-ubuntu-20.04_sev-x86_64-containerd_kata-qemu-sev-PR_ws-cleanup_1669662354920</path>
+              </disposable>
+              <registered>2022-11-28 19:05:55.120 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/confidential-containers-operator-main-ubuntu-20.04_sev-x86_64-containerd_kata-qemu-sev-PR_ws-cleanup_1669662354920</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>arm03_slave</node>
+                <path>/home/jenkins/workspace/kata-containers-2.0-ubuntu20.04-ARM-main_ws-cleanup_1668620486774</path>
+              </disposable>
+              <registered>2022-11-16 17:41:26.861 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace arm03_slave:/home/jenkins/workspace/kata-containers-2.0-ubuntu20.04-ARM-main_ws-cleanup_1668620486774</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>arm01_slave</node>
+                <path>/home/jenkins/workspace/kata-containers-2.0-ubuntu20.04-ARM-unit_ws-cleanup_1668750103352</path>
+              </disposable>
+              <registered>2022-11-18 05:41:43.441 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace arm01_slave:/home/jenkins/workspace/kata-containers-2.0-ubuntu20.04-ARM-unit_ws-cleanup_1668750103352</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>equinix-amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669723921553</path>
+              </disposable>
+              <registered>2022-11-29 12:12:01.648 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace equinix-amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669723921553</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669309682470</path>
+              </disposable>
+              <registered>2022-11-24 17:08:02.624 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669309682470</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669311914776</path>
+              </disposable>
+              <registered>2022-11-24 17:45:14.932 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669311914776</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/tests-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669373001456</path>
+              </disposable>
+              <registered>2022-11-25 10:43:21.611 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/tests-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669373001456</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669330480287</path>
+              </disposable>
+              <registered>2022-11-24 22:54:40.441 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669330480287</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>equinix-amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/tests-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669828755455</path>
+              </disposable>
+              <registered>2022-11-30 17:19:15.552 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace equinix-amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/tests-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669828755455</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>equinix-amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669671141108</path>
+              </disposable>
+              <registered>2022-11-28 21:32:21.205 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace equinix-amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669671141108</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669300869807</path>
+              </disposable>
+              <registered>2022-11-24 14:41:09.962 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669300869807</disposableInfo>
+            </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+            <boolean>true</boolean>
+          </entry>
+          <entry>
+            <org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
+              <disposer reference="../../../../../../.."/>
+              <disposable class="hudson.plugins.ws_cleanup.Wipeout$DisposableImpl" plugin="ws-cleanup@0.41">
+                <node>amd-coco-ci-ubuntu2004-001</node>
+                <path>/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669287891683</path>
+              </disposable>
+              <registered>2022-11-24 11:04:51.837 UTC</registered>
+              <disposableInfo>hudson.plugins.ws_cleanup.Wipeout$DisposableImpl:Workspace amd-coco-ci-ubuntu2004-001:/home/jenkins/workspace/kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR_ws-cleanup_1669287891683</disposableInfo>
             </org.jenkinsci.plugins.resourcedisposer.AsyncResourceDisposer_-WorkItem>
             <boolean>true</boolean>
           </entry>
