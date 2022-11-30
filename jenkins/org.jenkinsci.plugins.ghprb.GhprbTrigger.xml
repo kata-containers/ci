@@ -37,6 +37,13 @@
       <description>Cloud Hypervisor External job</description>
       <secret>{AQAAABAAAAAQjR02EdTsY1iPn8Ky49O51pvB23HTtQ+iRjcWdveeLPc=}</secret>
     </org.jenkinsci.plugins.ghprb.GhprbGitHubAuth>
+    <org.jenkinsci.plugins.ghprb.GhprbGitHubAuth>
+      <serverAPIUrl>https://api.github.com</serverAPIUrl>
+      <credentialsId>katacontainersbot for CC</credentialsId>
+      <id>ec9029cc-e19b-40d0-92f1-9a80e933d9ea</id>
+      <description>Confidential Containers external jobs</description>
+      <secret>{AQAAABAAAAAQxluK41slBNtMV6hjmrwPry6+hphr8PKPER39lSTPKsg=}</secret>
+    </org.jenkinsci.plugins.ghprb.GhprbGitHubAuth>
   </githubAuth>
   <adminlist>katacontainersbot</adminlist>
   <requestForTestingPhrase></requestForTestingPhrase>
