@@ -1,8 +1,8 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Reboot a slave node.&#xd;
-This job would be chained in with another job, particularly say a metrics bare metal slave node build, to try and get the slave back to a known clean state after a build.</description>
+  <description>Reboot a worker node that runs metrics for 2.x branches.&#xd;
+This job would be chained in with another job, particularly say a metrics bare metal worker node build, to try and get the worker back to a known clean state after a build.</description>
   <keepDependencies>false</keepDependencies>
   <properties>
     <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.3"/>
@@ -12,15 +12,15 @@ This job would be chained in with another job, particularly say a metrics bare m
     </com.sonyericsson.rebuild.RebuildSettings>
   </properties>
   <scm class="hudson.scm.NullSCM"/>
-  <assignedNode>x86_metrics_slave</assignedNode>
+  <assignedNode>x86_metrics_worker</assignedNode>
   <canRoam>false</canRoam>
-  <disabled>true</disabled>
+  <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
   <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
   <triggers>
     <jenkins.triggers.ReverseBuildTrigger>
       <spec></spec>
-      <upstreamProjects>kata-metrics-proxy-ubuntu-18-04-PR,kata-metrics-agent-ubuntu-18-04-PR,kata-metrics-runtime-ubuntu-18-04-PR,kata-metrics-shim-ubuntu-18-04-PR,kata-metrics-tests-ubuntu-18-04-PR,metrics/clh-master,kata-metrics-tests-ubuntu-clh-18-04-PR,kata-metrics-runtime-ubuntu-clh-18-04-PR</upstreamProjects>
+      <upstreamProjects>kata-containers-2.0-tests-metrics-ubuntu-20-04-PR,kata-containers-2.0-metrics-ubuntu-20-04-PR</upstreamProjects>
       <threshold>
         <name>FAILURE</name>
         <ordinal>2</ordinal>
@@ -34,6 +34,9 @@ This job would be chained in with another job, particularly say a metrics bare m
     <hudson.tasks.Shell>
       <command>#!/bin/bash
 
+set -x 
+
+uptime
 sudo reboot now</command>
       <configuredLocalRules/>
     </hudson.tasks.Shell>
