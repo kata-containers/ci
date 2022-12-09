@@ -1,10 +1,10 @@
 <?xml version='1.1' encoding='UTF-8'?>
 <project>
   <actions/>
-  <description>Run metrics tests on kata-containers PRs</description>
+  <description></description>
   <keepDependencies>false</keepDependencies>
   <properties>
-    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.7.1"/>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.7"/>
     <jenkins.model.BuildDiscarderProperty>
       <strategy class="hudson.tasks.LogRotator">
         <daysToKeep>30</daysToKeep>
@@ -22,7 +22,7 @@
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
   </properties>
-  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.11.3">
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.11.0">
     <configVersion>2</configVersion>
     <userRemoteConfigs>
       <hudson.plugins.git.UserRemoteConfig>
@@ -40,7 +40,7 @@
     <submoduleCfg class="empty-list"/>
     <extensions/>
   </scm>
-  <assignedNode>x86-bm-ubuntu-2004 &amp;&amp; x86_metrics_worker</assignedNode>
+  <assignedNode>ubuntu1804-azure</assignedNode>
   <canRoam>false</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
@@ -67,17 +67,11 @@
       </whiteListTargetBranches>
       <blackListTargetBranches>
         <org.jenkinsci.plugins.ghprb.GhprbBranch>
-          <branch>master</branch>
-        </org.jenkinsci.plugins.ghprb.GhprbBranch>
-        <org.jenkinsci.plugins.ghprb.GhprbBranch>
-          <branch>stable-1.*</branch>
-        </org.jenkinsci.plugins.ghprb.GhprbBranch>
-        <org.jenkinsci.plugins.ghprb.GhprbBranch>
-          <branch>stable-2.*</branch>
+          <branch></branch>
         </org.jenkinsci.plugins.ghprb.GhprbBranch>
       </blackListTargetBranches>
       <gitHubAuthId>c217b635-ee39-4531-a4ed-db4048679d71</gitHubAuthId>
-      <triggerPhrase>.*(\n|^|\s)/(re)?test(-ubuntu(-metrics)?)?(\n|$|\s)+.*</triggerPhrase>
+      <triggerPhrase>.*(\n|^|\s)/(re)?test(-clh(-k8s(-containerd)?)?)?(\n|$|\s)+.*</triggerPhrase>
       <skipBuildPhrase>.*\[skip\W+ci\].*</skipBuildPhrase>
       <blackListCommitAuthor></blackListCommitAuthor>
       <blackListLabels></blackListLabels>
@@ -89,7 +83,7 @@
           <overrideGlobal>false</overrideGlobal>
         </org.jenkinsci.plugins.ghprb.extensions.build.GhprbCancelBuildsOnUpdate>
         <org.jenkinsci.plugins.ghprb.extensions.status.GhprbSimpleStatus>
-          <commitStatusContext>jenkins-metrics-ubuntu-20-04</commitStatusContext>
+          <commitStatusContext>jenkins-ci-ubuntu-1804-cloud-hypervisor-k8s-containerd-2.0</commitStatusContext>
           <triggeredStatus>Build triggered</triggeredStatus>
           <startedStatus>Build running</startedStatus>
           <statusUrl></statusUrl>
@@ -103,16 +97,16 @@
     <hudson.tasks.Shell>
       <command>#!/bin/bash
 
-set -ex
+set -e
 
-sudo rm -rf /etc/docker/daemon.json || true
-sudo umount /usr/share/kata-containers/kata-containers.img || true
-sudo rm -f /usr/share/kata-containers/kata-containers.img
-sudo systemctl restart docker
-sudo systemctl status docker.service
+# TODO testing move to kata master script
 curl -OL https://raw.githubusercontent.com/kata-containers/tests/main/.ci/ci_entry_point.sh
-export CI_JOB=&quot;METRICS&quot;
-bash -x ci_entry_point.sh &quot;${GIT_URL}&quot;</command>
+export CI_JOB=&quot;CLOUD-HYPERVISOR-K8S-CONTAINERD&quot;
+# TODO document this on tests repo
+export SHIMV2_TEST=&quot;true&quot;
+export DEBUG=true
+bash -x ci_entry_point.sh &quot;${GIT_URL}&quot;
+</command>
       <configuredLocalRules/>
     </hudson.tasks.Shell>
   </builders>
@@ -123,7 +117,7 @@ bash -x ci_entry_point.sh &quot;${GIT_URL}&quot;</command>
           <logTexts>
             <hudson.plugins.postbuildtask.LogProperties>
               <logText>.*</logText>
-              <operator>OR</operator>
+              <operator>AND</operator>
             </hudson.plugins.postbuildtask.LogProperties>
           </logTexts>
           <EscalateStatus>false</EscalateStatus>
@@ -135,18 +129,13 @@ export GOROOT=&quot;/usr/local/go&quot;&#xd;
 export PATH=${GOPATH}/bin:/usr/local/go/bin:/usr/sbin:/usr/local/bin:${PATH}&#xd;
 &#xd;
 cd $GOPATH/src/github.com/kata-containers/tests&#xd;
-.ci/teardown.sh &quot;$WORKSPACE&quot;&#xd;
-&#xd;
-# And ensure the workspace tree is all owned by us before we quit, otherwise the later&#xd;
-# `delete workspace before run` may fail on file perms (as some tests leave things owned by root).&#xd;
-sudo chown -R ${USER} ${WORKSPACE}&#xd;
-sudo chgrp -R $(id -ng) ${WORKSPACE}</script>
+.ci/teardown.sh &quot;$WORKSPACE/artifacts&quot;</script>
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
     <hudson.tasks.ArtifactArchiver>
-      <artifacts>go/src/github.com/kata-containers/tests/metrics/results/*</artifacts>
-      <allowEmptyArchive>true</allowEmptyArchive>
+      <artifacts>artifacts/*</artifacts>
+      <allowEmptyArchive>false</allowEmptyArchive>
       <onlyIfSuccessful>false</onlyIfSuccessful>
       <fingerprint>false</fingerprint>
       <defaultExcludes>true</defaultExcludes>
@@ -155,23 +144,12 @@ sudo chgrp -R $(id -ng) ${WORKSPACE}</script>
     </hudson.tasks.ArtifactArchiver>
   </publishers>
   <buildWrappers>
-    <hudson.plugins.ws__cleanup.PreBuildCleanup plugin="ws-cleanup@0.41">
-      <deleteDirs>false</deleteDirs>
-      <cleanupParameter></cleanupParameter>
-      <externalDelete></externalDelete>
-      <disableDeferredWipeout>false</disableDeferredWipeout>
-    </hudson.plugins.ws__cleanup.PreBuildCleanup>
     <org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper plugin="credentials-binding@1.27.1">
-      <bindings>
-        <org.jenkinsci.plugins.credentialsbinding.impl.StringBinding>
-          <credentialsId>62ba7b0f-6f74-4674-8c0f-31b928acbebc</credentialsId>
-          <variable>CODECOV_TOKEN</variable>
-        </org.jenkinsci.plugins.credentialsbinding.impl.StringBinding>
-      </bindings>
+      <bindings class="empty-list"/>
     </org.jenkinsci.plugins.credentialsbinding.impl.SecretBuildWrapper>
     <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.20">
       <strategy class="hudson.plugins.build_timeout.impl.NoActivityTimeOutStrategy">
-        <timeoutSecondsString>500</timeoutSecondsString>
+        <timeoutSecondsString>900</timeoutSecondsString>
       </strategy>
       <operationList/>
     </hudson.plugins.build__timeout.BuildTimeoutWrapper>
@@ -179,5 +157,6 @@ sudo chgrp -R $(id -ng) ${WORKSPACE}</script>
     <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@1.0.1">
       <colorMapName>xterm</colorMapName>
     </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
+    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.61"/>
   </buildWrappers>
 </project>
