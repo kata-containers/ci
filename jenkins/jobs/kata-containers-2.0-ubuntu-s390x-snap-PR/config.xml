@@ -1,0 +1,216 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <hudson.plugins.jira.JiraProjectProperty plugin="jira@3.7.1"/>
+    <jenkins.model.BuildDiscarderProperty>
+      <strategy class="hudson.tasks.LogRotator">
+        <daysToKeep>30</daysToKeep>
+        <numToKeep>30</numToKeep>
+        <artifactDaysToKeep>-1</artifactDaysToKeep>
+        <artifactNumToKeep>-1</artifactNumToKeep>
+      </strategy>
+    </jenkins.model.BuildDiscarderProperty>
+    <com.coravy.hudson.plugins.github.GithubProjectProperty plugin="github@1.34.3">
+      <projectUrl>https://github.com/kata-containers/kata-containers/</projectUrl>
+      <displayName></displayName>
+    </com.coravy.hudson.plugins.github.GithubProjectProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.33">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
+  </properties>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@4.11.3">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <name>origin</name>
+        <refspec>+refs/pull/${ghprbPullId}/*:refs/remotes/origin/pr/${ghprbPullId}/*</refspec>
+        <url>https://github.com/kata-containers/kata-containers.git</url>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>${sha1}</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <submoduleCfg class="empty-list"/>
+    <extensions/>
+  </scm>
+  <assignedNode>s390x-ubuntu-2004</assignedNode>
+  <canRoam>false</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers>
+    <org.jenkinsci.plugins.ghprb.GhprbTrigger plugin="ghprb@1.42.2">
+      <spec>H/5 * * * *</spec>
+      <configVersion>3</configVersion>
+      <adminlist></adminlist>
+      <allowMembersOfWhitelistedOrgsAsAdmin>true</allowMembersOfWhitelistedOrgsAsAdmin>
+      <orgslist>kata-containers</orgslist>
+      <cron>H/5 * * * *</cron>
+      <buildDescTemplate></buildDescTemplate>
+      <onlyTriggerPhrase>true</onlyTriggerPhrase>
+      <useGitHubHooks>true</useGitHubHooks>
+      <permitAll>false</permitAll>
+      <whitelist></whitelist>
+      <autoCloseFailedPullRequests>false</autoCloseFailedPullRequests>
+      <displayBuildErrorsOnDownstreamBuilds>false</displayBuildErrorsOnDownstreamBuilds>
+      <whiteListTargetBranches>
+        <org.jenkinsci.plugins.ghprb.GhprbBranch>
+          <branch>main</branch>
+        </org.jenkinsci.plugins.ghprb.GhprbBranch>
+        <org.jenkinsci.plugins.ghprb.GhprbBranch>
+          <branch>stable-2.*</branch>
+        </org.jenkinsci.plugins.ghprb.GhprbBranch>
+        <org.jenkinsci.plugins.ghprb.GhprbBranch>
+          <branch>stable-3.*</branch>
+        </org.jenkinsci.plugins.ghprb.GhprbBranch>
+      </whiteListTargetBranches>
+      <blackListTargetBranches>
+        <org.jenkinsci.plugins.ghprb.GhprbBranch>
+          <branch>master</branch>
+        </org.jenkinsci.plugins.ghprb.GhprbBranch>
+        <org.jenkinsci.plugins.ghprb.GhprbBranch>
+          <branch>stable-1.*</branch>
+        </org.jenkinsci.plugins.ghprb.GhprbBranch>
+        <org.jenkinsci.plugins.ghprb.GhprbBranch>
+          <branch>stable-2.1</branch>
+        </org.jenkinsci.plugins.ghprb.GhprbBranch>
+        <org.jenkinsci.plugins.ghprb.GhprbBranch>
+          <branch>stable-2.0</branch>
+        </org.jenkinsci.plugins.ghprb.GhprbBranch>
+      </blackListTargetBranches>
+      <gitHubAuthId>c217b635-ee39-4531-a4ed-db4048679d71</gitHubAuthId>
+      <triggerPhrase>.*(\n|^|\s)/(re)?test(-s390x)?(-snap)?(\n|$|\s)+.*</triggerPhrase>
+      <skipBuildPhrase>.*\[skip\W+ci\].*</skipBuildPhrase>
+      <blackListCommitAuthor></blackListCommitAuthor>
+      <blackListLabels></blackListLabels>
+      <whiteListLabels></whiteListLabels>
+      <includedRegions></includedRegions>
+      <excludedRegions></excludedRegions>
+      <extensions>
+        <org.jenkinsci.plugins.ghprb.extensions.build.GhprbCancelBuildsOnUpdate>
+          <overrideGlobal>false</overrideGlobal>
+        </org.jenkinsci.plugins.ghprb.extensions.build.GhprbCancelBuildsOnUpdate>
+        <org.jenkinsci.plugins.ghprb.extensions.status.GhprbSimpleStatus>
+          <commitStatusContext>jenkins-ci-s390x-snap-ubuntu-20-04</commitStatusContext>
+          <triggeredStatus>Build triggered</triggeredStatus>
+          <startedStatus>Build running</startedStatus>
+          <statusUrl></statusUrl>
+          <addTestResults>false</addTestResults>
+        </org.jenkinsci.plugins.ghprb.extensions.status.GhprbSimpleStatus>
+      </extensions>
+    </org.jenkinsci.plugins.ghprb.GhprbTrigger>
+  </triggers>
+  <concurrentBuild>true</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>#!/bin/bash
+
+set -e
+
+shopt -s extglob
+sudo rm -rf $WORKSPACE/../!($(basename $WORKSPACE))
+
+export ghprbPullId
+export ghprbTargetBranch
+export DEBUG=true
+export CI=&quot;true&quot;
+export CI_JOB=&quot;CRI_CONTAINERD_K8S&quot;
+export SHIMV2_TEST=&quot;true&quot;
+
+export GOPATH=${WORKSPACE}/go
+export PATH=${GOPATH}/bin:/usr/local/go/bin:/usr/sbin:${PATH}
+export GOROOT=&quot;/usr/local/go&quot;
+
+# TEST
+kata_repo=&quot;github.com/kata-containers/kata-containers&quot;
+kata_repo_dir=&quot;${GOPATH}/src/${kata_repo}&quot;
+mkdir -p &quot;${kata_repo_dir}&quot;
+
+#rm -rf &quot;${kata_repo_dir}&quot;
+git clone &quot;https://${kata_repo}.git&quot; &quot;${kata_repo_dir}&quot;
+cd &quot;${kata_repo_dir}&quot;
+# Checkout to 2.0-dev
+git checkout &quot;$ghprbTargetBranch&quot;
+# END TEST
+
+tests_repo=&quot;github.com/kata-containers/tests&quot;
+tests_repo_dir=&quot;${GOPATH}/src/${tests_repo}&quot;
+mkdir -p &quot;${tests_repo_dir}&quot;
+
+#rm -rf &quot;${tests_repo_dir}&quot;
+git clone &quot;https://${tests_repo}.git&quot; &quot;${tests_repo_dir}&quot;
+cd &quot;${tests_repo_dir}&quot;
+git checkout &quot;$ghprbTargetBranch&quot;
+.ci/jenkins_job_build.sh &quot;github.com/kata-containers/kata-containers&quot; -t snap
+#/home/jenkins/script/cleanup-kata.sh || :</command>
+      <configuredLocalRules/>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers>
+    <hudson.plugins.postbuildtask.PostbuildTask plugin="postbuild-task@1.9">
+      <tasks>
+        <hudson.plugins.postbuildtask.TaskProperties>
+          <logTexts>
+            <hudson.plugins.postbuildtask.LogProperties>
+              <logText>.*</logText>
+              <operator>OR</operator>
+            </hudson.plugins.postbuildtask.LogProperties>
+          </logTexts>
+          <EscalateStatus>false</EscalateStatus>
+          <RunIfJobSuccessful>false</RunIfJobSuccessful>
+          <script>#!/bin/bash&#xd;
+&#xd;
+export GOPATH=$WORKSPACE/go&#xd;
+export GOROOT=&quot;/usr/local/go&quot;&#xd;
+export PATH=${GOPATH}/bin:/usr/local/go/bin:/usr/sbin:/usr/local/bin:${PATH}&#xd;
+&#xd;
+cd $GOPATH/src/github.com/kata-containers/tests&#xd;
+.ci/teardown.sh &quot;$WORKSPACE/artifacts&quot;&#xd;
+sudo chown -R ${USER} ${WORKSPACE}&#xd;
+sudo chgrp -R $(id -ng) ${WORKSPACE}&#xd;
+sudo rm -rf ${WORKSPACE}_*&#xd;
+sudo rm -rf /etc/docker&#xd;
+sudo rm -rf /home/jenkins/.cargo&#xd;
+ls -1 /var/log/sysstat | xargs -i{} sar -f /var/log/sysstat/{} -n DEV&#xd;
+ip -s l l&#xd;
+echo &quot;cd /home/jenkins/script &amp;&amp; ./destroy_vsi.sh ${JOB_URL} ${BUILD_ID} 300 &gt; test.log 2&gt;&amp;1&quot; | at now</script>
+        </hudson.plugins.postbuildtask.TaskProperties>
+      </tasks>
+    </hudson.plugins.postbuildtask.PostbuildTask>
+    <hudson.tasks.ArtifactArchiver>
+      <artifacts>artifacts/*</artifacts>
+      <allowEmptyArchive>true</allowEmptyArchive>
+      <onlyIfSuccessful>false</onlyIfSuccessful>
+      <fingerprint>false</fingerprint>
+      <defaultExcludes>true</defaultExcludes>
+      <caseSensitive>true</caseSensitive>
+      <followSymlinks>true</followSymlinks>
+    </hudson.tasks.ArtifactArchiver>
+  </publishers>
+  <buildWrappers>
+    <hudson.plugins.ws__cleanup.PreBuildCleanup plugin="ws-cleanup@0.41">
+      <deleteDirs>false</deleteDirs>
+      <cleanupParameter></cleanupParameter>
+      <externalDelete></externalDelete>
+      <disableDeferredWipeout>false</disableDeferredWipeout>
+    </hudson.plugins.ws__cleanup.PreBuildCleanup>
+    <hudson.plugins.build__timeout.BuildTimeoutWrapper plugin="build-timeout@1.20">
+      <strategy class="hudson.plugins.build_timeout.impl.NoActivityTimeOutStrategy">
+        <timeoutSecondsString>1500</timeoutSecondsString>
+      </strategy>
+      <operationList/>
+    </hudson.plugins.build__timeout.BuildTimeoutWrapper>
+    <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.17"/>
+    <hudson.plugins.ansicolor.AnsiColorBuildWrapper plugin="ansicolor@1.0.1">
+      <colorMapName>xterm</colorMapName>
+    </hudson.plugins.ansicolor.AnsiColorBuildWrapper>
+    <jenkins.plugins.openstack.compute.JCloudsOneOffSlave plugin="openstack-cloud@2.61"/>
+  </buildWrappers>
+</project>
