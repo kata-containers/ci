@@ -7,3 +7,9 @@
 # Use to delete either unwanted generated jobs or jobs that no longer are needed.
 # The job can be removed from this list eventually if it is not generated anymore and it
 # was deleted at least one time.
+kata-containers-CCv0-ubuntu-20.04-x86_64-CC_SKOPEO_CRI_CONTAINERD-PR
+kata-containers-CCv0-ubuntu-20.04-x86_64-CC_SKOPEO_CRI_CONTAINERD_CLOUD_HYPERVISOR-PR
+kata-containers-CCv0-ubuntu-20.04-x86_64-CC_SKOPEO_CRI_CONTAINERD_K8S-PR
+tests-CCv0-ubuntu-20.04-x86_64-CC_SKOPEO_CRI_CONTAINERD-PR
+tests-CCv0-ubuntu-20.04-x86_64-CC_SKOPEO_CRI_CONTAINERD_CLOUD_HYPERVISOR-PR
+tests-CCv0-ubuntu-20.04-x86_64-CC_SKOPEO_CRI_CONTAINERD_K8S-PR
