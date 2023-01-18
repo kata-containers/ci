@@ -1,6 +1,6 @@
 # Overview
 
-Manage the Jenkins jobs with help of the [Jenkins Job Builder](https://docs.openstack.org/infra/jenkins-job-builder) (JJB).
+Manage the Jenkins jobs with help of the [Jenkins Job Builder](https://jenkins-job-builder.readthedocs.io/en/latest/index.html) (JJB).
 
 The JJB converts jobs and views from YAML representations into the Jenkins XML
 configuration files. Also the tool is able to manage jobs, for example, publish
@@ -9,7 +9,7 @@ the generated jobs and views in a running Jenkins instance.
 # Getting started
 
 First of all, you need to install Jenkins Job Builder in your environment. The
-instructions can be found [here](https://docs.openstack.org/infra/jenkins-job-builder/installation.html).
+instructions can be found [here](https://jenkins-job-builder.readthedocs.io/en/latest/installation.html).
 
 To use the Jenkins Job Builder a configuration file is needed which contains
 the Jenkins URL, user and token API to manage Jenkins, among other information
