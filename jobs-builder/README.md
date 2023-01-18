@@ -39,6 +39,9 @@ them all then do:
 $ ./publish_jobs.sh -c jjb.conf -t
 ```
 
+The `publish_jobs.sh` can also delete unwanted and/or not needed anymore jobs. You
+just need to list their names in the `trash` file.
+
 Run `./publish_jobs.sh -h` to see all the available options of the script.
 
 # Checking your changes on a local Jenkins
