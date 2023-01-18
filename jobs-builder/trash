@@ -1,0 +1,9 @@
+# Copyright (c) 2023 Red Hat
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+# List of jobs that should be deleted from Jenkins.
+#
+# Use to delete either unwanted generated jobs or jobs that no longer are needed.
+# The job can be removed from this list eventually if it is not generated anymore and it
+# was deleted at least one time.

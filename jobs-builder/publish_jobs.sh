@@ -72,6 +72,12 @@ function main
 	if [ $test_only -eq 0 ]; then
 		# Going to update the managed jobs.
 		$cmd --conf "$config_file" update "$jobs_dir"
+
+		# Going to delete jobs.
+		jobs_to_delete=$(grep -v "^#" "${script_dir}/trash")
+		if [ -n "$jobs_to_delete" ]; then
+			$cmd --conf "$config_file" delete -j ${jobs_to_delete}
+		fi
 	fi
 }
 
