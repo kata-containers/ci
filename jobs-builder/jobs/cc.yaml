@@ -22,6 +22,10 @@
     wrappers:
       - ansicolor:
           colormap: "xterm"
+      - credentials-binding:
+          - text:
+              credential-id: quay_kata-containers-cc_auth_bot_creds
+              variable: REGISTRY_CREDENTIAL_ENCODED
       - openstack:
           single-use: True
       - timestamps
