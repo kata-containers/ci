@@ -8,6 +8,8 @@ on:
     paths:
       # Run only when the definitions of jobs changed.
       - 'jobs-builder/jobs/**'
+      # Or when the trash file changed.
+      - 'jobs-builder/trash'
 name: Publish Jenkins jobs
 jobs:
   publish:
