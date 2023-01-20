@@ -2572,16 +2572,10 @@ git config --global user.name &quot;Kata Containers Bot&quot;</initScript>
         <string>kata-containers-CCv0-ubuntu-20.04-x86_64-CC_CRI_CONTAINERD-PR</string>
         <string>kata-containers-CCv0-ubuntu-20.04-x86_64-CC_CRI_CONTAINERD_CLOUD_HYPERVISOR-PR</string>
         <string>kata-containers-CCv0-ubuntu-20.04-x86_64-CC_CRI_CONTAINERD_K8S-PR</string>
-        <string>kata-containers-CCv0-ubuntu-20.04-x86_64-CC_SKOPEO_CRI_CONTAINERD-PR</string>
-        <string>kata-containers-CCv0-ubuntu-20.04-x86_64-CC_SKOPEO_CRI_CONTAINERD_CLOUD_HYPERVISOR-PR</string>
-        <string>kata-containers-CCv0-ubuntu-20.04-x86_64-CC_SKOPEO_CRI_CONTAINERD_K8S-PR</string>
         <string>kata-containers-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR</string>
         <string>tests-CCv0-ubuntu-20.04-x86_64-CC_CRI_CONTAINERD-PR</string>
         <string>tests-CCv0-ubuntu-20.04-x86_64-CC_CRI_CONTAINERD_CLOUD_HYPERVISOR-PR</string>
         <string>tests-CCv0-ubuntu-20.04-x86_64-CC_CRI_CONTAINERD_K8S-PR</string>
-        <string>tests-CCv0-ubuntu-20.04-x86_64-CC_SKOPEO_CRI_CONTAINERD-PR</string>
-        <string>tests-CCv0-ubuntu-20.04-x86_64-CC_SKOPEO_CRI_CONTAINERD_CLOUD_HYPERVISOR-PR</string>
-        <string>tests-CCv0-ubuntu-20.04-x86_64-CC_SKOPEO_CRI_CONTAINERD_K8S-PR</string>
         <string>tests-CCv0-ubuntu-20.04_sev-x86_64-CC_SEV_CRI_CONTAINERD_K8S-PR</string>
       </jobNames>
       <jobFilters/>

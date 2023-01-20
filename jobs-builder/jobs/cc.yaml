@@ -221,9 +221,6 @@
       - CC_CRI_CONTAINERD
       - CC_CRI_CONTAINERD_CLOUD_HYPERVISOR
       - CC_CRI_CONTAINERD_K8S
-      - CC_SKOPEO_CRI_CONTAINERD
-      - CC_SKOPEO_CRI_CONTAINERD_CLOUD_HYPERVISOR
-      - CC_SKOPEO_CRI_CONTAINERD_K8S
     jobs:
       - '{repo}-CCv0-{os}-{arch}-{ci_job}-PR'
 - project:
