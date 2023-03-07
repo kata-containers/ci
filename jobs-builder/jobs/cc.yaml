@@ -67,6 +67,7 @@
     <<: *cc_jobs_common_properties
     # Allow concurrent jobs by default. Specify `false` on the project definition otherwise.
     concurrent_toggle: true
+    tee: ""
     description:
       !j2: |
          <pre>
@@ -95,7 +96,12 @@
           only-trigger-phrase: true
           # The expected phrase will be like "/(re)test-<OS Name>"
           trigger-phrase:
-            !j2: '.*(\n|^|\s)/(re)?test(-{{ os.split("-")[0] }})?(\n|$|\s)+.*'
+            !j2: |
+              {% if not tee %}
+              .*(\n|^|\s)/(re)?test(-{{ os.split("-")[0] }})?(\n|$|\s)+.*
+              {% else %}
+              .*(\n|^|\s)/(re)?test(-{{ os.split("-")[0] }})?(-{{ tee }})?(\n|$|\s)+.*
+              {% endif %}
           # Skip on commenting phrase.
           skip-build-phrase: '.*\[skip\W+ci\].*'
           cron: 'H/5 * * * *'
@@ -262,6 +268,7 @@
     arch:
       - x86_64
     baremetal: "true"
+    tee: "sev"
     ci_job:
       - CC_SEV_CRI_CONTAINERD_K8S
     jobs:
