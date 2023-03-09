@@ -22,6 +22,7 @@ def jobsConfig = [
 ]
 
 def jobs = [:]
+def jobsArches = jobsConfig.collect { "$it.value.arch" }.unique()
 // The new runtime-payload image
 def payloadNewImg = "confidential-containers/runtime-payload-ci"
 // The new runtime-payload image tag (the -arch suffix is omitted)
@@ -72,10 +73,13 @@ node("amd-ubuntu-2004_op-ci") {
         payloadNewImgTag = "kata-containers-" + kataCommit
         timeout(time: waitImagesTimeout, unit: 'MINUTES') {
           sh """
-          tag=""
-          while [ -z "\$tag" ]; do
-            sleep 60
-            tag=\$(curl -s https://quay.io/api/v1/repository/${payloadNewImg} | grep "${payloadNewImgTag}-x86_64") || true
+          for arch in ${jobsArches.join(' ')}; do
+            payload_img_tag="${payloadNewImgTag}-\$arch"
+            tag=""
+            while [ -z "\$tag" ]; do
+              sleep 60
+              tag=\$(curl -s https://quay.io/api/v1/repository/${payloadNewImg} | grep "\$payload_img_tag") || true
+            done
           done
           """
         }
