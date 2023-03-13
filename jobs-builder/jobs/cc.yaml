@@ -97,11 +97,11 @@
           # The expected phrase will be like "/(re)test-<OS Name>"
           trigger-phrase:
             !j2: |
-              {% if not tee %}
+              {% if not tee -%}
               .*(\n|^|\s)/(re)?test(-{{ os.split("-")[0] }})?(\n|$|\s)+.*
-              {% else %}
+              {%- else -%}
               .*(\n|^|\s)/(re)?test(-{{ os.split("-")[0] }})?(-{{ tee }})?(\n|$|\s)+.*
-              {% endif %}
+              {%- endif %}
           # Skip on commenting phrase.
           skip-build-phrase: '.*\[skip\W+ci\].*'
           cron: 'H/5 * * * *'
