@@ -273,3 +273,18 @@
       - CC_SEV_CRI_CONTAINERD_K8S
     jobs:
       - '{repo}-CCv0-{os}-{arch}-{ci_job}-PR'
+
+###
+# Define stand-alone jobs.
+###
+- job:
+    project-type: pipeline
+    name: confidential-containers-ci
+    concurrent: false
+    description: |
+      Confidential Containers CI job.
+    dsl: !include-raw: include/cc-ci.groovy
+    sandbox: true
+    triggers:
+      - pollscm:
+          cron: "@hourly"
