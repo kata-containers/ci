@@ -32,7 +32,7 @@ def operatorCommit = ""
 // The kata-containers repositories branch it should monitor
 def kataRepoBranch = "CCv0"
 // The amount of time in minutes it should wait for the images be built.
-def waitImagesTimeout = 30
+def waitImagesTimeout = 90
 
 // Keep polling the repositories for new changes.
 node("amd-ubuntu-2004_op-ci") {
