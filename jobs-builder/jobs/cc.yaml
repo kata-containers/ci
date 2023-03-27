@@ -201,17 +201,10 @@
           started-status: Build running
     builders:
       - shell:
-          !j2: |
-            #!/bin/bash
-
-            sudo apt-get update -y
-            sudo apt-get install -y ansible python-is-python3
-            cd tests/e2e
-            export PATH="$PATH:/usr/local/bin"
-            ./run-local.sh -r {{ runtimeclass }} {%+ if baremetal == "true" %}-u{% endif %}
+          !include-jinja2: include/operator-ci_entrypoint.sh.inc
 
 - job-template:
-    # Use to generate baseline jobs.
+    # Use to generate baseline jobs for Kata Containers.
     #
     # Arguments:
     #   os          - the node Operating System in <name>-<version> format.
@@ -253,6 +246,48 @@
           !include-jinja2: include/cc-ci_entrypoint.sh.inc
     <<: *cc_jobs_common_publishers
 
+- job-template:
+    # Use to generate baseline jobs for the operator.
+    #
+    # Arguments:
+    #   os                - the node Operating System in <name>-<version> format.
+    #   arch              - the node architecture (e.g x86_64, s390x, ppc64le, and so on).
+    #   container_runtime - the container runtime (e.g. containerd, crio, and so on).
+    #   runtimeclass      - the kata runtimeclass (e.g. kata-qemu, kata-clh, and so on).
+    #   maintainers       - a list of maintainer (use the github's mentions @somebody).
+    #
+    name: "confidential-containers-operator-main-{os}-{arch}-{container_runtime}_{runtimeclass}-baseline"
+    <<: *cc_jobs_common_properties
+    # Allow concurrent jobs by default. Specify `false` on the project definition otherwise.
+    concurrent_toggle: true
+    description:
+      !j2: |
+         <pre>
+         Baseline job.
+         /scheduled
+         status="Stable"
+         OS="{{ os }}"
+         arch="{{ arch }}"
+         branch="main"
+         repo="confidential-containers/operator"
+         type="baseline"
+         Maintainers:
+           {% for i in maintainers -%}
+           - {{ i }}
+           {% endfor %}
+         </pre>
+    scm:
+      - git:
+          url: https://github.com/confidential-containers/operator
+          branches:
+            - '*/main'
+          wipe-workspace: false
+    triggers:
+      - timed: 'H 0 * * *'
+    builders:
+      - shell:
+          !include-jinja2: include/operator-ci_entrypoint.sh.inc
+
 ###
 # Define the projects
 ###
@@ -287,8 +322,12 @@
     runtimeclass:
       - kata-qemu
       - kata-clh
+    maintainers:
+      - '@wainersm'
+      - '@fidencio'
     jobs:
       - 'confidential-containers-operator-main-{os}-{arch}-{container_runtime}_{runtimeclass}-PR'
+      - 'confidential-containers-operator-main-{os}-{arch}-{container_runtime}_{runtimeclass}-baseline'
 - project:
     # The node label is selected based on this project name. Be careful if you
     # need to change the name.
@@ -302,8 +341,11 @@
       - containerd
     runtimeclass:
       - kata-qemu-sev
+    maintainers:
+      - '@ryansavino'
     jobs:
       - 'confidential-containers-operator-main-{os}-{arch}-{container_runtime}_{runtimeclass}-PR'
+      - 'confidential-containers-operator-main-{os}-{arch}-{container_runtime}_{runtimeclass}-baseline'
 - project:
     name: "Generate jobs for Confidential Containers on AMD SEV"
     repo:
@@ -343,4 +385,4 @@
 - view:
     name: Daily CCv0 baseline
     view-type: list
-    regex: '.*-CCv0-.*-baseline'
+    regex: '.*\(operator-main\|CCv0\)-.*-baseline'
