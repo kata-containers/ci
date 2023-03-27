@@ -210,6 +210,49 @@
             export PATH="$PATH:/usr/local/bin"
             ./run-local.sh -r {{ runtimeclass }} {%+ if baremetal == "true" %}-u{% endif %}
 
+- job-template:
+    # Use to generate baseline jobs.
+    #
+    # Arguments:
+    #   os          - the node Operating System in <name>-<version> format.
+    #   arch        - the node architecture (e.g x86_64, s390x, ppc64le, and so on).
+    #   ci_job      - the CI job type as defined in https://github.com/kata-containers/tests/blob/main/.ci/ci_job_flags.sh
+    #   maintainers - a list of maintainer (use the github's mentions @somebody).
+    #
+    name: "kata-containers-CCv0-{os}-{arch}-{ci_job}-baseline"
+    <<: *cc_jobs_common_properties
+    # Allow concurrent jobs by default. Specify `false` on the project definition otherwise.
+    concurrent_toggle: true
+    description:
+      !j2: |
+         <pre>
+         Baseline job.
+         /scheduled
+         status="Stable"
+         OS="{{ os }}"
+         arch="{{ arch }}"
+         branch="CCv0"
+         CI_JOB="{{ ci_job }}"
+         repo="kata-containers"
+         type="baseline"
+         Maintainers:
+           {% for i in maintainers -%}
+           - {{ i }}
+           {% endfor %}
+         </pre>
+    scm:
+      - git:
+          url: https://github.com/kata-containers/kata-containers
+          branches:
+            - '*/CCv0'
+          wipe-workspace: false
+    triggers:
+      - timed: 'H 0 * * *'
+    builders:
+      - shell:
+          !include-jinja2: include/cc-ci_entrypoint.sh.inc
+    <<: *cc_jobs_common_publishers
+
 ###
 # Define the projects
 ###
@@ -227,8 +270,11 @@
       - CC_CRI_CONTAINERD
       - CC_CRI_CONTAINERD_CLOUD_HYPERVISOR
       - CC_CRI_CONTAINERD_K8S
+    maintainers:
+      - '@wainersm'
     jobs:
       - '{repo}-CCv0-{os}-{arch}-{ci_job}-PR'
+      - 'kata-containers-CCv0-{os}-{arch}-{ci_job}-baseline'
 - project:
     name: "Generate jobs for the Confidential Containers Operator"
     os:
@@ -271,8 +317,11 @@
     tee: "sev"
     ci_job:
       - CC_SEV_CRI_CONTAINERD_K8S
+    maintainers:
+      - '@ryansavino'
     jobs:
       - '{repo}-CCv0-{os}-{arch}-{ci_job}-PR'
+      - 'kata-containers-CCv0-{os}-{arch}-{ci_job}-baseline'
 
 ###
 # Define stand-alone jobs.
@@ -288,3 +337,10 @@
     triggers:
       - pollscm:
           cron: "@hourly"
+###
+# Define views.
+###
+- view:
+    name: Daily CCv0 baseline
+    view-type: list
+    regex: '.*-CCv0-.*-baseline'
