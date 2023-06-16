@@ -364,6 +364,42 @@
     jobs:
       - '{repo}-CCv0-{os}-{arch}-{ci_job}-PR'
       - 'kata-containers-CCv0-{os}-{arch}-{ci_job}-baseline'
+- project:
+    # The node label is selected based on this project name. Be careful if you
+    # need to change the name.
+    name: "Generate jobs for the Confidential Containers Operator on AMD SEV-SNP"
+    os:
+      - ubuntu-20.04_snp
+    arch:
+      - x86_64
+    baremetal: "true"
+    container_runtime:
+      - containerd
+    runtimeclass:
+      - kata-qemu-snp
+    maintainers:
+      - '@UnmeshDeodhar'
+    jobs:
+      - 'confidential-containers-operator-main-{os}-{arch}-{container_runtime}_{runtimeclass}-PR'
+      - 'confidential-containers-operator-main-{os}-{arch}-{container_runtime}_{runtimeclass}-baseline'
+- project:
+    name: "Generate jobs for Confidential Containers on AMD SEV-SNP"
+    repo:
+      - kata-containers
+      - tests
+    os:
+      - ubuntu-20.04_snp
+    arch:
+      - x86_64
+    baremetal: "true"
+    tee: "snp"
+    ci_job:
+      - CC_SNP_CRI_CONTAINERD_K8S
+    maintainers:
+      - '@UnmeshDeodhar'
+    jobs:
+      - '{repo}-CCv0-{os}-{arch}-{ci_job}-PR'
+      - 'kata-containers-CCv0-{os}-{arch}-{ci_job}-baseline'
 
 ###
 # Define stand-alone jobs.
