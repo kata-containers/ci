@@ -20,7 +20,7 @@ jobs:
       - name: Install the Jenkins Job Builder
         run: |
           pip install --user --upgrade jinja2
-          pip install --user jenkins-job-builder
+          pip install --user jenkins-job-builder==4.3.0
       - name: Run the publish script
         env:
           JENKINS_USER: ${{ secrets.JENKINS_USER }}
