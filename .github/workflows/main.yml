@@ -53,7 +53,7 @@ jobs:
       - name: Install the Jenkins Job Builder
         run: |
           pip install --user --upgrade jinja2
-          pip install --user jenkins-job-builder
+          pip install --user jenkins-job-builder==4.3.0
       - name: Check it can generate all jobs
         run: |
           cd jobs-builder
