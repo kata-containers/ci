@@ -314,6 +314,7 @@
     name: "Generate jobs for the Confidential Containers Operator"
     os:
       - ubuntu-20.04
+      - ubuntu-22.04
     arch:
       - x86_64
     baremetal: "false"
