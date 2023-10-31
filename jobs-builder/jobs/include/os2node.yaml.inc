@@ -12,6 +12,8 @@ fedora35_azure
 ubuntu1804_azure || ubuntu1804-azure
 {%- elif os == "ubuntu-20.04" -%}
 ubuntu_20.04
+{%- elif os == "ubuntu-22.04" -%}
+ubuntu22_04
 {%- elif os == "ubuntu-20.04_sev" -%}
 amd-ubuntu-2004
 {%- elif os == "ubuntu-20.04_snp" -%}
